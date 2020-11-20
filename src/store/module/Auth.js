@@ -1,5 +1,5 @@
 import http from "../../service/index";
-import router from "../../router";
+import router from "../../router/router";
 
 const state = () => ({
     token: localStorage.getItem("token") || null,
