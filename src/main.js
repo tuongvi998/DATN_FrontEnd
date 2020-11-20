@@ -3,7 +3,7 @@ import App from "./App.vue";
 import Axios from "axios";
 import MaterialKit from "./plugins/material-kit";
 import store from "./store/index";
-import router from "./router";
+import router from "./router/router";
 
 import Notifications from 'vue-notification';
 Vue.use(Notifications);
