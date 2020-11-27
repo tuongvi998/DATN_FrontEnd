@@ -50,6 +50,8 @@
                 <md-input v-model="password" type="password"></md-input>
                 <md-icon v-if="!checkPassword">clear</md-icon>
               </md-field>
+              <div slot="alert" class="text-center" id="notify">
+              </div>
               <!-- <md-field v-if="!check" slot="alert">
                 
               </md-field> -->
@@ -76,7 +78,7 @@
 
 <script>
 import { LoginCard } from "@/components/index.js";
-import { mapActions } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 export default {
   components: {
     LoginCard,
@@ -84,9 +86,9 @@ export default {
   bodyClass: "login-page",
   data() {
     return {
-      firstname: null,
-      email: null,
-      password: null,
+      firstname: '',
+      email: '',
+      password: '',
       checkEmail: true,
       checkPassword: true,
     };
@@ -94,10 +96,13 @@ export default {
   props: {
     header: {
       type: String,
-      default: require("@/assets/img/profile_city.jpg"),
+      default: require("@/assets/img/handsup.jpg"),
     },
   },
   computed: {
+    ...mapState({
+      showNoti: "showNoti"
+    }),
     headerStyle() {
       return {
         backgroundImage: `url(${this.header})`,
@@ -108,8 +113,12 @@ export default {
     ...mapActions({
       login: "login",
     }),
+    ...mapMutations({
+      disableNotify: "disableNotify"
+    }),
     loginFun() {
-      if (this.email == null && this.password == null) {
+      console.log(this.email + 'v ' + this.password)
+      if (this.email == '' && this.password == '') {
         this.checkEmail = false;
         this.checkPassword = false;
         this.$notify({
@@ -121,19 +130,10 @@ export default {
           speed: 700,
           width: 1000,
         });
-      } else if (this.email == null) {
-        this.checkEmail = false;
-        this.$notify({
-          group: "foo",
-          type: "error",
-          title: "",
-          text: "Vui lòng nhập email!",
-          duration: 800,
-          speed: 700,
-          width: 1000,
-        });
-      } else if (this.password == null) {
+      }else if (this.password == '' && this.email != '') {
         this.checkPassword = false;
+        this.checkEmail = true;
+        console.log('pw ', this.checkPassword)
         this.$notify({
           group: "foo",
           type: "error",
@@ -143,19 +143,42 @@ export default {
           speed: 700,
           width: 1000,
         });
+      } else if (this.email == '' && this.password != '') {
+        this.checkEmail = false;
+        this.checkPassword = true;
+        console.log('email ', this.checkEmail);
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "",
+          text: "Vui lòng nhập email!",
+          duration: 800,
+          speed: 700,
+          width: 1000,
+        });
       }
-      if (this.email != null && this.password != null) {
+      else if (this.email != '' && this.password != '') {
         this.checkEmail = true;
         this.checkPassword = true;
-        return this.login({
+        return  this.login({
           email: this.email,
           password: this.password,
-        });
+        }).then(response =>{
+
+        }).catch(error=>{console.log(error.status)});
       }
     },
   },
+  watch:{
+    login(error){
+      console.log(error)
+    }
+  }
 };
 </script>
 
 <style lang="css">
+  #notify{
+    font-weight: 700;
+  }
 </style>

@@ -8,6 +8,14 @@ import LoginCard from "./cards/LoginCard.vue";
 import Tabs from "./Tabs.vue";
 import Modal from "./Modal.vue";
 import RegisterCard from "./cards/RegisterCard.vue";
+import ChartCard from "./DashboardCards/ChartCard.vue";
+import NavTabsDashBoardCard from "./DashboardCards/NavTabsDashBoardCard.vue";
+import StatsCard from "./DashboardCards/StatsCard.vue";
+import SimpleTable from "./DashBoardTables/SimpleTable.vue";
+// Tables
+import NavTabsTable from "./DashBoardTables/NavTabsTable.vue";
+import OrderedTable from "./DashBoardTables/OrderedTable.vue";
+import Carousel from './Carousel.vue';
 
 export {
     DropDown,
@@ -19,5 +27,13 @@ export {
     LoginCard,
     Tabs,
     Modal,
-    RegisterCard
+    RegisterCard,
+    //
+    ChartCard,
+    NavTabsDashBoardCard,
+    StatsCard,
+    NavTabsTable,
+    OrderedTable,
+    SimpleTable,
+    Carousel
 };

@@ -71,7 +71,14 @@
                 <i class="material-icons">content_paste</i>
                 <p>Documentation</p>
               </md-list-item>
-
+              <md-list-item
+                href="/login"
+                target="_blank"
+                v-if="showDownload"
+              >
+                <i class="material-icons">content_paste</i>
+                <p>Login</p>
+              </md-list-item>
               <md-list-item
                 href="javascript:void(0)"
                 @click="scrollToElement()"
@@ -239,11 +246,11 @@ export default {
       this.currentScrollValue = scrollValue;
       if (this.colorOnScroll > 0 && scrollValue > this.colorOnScroll) {
         this.extraNavClasses = `md-${this.type}`;
-        navbarColor.classList.remove("md-transparent");
+        navbarColor.classList.remove("md-transparent");// md-dark
       } else {
         if (this.extraNavClasses) {
           this.extraNavClasses = "";
-          navbarColor.classList.add("md-transparent");
+          navbarColor.classList.add("md-transparent");// md-transparent
         }
       }
     },
