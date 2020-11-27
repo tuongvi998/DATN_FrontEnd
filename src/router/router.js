@@ -1,12 +1,25 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Index from "../views/Index.vue";
-import Landing from "../views/Landing.vue";
-import Login from "../views/Login.vue";
-import Profile from "../views/Profile.vue";
+import Index from "../components/views/Index.vue";
+import Landing from "../components/views/Landing.vue";
+import Login from "../components/views/Login.vue";
+import Profile from "../components/views/Profile.vue";
 import MainNavbar from "../layout/MainNavbar.vue";
 import MainFooter from "../layout/MainFooter.vue";
-import Register from "../views/Register.vue";
+import Register from "../components/views/Register.vue";
+import Home from "../components/views/HomePage.vue";
+//
+import GroupLayout from "../components/views/GroupLayout.vue";
+import DashboardLayout from "../components/views/DashboardLayout.vue";
+import Dashboard from "../components/views/Dashboard/DashBoard.vue";
+import TableList from "../components/views/Dashboard/TableList.vue";
+import Typography from "../components/views/Dashboard/Typography.vue";
+import Icons from "../components/views/Dashboard/Icons.vue";
+// import Maps from "../components/views/Dashboard/Maps.vue";
+import Notifications from "../components/views/Dashboard/Notifications.vue";
+import UpgradeToPRO from "../components/views/Dashboard/UpgradeToPRO.vue";
+import UserList from "../components/views/Dashboard/UserList.vue";
+import GroupList from "../components/views/Dashboard/GroupList.vue";
 
 Vue.use(Router);
 
@@ -25,6 +38,15 @@ const router = new Router({
             path: "/landing",
             name: "landing",
             components: { default: Landing, header: MainNavbar, footer: MainFooter },
+            props: {
+                header: { colorOnScroll: 400 },
+                footer: { backgroundColor: "black" },
+            },
+        },
+        {
+            path: "/",
+            name: "homepage",
+            components: { default: Home, header: MainNavbar, footer: MainFooter },
             props: {
                 header: { colorOnScroll: 400 },
                 footer: { backgroundColor: "black" },
@@ -54,6 +76,66 @@ const router = new Router({
                 header: { colorOnScroll: 400 },
                 footer: { backgroundColor: "black" },
             },
+        },
+        {
+            path: '/group',
+            component: GroupLayout,
+            redirect: "group/dashboard",
+            children: [{
+                path: "dashboard",
+                name: "Dashboard",
+                component: Dashboard,
+            }, ]
+        },
+        {
+            path: "/admin",
+            component: DashboardLayout,
+            redirect: "admin/dashboard",
+            children: [{
+                    path: "dashboard",
+                    name: "Dashboard",
+                    component: Dashboard,
+
+                },
+                {
+                    path: "table",
+                    name: "Table List",
+                    component: TableList,
+                },
+                {
+                    path: "groups",
+                    name: "Group List",
+                    component: GroupList,
+                },
+                {
+                    path: "typography",
+                    name: "Typography",
+                    component: Typography,
+                },
+                {
+                    path: "icons",
+                    name: "Icons",
+                    component: Icons,
+                },
+                {
+                    path: "users",
+                    name: "Users",
+                    meta: {
+                        hideFooter: true,
+                    },
+                    component: UserList,
+                },
+                {
+                    path: "notifications",
+                    name: "Notifications",
+                    component: Notifications,
+                },
+                {
+                    path: "upgrade",
+                    name: "Upgrade to PRO",
+                    component: UpgradeToPRO,
+                },
+            ],
         },
     ],
     mode: "history",
