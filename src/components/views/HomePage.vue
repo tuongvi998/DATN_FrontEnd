@@ -11,6 +11,11 @@
       </div>
     </parallax> 
     <div class="main main-raised">
+      <div class="section section-help">
+        <div class="container">
+          <help-process></help-process>
+        </div>
+      </div>
       <div class="section section-basic">
         <div class="container">
           <carousel></carousel>
@@ -270,7 +275,7 @@ import NavPills from "./components/NavPillsSection";
 import Notifications from "./components/NotificationsSection";
 import TypographyImages from "./components/TypographyImagesSection";
 import JavascriptComponents from "./components/JavascriptComponentsSection";
-import { LoginCard, Carousel } from "@/components";
+import { LoginCard, Carousel,HelpProcess } from "@/components";
 
 // //carousel
 // import VueSlickCarousel from "vue-slick-carousel";
@@ -279,6 +284,7 @@ import { LoginCard, Carousel } from "@/components";
 export default {
   components: {
     Carousel,
+    HelpProcess,
     BasicElements,
     Navigation,
     SmallNavigation,

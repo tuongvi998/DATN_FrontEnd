@@ -48,17 +48,17 @@ const router = new Router({
             name: "homepage",
             components: { default: Home, header: MainNavbar, footer: MainFooter },
             props: {
-                header: { colorOnScroll: 400 },
+                header: { colorOnScroll: 300 },
                 footer: { backgroundColor: "black" },
             },
         },
         {
             path: "/login",
             name: "login",
-            components: { default: Login, header: MainNavbar, footer: MainFooter },
-            props: {
-                header: { colorOnScroll: 400 },
-            },
+            components: { default: Login, footer: MainFooter },
+            // props: {
+            //     header: { colorOnScroll: 400 },
+            // },
         },
         {
             path: "/register",

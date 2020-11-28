@@ -97,7 +97,7 @@ var router = new _vueRouter["default"]({
     },
     props: {
       header: {
-        colorOnScroll: 400
+        colorOnScroll: 300
       },
       footer: {
         backgroundColor: "black"
@@ -108,14 +108,11 @@ var router = new _vueRouter["default"]({
     name: "login",
     components: {
       "default": _Login["default"],
-      header: _MainNavbar["default"],
       footer: _MainFooter["default"]
-    },
-    props: {
-      header: {
-        colorOnScroll: 400
-      }
-    }
+    } // props: {
+    //     header: { colorOnScroll: 400 },
+    // },
+
   }, {
     path: "/register",
     name: "register",

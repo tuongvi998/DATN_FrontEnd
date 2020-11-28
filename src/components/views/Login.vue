@@ -96,7 +96,7 @@ export default {
   props: {
     header: {
       type: String,
-      default: require("@/assets/img/handsup.jpg"),
+      default: require("@/assets/img/joinus_hand.jpg"),
     },
   },
   computed: {
