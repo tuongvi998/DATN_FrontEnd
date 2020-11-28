@@ -16,7 +16,7 @@ import SimpleTable from "./DashBoardTables/SimpleTable.vue";
 import NavTabsTable from "./DashBoardTables/NavTabsTable.vue";
 import OrderedTable from "./DashBoardTables/OrderedTable.vue";
 import Carousel from './Carousel.vue';
-
+import HelpProcess from './HelpProcess.vue';
 export {
     DropDown,
     Parallax,
@@ -35,5 +35,6 @@ export {
     NavTabsTable,
     OrderedTable,
     SimpleTable,
-    Carousel
+    Carousel,
+    HelpProcess
 };

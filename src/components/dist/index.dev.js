@@ -105,6 +105,12 @@ Object.defineProperty(exports, "Carousel", {
     return _Carousel["default"];
   }
 });
+Object.defineProperty(exports, "HelpProcess", {
+  enumerable: true,
+  get: function get() {
+    return _HelpProcess["default"];
+  }
+});
 
 var _Dropdown = _interopRequireDefault(require("./Dropdown.vue"));
 
@@ -139,5 +145,7 @@ var _NavTabsTable = _interopRequireDefault(require("./DashBoardTables/NavTabsTab
 var _OrderedTable = _interopRequireDefault(require("./DashBoardTables/OrderedTable.vue"));
 
 var _Carousel = _interopRequireDefault(require("./Carousel.vue"));
+
+var _HelpProcess = _interopRequireDefault(require("./HelpProcess.vue"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
