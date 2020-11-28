@@ -210,7 +210,7 @@ import {
   NavTabsDashBoardCard,
   NavTabsTable,
   OrderedTable
-} from "../../index";
+} from "../index";
 
 export default {
   components: {
