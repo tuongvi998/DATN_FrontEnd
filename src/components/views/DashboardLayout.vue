@@ -58,12 +58,12 @@
 </template>
 
 <script>
-import TopNavbar from "./Dashboard/TopNavbar";
-import ContentFooter from "./Dashboard/ContentFooter.vue";
-import DashboardContent from "./Dashboard/Content.vue";
+import TopNavbar from "../Dashboard/TopNavbar";
+import ContentFooter from "../Dashboard/ContentFooter.vue";
+import DashboardContent from "../Dashboard/Content.vue";
 // import MobileMenu from "./Dashboard/MobileMenu.vue";
-import FixedPlugin from "./Dashboard/FixedPlugin.vue";
-import UserList from "./Dashboard/UserList.vue";
+import FixedPlugin from "../Dashboard/FixedPlugin.vue";
+import UserList from "../Dashboard/UserList.vue";
 
 export default {
   components: {

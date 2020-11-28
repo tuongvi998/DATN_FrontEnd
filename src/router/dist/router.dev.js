@@ -29,21 +29,21 @@ var _GroupLayout = _interopRequireDefault(require("../components/views/GroupLayo
 
 var _DashboardLayout = _interopRequireDefault(require("../components/views/DashboardLayout.vue"));
 
-var _DashBoard = _interopRequireDefault(require("../components/views/Dashboard/DashBoard.vue"));
+var _DashBoard = _interopRequireDefault(require("../components/Dashboard/DashBoard.vue"));
 
-var _TableList = _interopRequireDefault(require("../components/views/Dashboard/TableList.vue"));
+var _TableList = _interopRequireDefault(require("../components/Dashboard/TableList.vue"));
 
-var _Typography = _interopRequireDefault(require("../components/views/Dashboard/Typography.vue"));
+var _Typography = _interopRequireDefault(require("../components/Dashboard/Typography.vue"));
 
-var _Icons = _interopRequireDefault(require("../components/views/Dashboard/Icons.vue"));
+var _Icons = _interopRequireDefault(require("../components/Dashboard/Icons.vue"));
 
-var _Notifications = _interopRequireDefault(require("../components/views/Dashboard/Notifications.vue"));
+var _Notifications = _interopRequireDefault(require("../components/Dashboard/Notifications.vue"));
 
-var _UpgradeToPRO = _interopRequireDefault(require("../components/views/Dashboard/UpgradeToPRO.vue"));
+var _UpgradeToPRO = _interopRequireDefault(require("../components/Dashboard/UpgradeToPRO.vue"));
 
-var _UserList = _interopRequireDefault(require("../components/views/Dashboard/UserList.vue"));
+var _UserList = _interopRequireDefault(require("../components/Dashboard/UserList.vue"));
 
-var _GroupList = _interopRequireDefault(require("../components/views/Dashboard/GroupList.vue"));
+var _GroupList = _interopRequireDefault(require("../components/Dashboard/GroupList.vue"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
