@@ -11,15 +11,15 @@ import Home from "../components/views/HomePage.vue";
 //
 import GroupLayout from "../components/views/GroupLayout.vue";
 import DashboardLayout from "../components/views/DashboardLayout.vue";
-import Dashboard from "../components/views/Dashboard/DashBoard.vue";
-import TableList from "../components/views/Dashboard/TableList.vue";
-import Typography from "../components/views/Dashboard/Typography.vue";
-import Icons from "../components/views/Dashboard/Icons.vue";
+import Dashboard from "../components/Dashboard/DashBoard.vue";
+import TableList from "../components/Dashboard/TableList.vue";
+import Typography from "../components/Dashboard/Typography.vue";
+import Icons from "../components/Dashboard/Icons.vue";
 // import Maps from "../components/views/Dashboard/Maps.vue";
-import Notifications from "../components/views/Dashboard/Notifications.vue";
-import UpgradeToPRO from "../components/views/Dashboard/UpgradeToPRO.vue";
-import UserList from "../components/views/Dashboard/UserList.vue";
-import GroupList from "../components/views/Dashboard/GroupList.vue";
+import Notifications from "../components/Dashboard/Notifications.vue";
+import UpgradeToPRO from "../components/Dashboard/UpgradeToPRO.vue";
+import UserList from "../components/Dashboard/UserList.vue";
+import GroupList from "../components/Dashboard/GroupList.vue";
 
 Vue.use(Router);
 
