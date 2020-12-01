@@ -25,6 +25,8 @@ var _Register = _interopRequireDefault(require("../components/views/Register.vue
 
 var _HomePage = _interopRequireDefault(require("../components/views/HomePage.vue"));
 
+var _UserPage = _interopRequireDefault(require("../components/views/UserPage.vue"));
+
 var _GroupLayout = _interopRequireDefault(require("../components/views/GroupLayout.vue"));
 
 var _DashboardLayout = _interopRequireDefault(require("../components/views/DashboardLayout.vue"));
@@ -48,7 +50,6 @@ var _GroupList = _interopRequireDefault(require("../components/Dashboard/GroupLi
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 //
-// import Maps from "../components/views/Dashboard/Maps.vue";
 _vue["default"].use(_vueRouter["default"]);
 
 var router = new _vueRouter["default"]({
@@ -143,7 +144,23 @@ var router = new _vueRouter["default"]({
       }
     }
   }, {
-    path: '/group',
+    path: "/page/user-page",
+    name: "user-page",
+    components: {
+      "default": _UserPage["default"],
+      header: _MainNavbar["default"],
+      footer: _MainFooter["default"]
+    },
+    props: {
+      header: {
+        colorOnScroll: 400
+      },
+      footer: {
+        backgroundColor: "black"
+      }
+    }
+  }, {
+    path: "/group",
     component: _GroupLayout["default"],
     redirect: "group/dashboard",
     children: [{

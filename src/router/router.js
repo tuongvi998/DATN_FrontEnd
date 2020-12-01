@@ -8,6 +8,7 @@ import MainNavbar from "../layout/MainNavbar.vue";
 import MainFooter from "../layout/MainFooter.vue";
 import Register from "../components/views/Register.vue";
 import Home from "../components/views/HomePage.vue";
+import UserPage from "../components/views/UserPage.vue";
 //
 import GroupLayout from "../components/views/GroupLayout.vue";
 import DashboardLayout from "../components/views/DashboardLayout.vue";
@@ -15,7 +16,6 @@ import Dashboard from "../components/Dashboard/DashBoard.vue";
 import TableList from "../components/Dashboard/TableList.vue";
 import Typography from "../components/Dashboard/Typography.vue";
 import Icons from "../components/Dashboard/Icons.vue";
-// import Maps from "../components/views/Dashboard/Maps.vue";
 import Notifications from "../components/Dashboard/Notifications.vue";
 import UpgradeToPRO from "../components/Dashboard/UpgradeToPRO.vue";
 import UserList from "../components/Dashboard/UserList.vue";
@@ -78,14 +78,23 @@ const router = new Router({
             },
         },
         {
-            path: '/group',
+            path: "/page/user-page",
+            name: "user-page",
+            components: { default: UserPage, header: MainNavbar, footer: MainFooter },
+            props: {
+                header: { colorOnScroll: 400 },
+                footer: { backgroundColor: "black" },
+            },
+        },
+        {
+            path: "/group",
             component: GroupLayout,
             redirect: "group/dashboard",
             children: [{
                 path: "dashboard",
                 name: "Dashboard",
                 component: Dashboard,
-            }, ]
+            }, ],
         },
         {
             path: "/admin",
@@ -95,7 +104,6 @@ const router = new Router({
                     path: "dashboard",
                     name: "Dashboard",
                     component: Dashboard,
-
                 },
                 {
                     path: "table",

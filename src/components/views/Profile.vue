@@ -2,7 +2,7 @@
   <div class="wrapper">
     <parallax
       class="section page-header header-filter"
-      :style="headerStyle"
+      
     ></parallax>
     <div class="main main-raised">
       <div class="section profile-content">

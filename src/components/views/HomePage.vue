@@ -3,297 +3,95 @@
     <parallax class="page-header header-filter" :style="headerStyle">
       <div class="md-layout">
         <div class="md-layout-item">
-            <div class="brand">
-              <h1>Vue Material Kit</h1>
-              <h3>A Badass Vue.js UI Kit made with Material Design.</h3>
-            </div>
+          <div class="brand">
+            <h1>Vue Material Kit</h1>
+            <h3>A Badass Vue.js UI Kit made with Material Design.</h3>
+          </div>
         </div>
       </div>
-    </parallax> 
+    </parallax>
     <div class="main main-raised">
-      <div class="section section-help">
-        <div class="container">
+      <div class="section section-help pt-5">
+        <div class="container pt-3">
           <help-process></help-process>
         </div>
       </div>
-      <div class="section section-basic">
-        <div class="container">
-          <carousel></carousel>
-          <div class="title">
-            <h2>Basic Elements</h2>
-          </div>
-          <basic-elements></basic-elements>
+      <div class="section section-activity-list">
+        <div class="contai">
+          <activity-list :list="upcoming_activity"></activity-list>
         </div>
       </div>
-      <div class="section section-navbars">
+      <div class="section section-download pt-4" id="downloadSection">
         <div class="container">
-          <small-navigation></small-navigation>
-        </div>
-        <navigation></navigation>
-      </div>
-      <div class="section section-tabs">
-        <div class="container">
-          <tabs></tabs>
-        </div>
-      </div>
-      <div class="section section-white">
-        <div class="container">
-          <nav-pills></nav-pills>
-        </div>
-      </div>
-      <div class="section section-notifications">
-        <div class="container">
-          <div class="title">
-            <h3>Notifications</h3>
-          </div>
-        </div>
-        <notifications></notifications>
-      </div>
-      <div class="section">
-        <div class="container">
-          <typography-images></typography-images>
-        </div>
-      </div>
-      <div class="section section-javascript">
-        <div class="container">
-          <javascript-components></javascript-components>
-        </div>
-      </div>
-      <div class="section">
-        <div class="container text-center">
-          <div class="md-layout">
-            <div
-              class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center"
-            >
-              <h2>Completed with examples</h2>
-              <h4>
-                The kit comes with three pre-built pages to help you get started
-                faster. You can change the text and images and you're good to
-                go. More importantly, looking at them will give you a picture of
-                what you can built with this powerful kit.
+          <div class="md-layout text-center">
+            <div class="md-layout-item md-size-66 md-small-size-100 mx-auto">
+              <h2 id="title">Tình nguyện cho tương lai</h2>
+              <h4 class="pt-4">
+                Chúng tôi tin rằng, thông tin là nhân tố quan trọng trong mục
+                tiêu xây dựng một cộng đồng tốt đẹp hơn. Khi càng có nhiều người
+                biết đến các vấn đề xã hội tồn tại tại khu vực mình sinh sống,
+                sẽ càng có nhiều người trong chúng ta muốn chung tay giúp sức.
+                Đồng thời, sự hiểu biết giúp chúng ta định hướng hành động. Vì
+                khi hiểu rõ các nhu cầu mà địa phương cần giúp sức và xác định
+                được trọng tâm thiện nguyện mà bạn quan tâm, bạn sẽ có thể đầu
+                tư thời gian và nguồn lực sẵn có theo cách hiệu quả nhất.
               </h4>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="section section-signup page-header" :style="signupImage">
-        <div class="container">
-          <div class="md-layout">
-            <div
-              class="md-layout-item md-size-33 md-medium-size-40 md-small-size-50 md-xsmall-size-70 mx-auto text-center"
-            >
-              <login-card header-color="green">
-                <h4 slot="title" class="card-title">Login</h4>
-                <md-button
-                  slot="buttons"
-                  href="javascript:void(0)"
-                  class="md-just-icon md-simple md-white"
-                >
-                  <i class="fab fa-facebook-square"></i>
-                </md-button>
-                <md-button
-                  slot="buttons"
-                  href="javascript:void(0)"
-                  class="md-just-icon md-simple md-white"
-                >
-                  <i class="fab fa-twitter"></i>
-                </md-button>
-                <md-button
-                  slot="buttons"
-                  href="javascript:void(0)"
-                  class="md-just-icon md-simple md-white"
-                >
-                  <i class="fab fa-google-plus-g"></i>
-                </md-button>
-                <p slot="description" class="description">Or Be Classical</p>
-                <md-field class="md-form-group" slot="inputs">
-                  <md-icon>face</md-icon>
-                  <label>First Name...</label>
-                  <md-input v-model="firstname"></md-input>
-                </md-field>
-                <md-field class="md-form-group" slot="inputs">
-                  <md-icon>email</md-icon>
-                  <label>Email...</label>
-                  <md-input v-model="email" type="email"></md-input>
-                </md-field>
-                <md-field class="md-form-group" slot="inputs">
-                  <md-icon>lock_outline</md-icon>
-                  <label>Password...</label>
-                  <md-input v-model="password"></md-input>
-                </md-field>
-                <md-button slot="footer" class="md-simple md-success md-lg">
-                  Get Started
-                </md-button>
-              </login-card>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="md-layout">
-        <div class="md-layout-item text-center">
-          <md-button href="#/login" class="md-simple md-success md-lg"
-            >View Login Page</md-button
+          <div
+            class="md-layout-item md-size-50 md-small-size-100 mx-auto text-center"
           >
-        </div>
-      </div>
-      <div class="section section-examples">
-        <div class="container-fluid text-center">
-          <div class="md-layout">
-            <div class="md-layout-item">
-              <a href="#/landing" target="_blank">
-                <img
-                  :src="landing"
-                  alt="Rounded Image"
-                  class="img-raised rounded img-fluid"
-                />
-              </a>
-              <md-button href="#/landing" class="md-simple md-success md-lg"
-                >View Landing Page</md-button
-              >
-            </div>
-            <div class="md-layout-item">
-              <a href="#/profile" target="_blank">
-                <img
-                  :src="profile"
-                  alt="Rounded Image"
-                  class="img-raised rounded img-fluid"
-                />
-              </a>
-              <md-button href="#/profile" class="md-simple md-success md-lg"
-                >View Profile Page</md-button
-              >
-            </div>
+            <md-button href="/register" class="md-success"
+              >ĐĂNG KÝ NGAY</md-button
+            ><br />
           </div>
         </div>
       </div>
-      <div class="section section-download" id="downloadSection">
-        <div class="container">
-          <div class="md-layout text-center">
-            <div class="md-layout-item md-size-66 md-small-size-100 mx-auto">
-              <h2>Do you love this UI Kit?</h2>
-              <h4>
-                Cause if you do, it can be yours for FREE. Hit the buttons below
-                to navigate to our website where you can find the kit. Our
-                friends from
-                <a
-                  href="https://themeisle.com/?utm_campaign=mkfree-hestia&amp;utm_source=creativetim&amp;utm_medium=website"
-                  target="_blank"
-                  >ThemeIsle</a
-                >
-                created a Wordpress Theme which can be also downloaded for free.
-                Start a new project or give an old Bootstrap project a new look!
-              </h4>
-            </div>
-            <div class="md-layout-item md-size-50 md-small-size-100 mx-auto">
-              <md-button
-                href="https://www.creative-tim.com/product/material-kit"
-                target="_blank"
-                class="md-success md-lg"
-                ><i class="fab fa-html5"></i> Free HTML Download</md-button
-              >
-              <md-button
-                href="https://themeisle.com/themes/hestia/?utm_campaign=mkfree-hestia&amp;utm_source=creativetim&amp;utm_medium=website"
-                class="md-success md-lg"
-                target="_blank"
-                ><i class="fab fa-wordpress"></i> Wordpress Theme</md-button
-              >
-            </div>
-          </div>
-          <br /><br />
-
-          <div class="md-layout text-center">
-            <div class="md-layout-item md-size-66 md-small-size-100 mx-auto">
-              <h2>Want more?</h2>
-              <h4>
-                We've just launched
-                <a
-                  href="https://www.creative-tim.com/product/vue-material-dashboard-pro?ref=utp-mk-demos"
-                  target="_blank"
-                  >Vue Material Dashboard PRO</a
-                >
-                and
-                <a
-                  href="https://www.creative-tim.com/product/vue-material-kit-pro?ref=utp-vmk-demos"
-                  target="_blank"
-                  >Vue Material Kit PRO</a
-                >. Every product has a huge number of components, sections and
-                example pages. Start Your Development With A Badass Bootstrap UI
-                Kit inspired by Material Design.
-              </h4>
-            </div>
-            <div class="md-layout-item md-size-50 md-small-size-100 mx-auto">
-              <div class="btn-container">
-                <md-button
-                  href="https://www.creative-tim.com/product/vue-material-kit-pro?ref=utp-vmk-demos"
-                  class="md-button md-success md-lg md-upgrade"
-                  target="_blank"
-                  ><md-icon>unarchive</md-icon>Vue Material Kit PRO</md-button
-                >
-                <md-button
-                  href="https://www.creative-tim.com/product/vue-material-dashboard-pro?ref=utp-vmd-demos"
-                  class="md-button md-success md-lg md-upgrade"
-                  target="_blank"
-                  ><md-icon>unarchive</md-icon>Vue Material Dashboard
-                  PRO</md-button
-                >
+      <div class="section section-field-list">
+        <div class="">
+          <div class="parallax vc_parallax">
+            <div class="dark-opacity">
+              <div class="row p-5">
+                <div class="col-md-4 d-flex justify-content-center">
+                  <h5>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. L
+                  </h5>
+                </div>
+                <div class="col-md-4">
+                  <h5>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Laudantium id modi sapiente provident aliquam ut. Ducimus
+                  </h5>
+                </div>
+                <div class="col-md-4">
+                  <h5>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Laudantium id modi sapiente provident aliquam ut. Ducimus
+                  </h5>
+                </div>
               </div>
             </div>
           </div>
-
-          <div class="sharing-area text-center">
-            <div class="md-layout">
-              <div class="md-layout-item">
-                <h3>Thank you for supporting us!</h3>
-              </div>
-            </div>
-
-            <md-button class="md-twitter"
-              ><i class="fab fa-twitter"></i>Tweet</md-button
-            >
-            <md-button class="md-facebook"
-              ><i class="fab fa-facebook-square"></i> Share</md-button
-            >
-            <md-button class="md-google"
-              ><i class="fab fa-google-plus"></i> Share</md-button
-            >
-            <md-button class="md-github"
-              ><i class="fab fa-github"></i> Star</md-button
-            >
-          </div>
         </div>
       </div>
+ <div class="section section-contacts">
+      <div class="container">
+      <contact></contact>
+      </div>
+ </div>
     </div>
   </div>
 </template>
 
 <script>
-import BasicElements from "./components/BasicElementsSection";
-import Navigation from "./components/NavigationSection";
-import SmallNavigation from "./components/SmallNavigationSection";
-import Tabs from "./components/TabsSection";
-import NavPills from "./components/NavPillsSection";
-import Notifications from "./components/NotificationsSection";
-import TypographyImages from "./components/TypographyImagesSection";
-import JavascriptComponents from "./components/JavascriptComponentsSection";
-import { LoginCard, Carousel,HelpProcess } from "@/components";
-
-// //carousel
-// import VueSlickCarousel from "vue-slick-carousel";
-// // optional style for arrows & dots
+import { LoginCard, HelpProcess, ActivityList, Contact} from "@/components";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
-    Carousel,
     HelpProcess,
-    BasicElements,
-    Navigation,
-    SmallNavigation,
-    Tabs,
-    NavPills,
-    Notifications,
-    TypographyImages,
-    JavascriptComponents,
-    LoginCard,
+    ActivityList,
+    Contact
   },
   name: "index",
   bodyClass: "index-page",
@@ -334,10 +132,8 @@ export default {
   },
   data() {
     return {
-      firstname: null,
-      email: null,
-      password: null,
-      leafShow: false     
+      leafShow: false,
+      helpinghand: require("@/assets/img/helping-hand.png"),
     };
   },
   methods: {
@@ -350,6 +146,9 @@ export default {
     },
   },
   computed: {
+    ...mapGetters({
+      upcoming_activity: "getUpcomingActivity",
+    }),
     headerStyle() {
       return {
         backgroundImage: `url(${this.image})`,
@@ -365,12 +164,40 @@ export default {
     this.leafActive();
     window.addEventListener("resize", this.leafActive);
   },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.leafActive);
+  created() {
+    this.$store.dispatch("showUpcomingActivity");
   },
 };
 </script>
 <style lang="scss">
+// number about volunteer
+.hepl-hand {
+  color: red;
+}
+.parallax {
+  z-index: 1;
+  background-size: cover;
+  opacity: 0.95;
+  background-repeat: no-repeat, repeat;
+  background-image: url("http://wp1.themexlab.com/wp/volunteer/wp-content/uploads/2015/10/image-2.jpg");
+}
+.dark-opacity {
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+.vc_parallax {
+  position: relative;
+  overflow: hidden;
+}
+
+.tpath-vc-section {
+  margin-bottom: 0;
+  position: relative;
+}
+
+.section {
+  padding: 20px 0;
+}
 .section-download {
   .md-button + .md-button {
     margin-left: 5px;
@@ -387,5 +214,8 @@ export default {
   width: 200px;
   height: 100px;
   background-image: linear-gradient(gray 100%, transparent 0);
+}
+#title {
+  font-family: Segoe UI, SegoeUI, Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 </style>
