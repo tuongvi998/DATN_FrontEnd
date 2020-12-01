@@ -2,7 +2,7 @@
   <md-toolbar
     id="toolbar"
     md-elevation="0"
-    class="md-white md-absolute"
+    class="md-transparent md-absolute"
     :class="extraNavClasses"
     :color-on-scroll="colorOnScroll"
   >
@@ -36,7 +36,7 @@
                     <drop-down direction="down">
                       <md-button
                         slot="title"
-                        class="md-button md-button-link md-simple dropdown-toggle"
+                        class="md-button md-button-link md-white md-simple dropdown-toggle"
                         data-toggle="dropdown"
                       >
                         <i class="material-icons">apps</i>
@@ -44,13 +44,15 @@
                       </md-button>
                       <ul class="dropdown-menu dropdown-with-icons">
                         <li>
-                          <a href="javascript:void(0)">
+                          <a href="#/">
                             <i class="material-icons">layers</i>
                             <p>All Components</p>
                           </a>
                         </li>
                         <li>
-                          <a href="javascript:void(0)">
+                          <a
+                            href="https://demos.creative-tim.com/vue-material-kit/documentation/"
+                          >
                             <i class="material-icons">content_paste</i>
                             <p>Documentation</p>
                           </a>
@@ -60,7 +62,7 @@
                   </div>
                 </a>
               </li>
-              <!-- nav ngang -->
+
               <md-list-item
                 href="https://demos.creative-tim.com/vue-material-kit/documentation/"
                 target="_blank"
@@ -69,30 +71,19 @@
                 <i class="material-icons">content_paste</i>
                 <p>Documentation</p>
               </md-list-item>
-              <md-list-item href="/login" target="_blank" v-if="showDownload">
-                <p>Danh bạ tổ chức</p>
-                <!-- show cac hd chua dien ra -->
-              </md-list-item>
-              <md-list-item href="/login" target="_blank" v-if="showDownload">
-                <p>Cơ hội tình nguyện</p>
-                <!-- show cac hd chua dien ra -->
-              </md-list-item>
-              <md-list-item href="/login" target="_blank" v-if="showDownload">
-                <i class="material-icons">login</i>
-                <p>Đăng nhập</p>
-              </md-list-item>
+
               <md-list-item
-                href="/register"
+                href="javascript:void(0)"
                 @click="scrollToElement()"
                 v-if="showDownload"
               >
-                <i class="material-icons">login</i>
-                <p>Đăng ký</p>
+                <i class="material-icons">cloud_download</i>
+                <p>Download</p>
               </md-list-item>
 
               <li class="md-list-item" v-else>
                 <a
-                  href=""
+                  href="javascript:void(0)"
                   class="md-list-item-router md-list-item-container md-button-clean dropdown"
                 >
                   <div class="md-list-item-content">
@@ -129,6 +120,37 @@
                   </div>
                 </a>
               </li>
+
+              <md-list-item
+                href="https://twitter.com/CreativeTim"
+                target="_blank"
+              >
+                <i class="fab fa-twitter"></i>
+                <p class="hidden-lg">Twitter</p>
+                <md-tooltip md-direction="bottom"
+                  >Follow us on Twitter</md-tooltip
+                >
+              </md-list-item>
+              <md-list-item
+                href="https://www.facebook.com/CreativeTim"
+                target="_blank"
+              >
+                <i class="fab fa-facebook-square"></i>
+                <p class="hidden-lg">Facebook</p>
+                <md-tooltip md-direction="bottom"
+                  >Like us on Facebook</md-tooltip
+                >
+              </md-list-item>
+              <md-list-item
+                href="https://www.instagram.com/CreativeTimOfficial"
+                target="_blank"
+              >
+                <i class="fab fa-instagram"></i>
+                <p class="hidden-lg">Instagram</p>
+                <md-tooltip md-direction="bottom"
+                  >Follow us on Instagram</md-tooltip
+                >
+              </md-list-item>
             </md-list>
           </div>
         </div>
@@ -154,7 +176,7 @@ function resizeThrottler(actualResizeHandler) {
 import MobileMenu from "@/layout/MobileMenu";
 export default {
   components: {
-    MobileMenu,
+    MobileMenu
   },
   props: {
     type: {
@@ -168,26 +190,26 @@ export default {
           "danger",
           "success",
           "warning",
-          "info",
+          "info"
         ].includes(value);
-      },
+      }
     },
     colorOnScroll: {
       type: Number,
-      default: 0,
-    },
+      default: 0
+    }
   },
   data() {
     return {
       extraNavClasses: "",
-      toggledClass: false,
+      toggledClass: false
     };
   },
   computed: {
     showDownload() {
       const excludedRoutes = ["login", "landing", "profile"];
-      return excludedRoutes.every((r) => r !== this.$route.name);
-    },
+      return excludedRoutes.every(r => r !== this.$route.name);
+    }
   },
   methods: {
     bodyClick() {
@@ -217,11 +239,11 @@ export default {
       this.currentScrollValue = scrollValue;
       if (this.colorOnScroll > 0 && scrollValue > this.colorOnScroll) {
         this.extraNavClasses = `md-${this.type}`;
-        navbarColor.classList.remove("md-transparent"); // md-dark
+        navbarColor.classList.remove("md-transparent");
       } else {
         if (this.extraNavClasses) {
           this.extraNavClasses = "";
-          navbarColor.classList.add("md-transparent"); // md-transparent
+          navbarColor.classList.add("md-transparent");
         }
       }
     },
@@ -233,13 +255,13 @@ export default {
       if (element_id) {
         element_id.scrollIntoView({ block: "end", behavior: "smooth" });
       }
-    },
+    }
   },
   mounted() {
     document.addEventListener("scroll", this.scrollListener);
   },
   beforeDestroy() {
     document.removeEventListener("scroll", this.scrollListener);
-  },
+  }
 };
 </script>

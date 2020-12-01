@@ -74,24 +74,24 @@
           </div>
         </div>
       </div>
- <div class="section section-contacts">
-      <div class="container">
-      <contact></contact>
+      <div class="section section-contacts">
+        <div class="pb-5 pt-1">
+          <contact></contact>
+        </div>
       </div>
- </div>
     </div>
   </div>
 </template>
 
 <script>
-import { LoginCard, HelpProcess, ActivityList, Contact} from "@/components";
+import { LoginCard, HelpProcess, ActivityList, Contact } from "@/components";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
     HelpProcess,
     ActivityList,
-    Contact
+    Contact,
   },
   name: "index",
   bodyClass: "index-page",

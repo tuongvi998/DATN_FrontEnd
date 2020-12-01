@@ -9,6 +9,7 @@ import MainFooter from "../layout/MainFooter.vue";
 import Register from "../components/views/Register.vue";
 import Home from "../components/views/HomePage.vue";
 import UserPage from "../components/views/UserPage.vue";
+import Navbar from "../layout/Navbar.vue";
 //
 import GroupLayout from "../components/views/GroupLayout.vue";
 import DashboardLayout from "../components/views/DashboardLayout.vue";
@@ -46,7 +47,7 @@ const router = new Router({
         {
             path: "/",
             name: "homepage",
-            components: { default: Home, header: MainNavbar, footer: MainFooter },
+            components: { default: Home, header: Navbar, footer: MainFooter },
             props: {
                 header: { colorOnScroll: 300 },
                 footer: { backgroundColor: "black" },
