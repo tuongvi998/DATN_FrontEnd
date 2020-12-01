@@ -145,7 +145,7 @@
       </div>
       <div class="md-layout">
         <div
-          class="md-layout-item md-size-20 md-xsmall-size-100"
+          class="md-layout-item md-size-20 md-xsmall-size-50"
           :class="{ 'text-center': responsive }"
         >
           <h4>Rounded Image</h4>

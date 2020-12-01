@@ -1,69 +1,46 @@
 <template>
   <div>
-    <div class="title">
-      <h3>Carousel</h3>
-    </div>
-    <!-- <div class="md-layout">
-      <div class="md-layout-item mx-auto md-small-size-100"> -->
-        <md-card>
-          <carousel
-            :per-page="1"
-            loop
-            :speed="600"
-            autoplay
-            :autoplay-timeout="3000"
-            :mouse-drag="false"
-            navigationEnabled
-            navigationNextLabel="<i class='material-icons'>keyboard_arrow_right</i>"
-            navigationPrevLabel="<i class='material-icons'>keyboard_arrow_left</i>"
-          >
-            <slide>
-              <div class="carousel-caption">
-                <h4>
-                  <md-icon>location_on</md-icon>
-                  Somewhere Beyond, United States
-                </h4>
-              </div>
-              <img :src="carousel1" alt="carousel1" />
-            </slide>
-            <slide>
-              <div class="carousel-caption">
-                <h4>
-                  <md-icon>location_on</md-icon>
-                  Yellowstone National Park, United States
-                </h4>
-              </div>
-              <img :src="carousel2" alt="carousel2" />
-            </slide>
-            <slide>
-              <div class="carousel-caption">
-                <h4>
-                  <md-icon>location_on</md-icon>
-                  Yellowstone National Park, United States
-                </h4>
-              </div>
-              <img :src="carousel3" alt="carousel3" />
-            </slide>
-          </carousel>
-        </md-card>
-      </div>
-    <!-- </div>
+    <carousel
+      :per-page="number_in_slide"
+      loop
+      :speed="500"
+      autoplay
+      :autoplay-timeout="3000"
+      :mouse-drag="true"
+    >
+      <!-- navigationEnabled
+        navigationNextLabel="<i class='material-icons'>keyboard_arrow_right</i>"
+        navigationPrevLabel="<i class='material-icons'>keyboard_arrow_left</i>" -->
+      <slot name="slide-slot"></slot>
+    </carousel>
+  </div>
+  <!-- </div>
   </div> -->
 </template>
 
 <script>
 import VueSlickCarousel from "vue-slick-carousel";
+// import ActivityList from './ActivityList.vue';
 export default {
   name: "SlickCarousel",
   data() {
     return {
       carousel1: require("@/assets/img/nature-2.jpg"),
       carousel2: require("@/assets/img/nature.jpg"),
-      carousel3: require("@/assets/img/nature-3.jpg")
+      carousel3: require("@/assets/img/nature-3.jpg"),
+      slide: 0,
+      sliding: null,
     };
   },
-  components: {
+  methods: {
+    onSlideStart(slide) {
+      this.sliding = true;
+    },
+    onSlideEnd(slide) {
+      this.sliding = false;
+    },
   },
+  props: ["number_in_slide"],
 };
 </script>
 

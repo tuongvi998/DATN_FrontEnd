@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row">
+    <div class="row"> 
       <div class="col-md-4 col-sm-12 help-process">
         <div class="text-center ikon-box">
           <img class="helpprocess-img" :src="donate_img" alt="" />
@@ -65,11 +65,9 @@ export default {
   text-transform: uppercase;
   color: #34495e;
   margin: 20px 0;
-  // line-height: 1;
-  // font-family: "Montserrat",sans-serif;
-  // text-transform: uppercase;
-  // font-weight: bold;
   text-align: center;
+  font-family: 'Inter', sans-serif;
+;
 }
 .help-process p {
   color: #34495e;
@@ -112,7 +110,7 @@ border-color: #4ba64f;
   padding: 0 22px;
   border: 1px solid;
   border-radius: 3px;
-  font: 700 13px/43px "Montserrat", sans-serif;
+  font: 700 12px/36px "Montserrat", sans-serif;
   text-transform: uppercase;
   -webkit-box-shadow: none;
   box-shadow: none;

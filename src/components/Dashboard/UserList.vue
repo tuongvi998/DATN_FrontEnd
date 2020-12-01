@@ -65,27 +65,6 @@ export default {
     ...mapActions({
       deleteVolunteer: "deleteVolunteer",
     }),
-    // deleUser(id, name){
-    //   this.id = id;
-    //   this.name = name;
-    //   alert( this.id, this.name);
-    // }
-    // deleUser(id, name) {
-    //   this.$confirm({
-    //     title: "Xoá tài khoản?",
-    //     message: "Bạn có muốn xoá tài khoản " + name + " ?",
-    //     button: {
-    //       yes: "Có",
-    //       no: "Không",
-    //     },
-    //     callback: (confirm) => {
-    //       if (confirm == true) {
-    //         alert("fasda");
-    //         return deleUser(id);
-    //       }
-    //     },
-    //   });
-    // },
   },
   created() {
     this.list_user = this.$store.dispatch("showListVolunteer");
