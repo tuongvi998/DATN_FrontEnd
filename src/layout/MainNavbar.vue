@@ -1,14 +1,8 @@
 <template>
-  <md-toolbar
-    id="toolbar"
-    md-elevation="0"
-    class="md-transparent md-absolute"
-    :class="extraNavClasses"
-    :color-on-scroll="colorOnScroll"
-  >
+  <md-toolbar id="toolbar" md-elevation="0" class="md-white md-absolute">
     <div class="md-toolbar-row md-collapse-lateral">
       <div class="md-toolbar-section-start">
-        <h3 class="md-title">Vue Material Kit</h3>
+        <h3 class="md-title">Vue</h3>
       </div>
       <div class="md-toolbar-section-end">
         <md-button
@@ -27,9 +21,23 @@
               <!-- Here you can add your items from the section-start of your toolbar -->
             </mobile-menu>
             <md-list>
-              <li class="md-list-item" v-if="!showDownload">
+              <md-list-item
+              >
+                <router-link :to="{name: 'all-activity'}" tag="a">Hoạt động</router-link>
+              </md-list-item>
+              <md-list-item
+              >
+                <router-link to="/" tag="a">Danh bạ tổ chức </router-link>
+              </md-list-item>
+              <md-list-item  v-if="!isLogin">
+                <router-link :to="{name: 'login'}" tag="a">
+                  Đăng nhập/Đăng ký
+                  <i class="material-icons">login</i>
+                  </router-link>
+                  
+              </md-list-item>
+              <li class="md-list-item" v-if="isLogin">
                 <a
-                  href="javascript:void(0)"
                   class="md-list-item-router md-list-item-container md-button-clean dropdown"
                 >
                   <div class="md-list-item-content">
@@ -38,48 +46,24 @@
                         slot="title"
                         class="md-button md-button-link md-white md-simple dropdown-toggle"
                         data-toggle="dropdown"
+                        @click="checkToken"
                       >
-                        <i class="material-icons">apps</i>
-                        <p>Components</p>
+                        <p>{{ user_name }}</p>
                       </md-button>
                       <ul class="dropdown-menu dropdown-with-icons">
-                        <li>
-                          <a href="#/">
-                            <i class="material-icons">layers</i>
-                            <p>All Components</p>
-                          </a>
+                        <li @click="profile()">
+                          <router-link  :to="{ name: 'user-page', params: { username: userpage_link } }">
+                            <p>Trang cá nhân</p>
+                          </router-link>
                         </li>
                         <li>
-                          <a
-                            href="https://demos.creative-tim.com/vue-material-kit/documentation/"
-                          >
-                            <i class="material-icons">content_paste</i>
-                            <p>Documentation</p>
-                          </a>
+                          <a @click="logoutFun()">Đăng xuất</a>
                         </li>
                       </ul>
                     </drop-down>
                   </div>
                 </a>
               </li>
-
-              <md-list-item
-                href="https://demos.creative-tim.com/vue-material-kit/documentation/"
-                target="_blank"
-                v-if="showDownload"
-              >
-                <i class="material-icons">content_paste</i>
-                <p>Documentation</p>
-              </md-list-item>
-
-              <md-list-item
-                href="javascript:void(0)"
-                @click="scrollToElement()"
-                v-if="showDownload"
-              >
-                <i class="material-icons">cloud_download</i>
-                <p>Download</p>
-              </md-list-item>
 
               <li class="md-list-item" v-else>
                 <a
@@ -88,30 +72,19 @@
                 >
                   <div class="md-list-item-content">
                     <drop-down direction="down">
-                      <md-button
-                        slot="title"
-                        class="md-button md-button-link md-white md-simple dropdown-toggle"
-                        data-toggle="dropdown"
-                      >
-                        <i class="material-icons">view_carousel</i>
-                        <p>Examples</p>
-                      </md-button>
                       <ul class="dropdown-menu dropdown-with-icons">
                         <li>
                           <a href="#/landing">
-                            <i class="material-icons">view_day</i>
                             <p>Landing Page</p>
                           </a>
                         </li>
                         <li>
-                          <a href="#/login">
-                            <i class="material-icons">fingerprint</i>
+                          <a href="/login">
                             <p>Login Page</p>
                           </a>
                         </li>
                         <li>
-                          <a href="#/profile">
-                            <i class="material-icons">account_circle</i>
+                          <a>
                             <p>Profile Page</p>
                           </a>
                         </li>
@@ -120,37 +93,6 @@
                   </div>
                 </a>
               </li>
-
-              <md-list-item
-                href="https://twitter.com/CreativeTim"
-                target="_blank"
-              >
-                <i class="fab fa-twitter"></i>
-                <p class="hidden-lg">Twitter</p>
-                <md-tooltip md-direction="bottom"
-                  >Follow us on Twitter</md-tooltip
-                >
-              </md-list-item>
-              <md-list-item
-                href="https://www.facebook.com/CreativeTim"
-                target="_blank"
-              >
-                <i class="fab fa-facebook-square"></i>
-                <p class="hidden-lg">Facebook</p>
-                <md-tooltip md-direction="bottom"
-                  >Like us on Facebook</md-tooltip
-                >
-              </md-list-item>
-              <md-list-item
-                href="https://www.instagram.com/CreativeTimOfficial"
-                target="_blank"
-              >
-                <i class="fab fa-instagram"></i>
-                <p class="hidden-lg">Instagram</p>
-                <md-tooltip md-direction="bottom"
-                  >Follow us on Instagram</md-tooltip
-                >
-              </md-list-item>
             </md-list>
           </div>
         </div>
@@ -174,47 +116,92 @@ function resizeThrottler(actualResizeHandler) {
 }
 
 import MobileMenu from "@/layout/MobileMenu";
+import { mapActions, mapGetters } from 'vuex';
+import VueJwtDecode from 'vue-jwt-decode';
 export default {
   components: {
-    MobileMenu
+    MobileMenu,
   },
-  props: {
-    type: {
-      type: String,
-      default: "white",
-      validator(value) {
-        return [
-          "white",
-          "default",
-          "primary",
-          "danger",
-          "success",
-          "warning",
-          "info"
-        ].includes(value);
-      }
-    },
-    colorOnScroll: {
-      type: Number,
-      default: 0
-    }
-  },
+  props: {},
   data() {
     return {
       extraNavClasses: "",
-      toggledClass: false
+      toggledClass: false,
+      user_name: localStorage.getItem("user_name"),
+      name: "",
+      userpage_link: "",
     };
   },
   computed: {
-    showDownload() {
-      const excludedRoutes = ["login", "landing", "profile"];
-      return excludedRoutes.every(r => r !== this.$route.name);
-    }
+    isLogin() {
+      return localStorage.getItem("access_token") !== null;
+    },
+    
   },
   methods: {
+    logoutFun() {
+      return this.$store.dispatch("logout");
+    },
+    checkToken(){
+      const token = localStorage.getItem("access_token");
+        if(token == null){
+          console.log('null');
+        }else{
+          const str = VueJwtDecode.decode(token);
+        console.log('token   ', str.sub);
+        }
+      this.name = localStorage.getItem("user_name");
+      var AccentsMap = [
+        "aàảãáạăằẳẵắặâầẩẫấậ",
+        "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
+        "dđ",
+        "DĐ",
+        "eèẻẽéẹêềểễếệ",
+        "EÈẺẼÉẸÊỀỂỄẾỆ",
+        "iìỉĩíị",
+        "IÌỈĨÍỊ",
+        "oòỏõóọôồổỗốộơờởỡớợ",
+        "OÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ",
+        "uùủũúụưừửữứự",
+        "UÙỦŨÚỤƯỪỬỮỨỰ",
+        "yỳỷỹýỵ",
+        "YỲỶỸÝỴ",
+      ];
+      for (var i = 0; i < AccentsMap.length; i++) {
+        var re = new RegExp("[" + AccentsMap[i].substr(1) + "]", "g");
+        var char = AccentsMap[i][0];
+        this.name = this.name.replace(re, char);
+      }
+      this.userpage_link = this.name.replace(/\s+/g, "-");
+    },
+    profile() {
+      this.name = localStorage.getItem("user_name");
+      var AccentsMap = [
+        "aàảãáạăằẳẵắặâầẩẫấậ",
+        "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
+        "dđ",
+        "DĐ",
+        "eèẻẽéẹêềểễếệ",
+        "EÈẺẼÉẸÊỀỂỄẾỆ",
+        "iìỉĩíị",
+        "IÌỈĨÍỊ",
+        "oòỏõóọôồổỗốộơờởỡớợ",
+        "OÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ",
+        "uùủũúụưừửữứự",
+        "UÙỦŨÚỤƯỪỬỮỨỰ",
+        "yỳỷỹýỵ",
+        "YỲỶỸÝỴ",
+      ];
+      for (var i = 0; i < AccentsMap.length; i++) {
+        var re = new RegExp("[" + AccentsMap[i].substr(1) + "]", "g");
+        var char = AccentsMap[i][0];
+        this.name = this.name.replace(re, char);
+      }
+      this.userpage_link = this.name.replace(/\s+/g, "-");
+    },
+
     bodyClick() {
       let bodyClick = document.getElementById("bodyClick");
-
       if (bodyClick === null) {
         let body = document.querySelector("body");
         let elem = document.createElement("div");
@@ -232,36 +219,13 @@ export default {
       this.toggledClass = !this.toggledClass;
       this.bodyClick();
     },
-    handleScroll() {
-      let scrollValue =
-        document.body.scrollTop || document.documentElement.scrollTop;
-      let navbarColor = document.getElementById("toolbar");
-      this.currentScrollValue = scrollValue;
-      if (this.colorOnScroll > 0 && scrollValue > this.colorOnScroll) {
-        this.extraNavClasses = `md-${this.type}`;
-        navbarColor.classList.remove("md-transparent");
-      } else {
-        if (this.extraNavClasses) {
-          this.extraNavClasses = "";
-          navbarColor.classList.add("md-transparent");
-        }
-      }
-    },
-    scrollListener() {
-      resizeThrottler(this.handleScroll);
-    },
-    scrollToElement() {
-      let element_id = document.getElementById("downloadSection");
-      if (element_id) {
-        element_id.scrollIntoView({ block: "end", behavior: "smooth" });
-      }
-    }
   },
   mounted() {
-    document.addEventListener("scroll", this.scrollListener);
+    // document.addEventListener("scroll", this.scrollListener);
+                // console.log(this.$router.currentRoute.path)
   },
   beforeDestroy() {
-    document.removeEventListener("scroll", this.scrollListener);
-  }
+    // document.removeEventListener("scroll", this.scrollListener);
+  },
 };
 </script>

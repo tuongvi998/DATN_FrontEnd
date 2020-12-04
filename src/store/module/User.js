@@ -6,6 +6,8 @@ const state = () => ({
     list_groups: [],
     upcoming_activity: [],
     list_field: [],
+    list_activity_joined: [],
+    list_activity_register: [],
 });
 
 const getters = {
@@ -20,6 +22,12 @@ const getters = {
     },
     getListField: (state) => {
         return state.list_field;
+    },
+    getActivityJoined: (state) => {
+        return state.list_activity_joined;
+    },
+    getActivityRegister: (state) => {
+        return state.list_activity_register;
     },
 };
 
@@ -44,6 +52,12 @@ const mutations = {
     showUpcomingActivity(state, upcoming_activity) {
         state.upcoming_activity = upcoming_activity;
     },
+    showActivityJoined(state, list_activity_joined) {
+        state.list_activity_joined = list_activity_joined;
+    },
+    showActivityRegister(state, list_activity_register) {
+        state.list_activity_register = list_activity_register;
+    },
     //fields
     showListField(state, list_field) {
         state.list_field = list_field;
@@ -55,13 +69,14 @@ const actions = {
         http
             .getNormal("/admin/list-all-volunteers")
             .then((response) => {
-                console.log(response.data.message);
+                // console.log(response.data.message);
                 commit("showListVolunteer", response.data.data);
             })
             .catch((error) => {
                 console.log(error);
             });
     },
+
     deleteVolunteer({ dispatch }, id) {
         http
             .deleteNormal("/admin/delete-volunteer", id)
@@ -97,13 +112,33 @@ const actions = {
                 console.log(error);
             });
     },
-    //activity
+    //activitya
     showUpcomingActivity({ commit }) {
         http
             .getNormal("/upcoming-activity")
             .then((response) => {
                 console.log(response.data.message);
                 commit("showUpcomingActivity", response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    showActivityJoined({ commit }, payload) {
+        http
+            .getNormal("/volunteer/activity-joined", payload)
+            .then((response) => {
+                commit("showActivityJoined", response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    showActivityRegister({ commit }, payload) {
+        http
+            .getNormal("/volunteer/activity-register", payload)
+            .then((response) => {
+                commit("showActivityRegister", response.data.data);
             })
             .catch((error) => {
                 console.log(error);

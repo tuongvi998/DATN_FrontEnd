@@ -13,7 +13,18 @@
 </template>
 <script>
 export default {
-  name: "App"
+  name: "App",
+  data() {
+    return {
+      token: localStorage.getItem("access_token")
+    }
+  },
+  watch: {
+    token(){
+        console('token null roi ne');
+      
+    }
+  }
 }
 </script>
 <style>

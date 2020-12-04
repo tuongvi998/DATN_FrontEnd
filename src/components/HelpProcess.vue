@@ -34,8 +34,8 @@
     </div>
     <div class="row how-help text-center mt-4">
       <div class="buttons">
-        <a href="" class="btn-primary mr-2 ml-2" id="donate-btn">Tài trợ</a>
-        <a href="/login" class="btn-primary btn-outline mr-2 ml-2" id="volunteer-btn">Đăng ký</a>
+        <router-link to="/"> <a class="btn-primary mr-2 ml-2" id="donate-btn">Tài trợ</a></router-link>
+        <router-link to="/login"> <a class="btn-primary btn-outline mr-2 ml-2" id="volunteer-btn">Đăng ký</a></router-link>
       </div>
     </div>
   </div>

@@ -84,7 +84,6 @@ export default {
  /* display: block; */
  display: -webkit-box;
  max-width: 100%;
- /* height: 43px; */
  margin: 0 auto;
  font-size: 14px;
  line-height: 1.5;

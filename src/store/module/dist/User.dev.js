@@ -70,7 +70,7 @@ var actions = {
     var commit = _ref.commit;
 
     _index["default"].getNormal("/admin/list-all-volunteers").then(function (response) {
-      console.log(response.data.message);
+      // console.log(response.data.message);
       commit("showListVolunteer", response.data.data);
     })["catch"](function (error) {
       console.log(error);
@@ -108,7 +108,7 @@ var actions = {
       console.log(error);
     });
   },
-  //activity
+  //activitya
   showUpcomingActivity: function showUpcomingActivity(_ref5) {
     var commit = _ref5.commit;
 
