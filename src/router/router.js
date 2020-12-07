@@ -9,7 +9,7 @@ import MainFooter from "../layout/MainFooter.vue";
 import Register from "../components/views/Register.vue";
 import Home from "../components/views/HomePage.vue";
 import UserPage from "../components/views/UserPage.vue";
-import AllActivity from "../components/views/AllActivity.vue"
+import AllActivity from "../components/views/AllActivity.vue";
 //
 import GroupLayout from "../components/views/GroupLayout.vue";
 import DashboardLayout from "../components/views/DashboardLayout.vue";
@@ -21,6 +21,7 @@ import Notifications from "../components/Dashboard/Notifications.vue";
 import UpgradeToPRO from "../components/Dashboard/UpgradeToPRO.vue";
 import UserList from "../components/Dashboard/UserList.vue";
 import GroupList from "../components/Dashboard/GroupList.vue";
+import FieldList from "../components/Dashboard/FieldList.vue";
 
 Vue.use(Router);
 
@@ -81,15 +82,37 @@ const router = new Router({
         {
             path: "/all-activity",
             name: "all-activity",
-            components: { default: AllActivity, header: MainNavbar, footer: MainFooter },
+            components: {
+                default: AllActivity,
+                header: MainNavbar,
+                footer: MainFooter,
+            },
             props: {
                 header: { colorOnScroll: 400 },
                 footer: { backgroundColor: "black" },
             },
+            children: [{
+                path: "/all-activity/:fieldname",
+                name: "field-name",
+                component: {
+                    default: AllActivity,
+                    header: MainNavbar,
+                    footer: MainFooter,
+                },
+            }, ],
         },
-
         {
-            path: '/user/:username',
+            path: "/group",
+            component: GroupLayout,
+            redirect: "group/dashboard",
+            children: [{
+                path: "dashboard",
+                name: "Dashboard",
+                component: Dashboard,
+            }, ],
+        },
+        {
+            path: "/user/:username",
             name: "user-page",
             components: { default: UserPage, header: MainNavbar, footer: MainFooter },
             props: {
@@ -125,6 +148,11 @@ const router = new Router({
                     path: "groups",
                     name: "Group List",
                     component: GroupList,
+                },
+                {
+                    path: "fields",
+                    name: "fields",
+                    component: FieldList,
                 },
                 {
                     path: "typography",

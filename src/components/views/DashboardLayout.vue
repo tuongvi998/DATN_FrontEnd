@@ -22,9 +22,9 @@
         <md-icon>group</md-icon>
         <p>Tổ chức</p>
       </sidebar-link>
-      <sidebar-link to="/admin/table">
+      <sidebar-link to="/admin/fields">
         <md-icon>content_paste</md-icon>
-        <p>Thể loại</p>
+        <p>Lĩnh Vực hoạt động</p>
       </sidebar-link>
       <sidebar-link to="/admin/typography">
         <md-icon>library_books</md-icon>

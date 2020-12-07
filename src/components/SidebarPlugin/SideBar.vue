@@ -10,7 +10,7 @@
     </slot>
     <div class="sidebar-wrapper">
       <slot name="content"></slot>
-      <md-list class="nav">
+      <md-list class="nav" :class="sidebar_color">
         <!--By default vue-router adds an active class to each route link. This way the links are colored when clicked-->
         <slot>
           <sidebar-link
@@ -37,12 +37,14 @@ export default {
     showLogo: {
       type: Boolean
     },
+    sidebar_color:{
+      type: String,
+    },
     title: {
       type: String,
     },
     sidebarBackgroundImage: {
       type: String,
-      default: require("@/assets/img/sidebar-2.jpg")
     },
     imgLogo: {
       type: String,
@@ -50,10 +52,7 @@ export default {
     sidebarItemColor: {
       type: String,
       default: "green",
-      validator: value => {
-        let acceptedValues = ["", "purple", "blue", "green", "orange", "red"];
-        return acceptedValues.indexOf(value) !== -1;
-      }
+
     },
     sidebarLinks: {
       type: Array,

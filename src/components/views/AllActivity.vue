@@ -1,65 +1,35 @@
 <template>
   <div class="bg-light">
     <!-- <main-navbar class="mt-0"></main-navbar> -->
-    <div
-      class="container-fluid pt-"
-      :class="{ 'nav-open': $sidebar.showSidebar }"
-    >
+    <div class="container-fluid pt-">
       <div class="content pt-5">
         <div class="md-layout pt-5">
-          <div class="md-layout-item md-medium-size-100 active-expandedmd-size-17">
-            <side-bar
-              :sidebar-item-color="sidebarBackground"
-              :sidebar-background-image="sidebarBackgroundImage"
-              :showLogo="false"
-              v-for="field in listField" :key="field.index"
-            >
-            <sidebar-link to="/admin/dashboard">
-                <md-icon>dashboard</md-icon>
-                <p>{{field.field_name}}</p>
-              </sidebar-link>
-              <!-- <mobile-menu slot="content"></mobile-menu> -->
-              <!-- <sidebar-link to="/admin/dashboard">
-                <md-icon>dashboard</md-icon>
-                <p>Dashboard</p>
-              </sidebar-link>
-              <sidebar-link to="/admin/users">
-                <md-icon>person</md-icon>
-                <p>Tình nguyện viên</p>
-              </sidebar-link>
-              <sidebar-link to="/admin/groups">
-                <md-icon>group</md-icon>
-                <p>Tổ chức</p>
-              </sidebar-link>
-              <sidebar-link to="/admin/table">
-                <md-icon>content_paste</md-icon>
-                <p>Thể loại</p>
-              </sidebar-link>
-              <sidebar-link to="/admin/typography">
-                <md-icon>library_books</md-icon>
-                <p>Typography</p>
-              </sidebar-link>
-              <sidebar-link to="/admin/icons">
-                <md-icon>bubble_chart</md-icon>
-                <p>Icons</p>
-              </sidebar-link>
-              <sidebar-link to="/admin/maps">
-                <md-icon>location_on</md-icon>
-                <p>Maps</p>
-              </sidebar-link>
-              <sidebar-link to="/admin/notifications">
-                <md-icon>notifications</md-icon>
-                <p>Notifications</p>
-              </sidebar-link> -->
-            </side-bar>
+          <div v-if="showFields" class="col-md-3 col-sm-3 col-12">
+            <div class="sidebar-normal">
+              <md-list class="sidebar-normal">
+                <li
+                  class="md-list-item"
+                  v-for="field in listField"
+                  :key="field.index"
+                >
+                  <router-link
+                   @click="hideSidebar(field.name )"
+                    :to="{ name: 'field-name', params: {fieldname: fieldname_link } }"
+                    class="md-list-item-router md-list-item-container md-button-clean"
+                  >
+                    <div class="md-list-item-content md-ripple">
+                      <!-- <md-icon>{{ link.icon }}</md-icon> -->
+                      <p>{{ field.name }}</p>
+                    </div>
+                  </router-link>
+                </li>
+              </md-list>
+            </div>
           </div>
-          <div class="md-layout-item md-medium-size-100 md-size-80">
-            <h1>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
-              obcaecati minus, voluptas corporis odit cupiditate dolorum vitae
-              totam enim aspernatur, ratione voluptate animi consequuntur
-              deserunt magnam! Animi expedita dolores id?
-            </h1>
+          <div class="col-md-9 col-sm-9 col-12">
+            <div class="container row bg-white pt-4 pb-4">
+              <activity-card :activity_list="listAllUpcomingActivity"></activity-card>
+            </div>
           </div>
         </div>
       </div>
@@ -69,27 +39,175 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
+import {ActivityCard} from "@/components";
 
 export default {
-  components: {},
+  components: {
+    ActivityCard
+  },
   props: {},
   data() {
     return {
+      showFields: true,
       sidebarBackground: "green",
       sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg"),
+      widthWindown: window.innerWidth,
+      activityList: [],
+      fieldname_link: ''
     };
   },
-  methods: {},
+  methods: {
+    hideSidebar(name) {
+      console.log("asdas");
+      var AccentsMap = [
+        "aàảãáạăằẳẵắặâầẩẫấậ",
+        "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
+        "dđ",
+        "DĐ",
+        "eèẻẽéẹêềểễếệ",
+        "EÈẺẼÉẸÊỀỂỄẾỆ",
+        "iìỉĩíị",
+        "IÌỈĨÍỊ",
+        "oòỏõóọôồổỗốộơờởỡớợ",
+        "OÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ",
+        "uùủũúụưừửữứự",
+        "UÙỦŨÚỤƯỪỬỮỨỰ",
+        "yỳỷỹýỵ",
+        "YỲỶỸÝỴ",
+      ];
+      for (var i = 0; i < AccentsMap.length; i++) {
+        var re = new RegExp("[" + AccentsMap[i].substr(1) + "]", "g");
+        var char = AccentsMap[i][0];
+        name = name.replace(re, char);
+      }
+      this.fieldname_link = name.replace(/\s+/g, "-");
+      console.log(this.fieldname_link)
+    },
+  },
   computed: {
     ...mapGetters({
-      listField: "getListField"
-    })
+      listField: "getListField",
+      listAllUpcomingActivity: "getAllUpcomingActivity",
+    }),
   },
   created() {
     this.$store.dispatch("showListField");
+    this.$store.dispatch("showAllUpcomingActivity");
+    this.activityList = this.listAllUpcomingActivity;
     console.log(this.listField);
+  },
+  watch: {
+    widthWindown(newval) {
+      if (newval < 578) {
+        this.showFields = false;
+      }
+    },
   },
 };
 </script>
 <style scoped>
+
+.sidebar-normal {
+  border-color: #4ba64f;
+  background-color: #4ba64f;
+}
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+
+@media (max-width: 60em) {
+  body {
+    padding: 3rem;
+  }
+}
+
+@media (max-width: 60em) {
+  .grid {
+    grid-gap: 3rem;
+  }
+}
+.grid__item {
+  background-color: #fff;
+  border-radius: 0.4rem;
+  overflow: hidden;
+  box-shadow: 0 3rem 6rem rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: 0.2s;
+}
+.grid__item:hover {
+  transform: translateY(-0.9%);
+  box-shadow: 0 4rem 8rem rgba(0, 0, 0, 0.2);
+}
+
+.card__img {
+  display: block;
+  width: 100%;
+  /* height: 18rem; */
+  object-fit: cover;
+}
+.card__content {
+  padding: 1rem 1rem;
+}
+/* .card__header {
+  font-size: 3rem;
+  font-weight: 500;
+  color: #0d0d0d;
+  margin-bottom: 1.5rem;
+} */
+.card__text {
+  /* font-size: 1.5rem; */
+  letter-spacing: 0.7;
+  line-height: 1.8;
+  color: #3d3d3d;
+  margin-bottom: 2.5rem;
+}
+.card__btn {
+  /* display: block; */
+  width: 50%;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+  color: #138f51;
+  background-color: #caf1c5;
+  border: none;
+  border-radius: 0.4rem;
+  transition: 0.2s;
+  cursor: pointer;
+}
+.card__btn span {
+  margin-left: 1rem;
+  transition: 0.2s;
+}
+.card__btn:hover,
+.card__btn:active {
+  background-color: #dce4ff;
+}
+.card__btn:hover span,
+.card__btn:active span {
+  margin-left: 1.5rem;
+}
 </style>
+<!-- <div class="grid__item">
+                  <div class="card">
+                    <img
+                      class="card__img"
+                      :src="activity.image"
+                      alt="Snowy Mountains"
+                    />
+                    <div class="card__content text-center">
+                      <h3 class="card__header">A starry night</h3>
+                      <p class="card__text">
+                        Look up at the night sky, and find yourself in the
+                        amazing mountain range of Aspen.
+                      </p>
+                      <button class="btn-primary text-center" id="detail-btn">
+                        Explore<span>&rarr;</span>
+                      </button>
+                    </div>
+                  </div>
+                </div> -->

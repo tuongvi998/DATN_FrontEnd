@@ -12,7 +12,7 @@
               :deleteUser="deleteGroup"
               :listHeader="listHeader"
               :listColumns="listColumns"
-              
+              :isUSer="true"
             >
             <!-- <td class="tb-content">{{ user.id }}</td>
             <td class="tb-content">{{ user.user_id }}</td>

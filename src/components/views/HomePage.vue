@@ -18,7 +18,7 @@
       </div>
       <div class="section section-activity-list">
         <div class="contai">
-          <activity-list :list="upcoming_activity"></activity-list>
+          <upcoming-activity-list :list="upcoming_activity"></upcoming-activity-list>
         </div>
       </div>
       <div class="section section-download pt-4" id="downloadSection">
@@ -85,14 +85,14 @@
 </template>
 
 <script>
-import { LoginCard, HelpProcess, ActivityList, Contact } from "@/components";
+import { LoginCard, HelpProcess, UpcomingActivityList, Contact } from "@/components";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
     HelpProcess,
-    ActivityList,
     Contact,
+    UpcomingActivityList,
   },
   name: "index",
   bodyClass: "index-page",

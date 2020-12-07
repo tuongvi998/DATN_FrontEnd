@@ -14,6 +14,8 @@ import MaterialDashboard from "./material-dashboard";
 import Chartist from "chartist";
 import Notifications from 'vue-notification';
 import VueConfirmDialog from 'vue-confirm-dialog';
+import VueSidebarMenu from 'vue-sidebar-menu'
+import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 
 
 Vue.use(VueConfirmDialog);
@@ -25,6 +27,8 @@ Vue.use(MaterialKit);
 Vue.use(MaterialDashboard);
 Vue.use(GlobalComponents);
 Vue.use(GlobalDirectives);
+Vue.use(VueSidebarMenu);
+// Vue.component(Modal);
 Vue.prototype.$Chartist = Chartist;
 
 

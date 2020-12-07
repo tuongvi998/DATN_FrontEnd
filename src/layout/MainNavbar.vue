@@ -46,7 +46,7 @@
                         slot="title"
                         class="md-button md-button-link md-white md-simple dropdown-toggle"
                         data-toggle="dropdown"
-                        @click="checkToken"
+                        @click="getNameLink"
                       >
                         <p>{{ user_name }}</p>
                       </md-button>
@@ -142,13 +142,13 @@ export default {
     logoutFun() {
       return this.$store.dispatch("logout");
     },
-    checkToken(){
+    getNameLink(){
       const token = localStorage.getItem("access_token");
         if(token == null){
           console.log('null');
         }else{
           const str = VueJwtDecode.decode(token);
-        console.log('token   ', str.sub);
+        console.log('token', str.sub);
         }
       this.name = localStorage.getItem("user_name");
       var AccentsMap = [

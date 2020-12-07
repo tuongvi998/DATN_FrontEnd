@@ -6,8 +6,10 @@ const state = () => ({
     list_groups: [],
     upcoming_activity: [],
     list_field: [],
+    list_field_controler: [],
     list_activity_joined: [],
     list_activity_register: [],
+    list_all_upcoming_activity: [],
 });
 
 const getters = {
@@ -20,8 +22,14 @@ const getters = {
     getUpcomingActivity: (state) => {
         return state.upcoming_activity;
     },
+    getAllUpcomingActivity: (state) => {
+        return state.list_all_upcoming_activity;
+    },
     getListField: (state) => {
         return state.list_field;
+    },
+    getListFieldController: (state) => {
+        return state.list_field_controler;
     },
     getActivityJoined: (state) => {
         return state.list_activity_joined;
@@ -52,6 +60,9 @@ const mutations = {
     showUpcomingActivity(state, upcoming_activity) {
         state.upcoming_activity = upcoming_activity;
     },
+    showAllUpcomingActivity(state, list_all_upcoming_activity) {
+        state.list_all_upcoming_activity = list_all_upcoming_activity;
+    },
     showActivityJoined(state, list_activity_joined) {
         state.list_activity_joined = list_activity_joined;
     },
@@ -61,6 +72,13 @@ const mutations = {
     //fields
     showListField(state, list_field) {
         state.list_field = list_field;
+    },
+    showListFieldController(state, list_field) {
+        state.list_field_controler = list_field;
+    },
+    deleteField(state, id) {
+        var list = state.list_field_controler.filter((field) => field.id != id);
+        state.list_field_controler = list;
     },
 };
 const actions = {
@@ -117,8 +135,19 @@ const actions = {
         http
             .getNormal("/upcoming-activity")
             .then((response) => {
-                console.log(response.data.message);
+                // console.log(response.data.message);
                 commit("showUpcomingActivity", response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    showAllUpcomingActivity({ commit }) {
+        http
+            .getNormal("/all-upcoming-activity")
+            .then((response) => {
+                // console.log(response.data.message);
+                commit("showAllUpcomingActivity", response.data.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -149,8 +178,40 @@ const actions = {
         http
             .getNormal("/all-fields")
             .then((response) => {
-                console.log(response.data.message);
+                // console.log(response.data.message);
                 commit("showListField", response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    showListFieldController({ commit }) {
+        http
+            .getNormal("/admin/fields")
+            .then((response) => {
+                // console.log(response.data.message);
+                commit("showListFieldController", response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    createField({ dispatch }, payload) {
+        http.postNormal("/admin/field", payload)
+            .then(response => {
+                // console.log(response);
+                dispatch("showListFieldController");
+            }).catch(error => {
+                console.log(error);
+            })
+    },
+    deleteField({ dispatch }, id) {
+        http
+            .deleteNormal("/admin/field", id)
+            .then((response) => {
+                // console.log(response);
+                // commit('deleteVolunteer', id);
+                dispatch("showListFieldController");
             })
             .catch((error) => {
                 console.log(error);
