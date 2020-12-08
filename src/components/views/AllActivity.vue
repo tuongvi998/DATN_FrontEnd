@@ -13,8 +13,8 @@
                   :key="field.index"
                 >
                   <router-link
-                   @click="getActivity(field.id)"
-                    :to="{ name: 'field-name', params: {fieldname: (field.name.normalize('NFD').replace(/\s+/g, '-').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D')) } }"
+                   @click="hideSidebar(field.name )"
+                    :to="{ name: 'field-name', params:  {fieldname: (field.name.normalize('NFD').replace(/\s+/g, '-').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D')) } }"
                     class="md-list-item-router md-list-item-container md-button-clean"
                   >
                     <div class="md-list-item-content md-ripple">
@@ -28,8 +28,7 @@
           </div>
           <div class="col-md-9 col-sm-9 col-12">
             <div class="container row bg-white pt-4 pb-4">
-              <!-- <activity-content></activity-content> -->
-              <activity-card :activity_list="listActivityByField"></activity-card>
+              <router-view></router-view>
             </div>
           </div>
         </div>
@@ -39,15 +38,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-import {ActivityCard} from "@/components";
-// import ActivityCard from '../Activity/ActivityCard.vue';
-// import ActivityContent from "../Activity/ListContent.vue";
+import { mapGetters, mapState } from "vuex";
+// import {ActivityCard} from "@/components";
+
 export default {
   components: {
     // ActivityCard
-    ActivityCard,
-    // ActivityContent
   },
   props: {},
   data() {
