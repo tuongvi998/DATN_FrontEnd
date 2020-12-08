@@ -24,7 +24,7 @@
             <md-list>
               <md-list-item
               >
-                <router-link :to="{name: 'all-activity'}" tag="a">Hoạt động</router-link>
+                <router-link :to="{name: 'activity'}" tag="a">Hoạt động</router-link>
               </md-list-item>
               <md-list-item
               >

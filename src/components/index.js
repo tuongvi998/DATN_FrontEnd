@@ -20,7 +20,6 @@ import HelpProcess from './HelpProcess.vue';
 import UpcomingActivityList from './UpcomingActivityList.vue';
 import FieldList from './FieldList.vue';
 import Contact from './Contact.vue';
-import ActivityCard from './ActivityCard.vue';
 export {
     DropDown,
     Parallax,
@@ -44,5 +43,4 @@ export {
     UpcomingActivityList,
     FieldList,
     Contact,
-    ActivityCard
 };

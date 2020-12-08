@@ -10,6 +10,7 @@ import Register from "../components/views/Register.vue";
 import Home from "../components/views/HomePage.vue";
 import UserPage from "../components/views/UserPage.vue";
 import AllActivity from "../components/views/AllActivity.vue";
+import ActivityDetail from "../components/views/ActivityDetail.vue";
 //
 import GroupLayout from "../components/views/GroupLayout.vue";
 import DashboardLayout from "../components/views/DashboardLayout.vue";
@@ -22,7 +23,7 @@ import UpgradeToPRO from "../components/Dashboard/UpgradeToPRO.vue";
 import UserList from "../components/Dashboard/UserList.vue";
 import GroupList from "../components/Dashboard/GroupList.vue";
 import FieldList from "../components/Dashboard/FieldList.vue";
-import ActivityCard from "../components/ActivityCard.vue";
+import ActivityCard from "../components/Activity/ActivityCard.vue";
 Vue.use(Router);
 
 const router = new Router({
@@ -57,7 +58,7 @@ const router = new Router({
         {
             path: "/login",
             name: "login",
-            components: { default: Login, footer: MainFooter },
+            components: { default: Login },
             // props: {
             //     header: { colorOnScroll: 400 },
             // },
@@ -65,7 +66,7 @@ const router = new Router({
         {
             path: "/register",
             name: "register",
-            components: { default: Register, footer: MainFooter },
+            components: { default: Register },
             // props: {
             //     header: { colorOnScroll: 400 },
             // },
@@ -81,8 +82,8 @@ const router = new Router({
         },
         {
             path: "/hoat-dong",
-            name: "all-activity",
-            redirect: '/hoat-dong',
+            name: "activity",
+            redirect: '/hoat-dong/tat-ca',
             components: {
                 default: AllActivity,
                 header: MainNavbar,
@@ -93,7 +94,7 @@ const router = new Router({
                 footer: { backgroundColor: "black" },
             },
             children: [{
-                    path: "/",
+                    path: "/hoat-dong/tat-ca",
                     name: "all-activity",
                     component: ActivityCard
                 },
@@ -105,6 +106,14 @@ const router = new Router({
             ],
         },
         {
+            path: "/hoat-dong/chi-tiet/:id",
+            name: "activity-detail",
+            components: { default: ActivityDetail, header: MainNavbar, footer: MainFooter },
+            props: {
+                header: { colorOnScroll: 400 },
+                footer: { backgroundColor: "black" },
+            },
+        }, {
             path: "/group",
             component: GroupLayout,
             redirect: "group/dashboard",
