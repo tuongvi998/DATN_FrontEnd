@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters,mapActions, mapState } from "vuex";
 // import {ActivityCard} from "@/components";
 
 export default {
@@ -57,44 +57,30 @@ export default {
     };
   },
   methods: {
-    hideSidebar(name) {
-      console.log("asdas");
-      var AccentsMap = [
-        "aàảãáạăằẳẵắặâầẩẫấậ",
-        "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
-        "dđ",
-        "DĐ",
-        "eèẻẽéẹêềểễếệ",
-        "EÈẺẼÉẸÊỀỂỄẾỆ",
-        "iìỉĩíị",
-        "IÌỈĨÍỊ",
-        "oòỏõóọôồổỗốộơờởỡớợ",
-        "OÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ",
-        "uùủũúụưừửữứự",
-        "UÙỦŨÚỤƯỪỬỮỨỰ",
-        "yỳỷỹýỵ",
-        "YỲỶỸÝỴ",
-      ];
-      for (var i = 0; i < AccentsMap.length; i++) {
-        var re = new RegExp("[" + AccentsMap[i].substr(1) + "]", "g");
-        var char = AccentsMap[i][0];
-        name = name.replace(re, char);
-      }
-      this.fieldname_link = name.replace(/\s+/g, "-");
-      console.log(this.fieldname_link)
+    getActivity(id) {
+      console.log(id);
+      return this.showActivityByField({
+        id: id
+      });
     },
   },
   computed: {
     ...mapGetters({
       listField: "getListField",
       listAllUpcomingActivity: "getAllUpcomingActivity",
+      listActivityByField: "getListAvtivityByField"
     }),
   },
   created() {
     this.$store.dispatch("showListField");
     this.$store.dispatch("showAllUpcomingActivity");
-    this.activityList = this.listAllUpcomingActivity;
+    // this.activityList = this.listAllUpcomingActivity;
     console.log(this.listField);
+  },
+  methods: {
+    ...mapActions({
+      showActivityByField: "showActivityByField"
+    })
   },
   watch: {
     widthWindown(newval) {

@@ -7,8 +7,7 @@
         </div>
         <h5>Tài trợ</h5>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipis purus efficitur eget.
-          Morbi sagittis mi eros porttitor auctor dui, in bibendum.
+          Hãy chung tay bằng cả vật chất lẫn tinh thần để chung tôi có thể thực hiện nhiều hơn các hoạt động tình nguyện.
         </p>
       </div>
       <div class="col-md-4 col-sm-12 help-process">
@@ -17,8 +16,7 @@
         </div>
         <h5>Đăng ký tình nguyện viên</h5>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipis purus efficitur eget.
-          Morbi sagittis mi eros porttitor auctor dui, in bibendum.
+          Hãy cũng đồng hành với chúng tôi, chung tay giúp đỡ cho xã hội ngày càng tốt đẹp hơn!
         </p>
       </div>
       <div class="col-md-4 col-sm-12 help-process">
@@ -27,8 +25,8 @@
         </div>
         <h5>Đăng ký tổ chức</h5>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipis purus efficitur eget.
-          Morbi sagittis mi eros porttitor auctor dui, in bibendum.
+          Đăng ký để có thể thực hiện nhiều hơn những hoạt động thiết thực, giúp đỡ cộng đồng. Mang các thông tin đến
+          gần với mọi người hơn.
         </p>
       </div>
     </div>

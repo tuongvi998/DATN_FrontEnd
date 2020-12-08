@@ -65,10 +65,10 @@ const router = new Router({
         {
             path: "/register",
             name: "register",
-            components: { default: Register, header: MainNavbar, footer: MainFooter },
-            props: {
-                header: { colorOnScroll: 400 },
-            },
+            components: { default: Register, footer: MainFooter },
+            // props: {
+            //     header: { colorOnScroll: 400 },
+            // },
         },
         {
             path: "/profile",
@@ -109,10 +109,16 @@ const router = new Router({
             component: GroupLayout,
             redirect: "group/dashboard",
             children: [{
-                path: "dashboard",
-                name: "Dashboard",
-                component: Dashboard,
-            }, ],
+                    path: "dashboard",
+                    name: "GroupDashboard",
+                    component: Dashboard,
+                },
+                // {
+                //     path: "activities",
+                //     name: "GroupActivity",
+                //     component: GroupActivity
+                // }
+            ],
         },
         {
             path: "/user/:username",

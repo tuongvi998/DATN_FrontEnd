@@ -5,6 +5,8 @@
     <side-bar
       :sidebar-item-color="sidebarBackground"
       :sidebar-background-image="sidebarBackgroundImage"
+      :imgLogo="imgLogo" :title="title"
+      :showLogo="true"
     >
       <!-- <mobile-menu slot="content"></mobile-menu> -->
       <sidebar-link to="/group/dashboard">
@@ -72,8 +74,10 @@ export default {
   },
   data() {
     return {
-      sidebarBackground: "green",
-      sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg")
+     sidebarBackground: "green",
+      title: "Vue MD",
+      imgLogo: require("@/assets/img/vue-logo.png"),
+      sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg"),
     };
   }
 };

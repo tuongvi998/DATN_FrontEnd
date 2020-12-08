@@ -12,7 +12,7 @@
               :deleteUser="deleteVolunteer"
               :listHeader="listHeader"
               :listColumns="listColumns"
-              :isUSer="true"
+              :isUser="true"
             >
             </simple-table>
           </md-card-content>
