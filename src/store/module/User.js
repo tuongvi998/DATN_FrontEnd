@@ -10,6 +10,7 @@ const state = () => ({
     list_activity_joined: [],
     list_activity_register: [],
     list_all_upcoming_activity: [],
+    list_activity_by_field: [],
 });
 
 const getters = {
@@ -30,6 +31,9 @@ const getters = {
     },
     getListFieldController: (state) => {
         return state.list_field_controler;
+    },
+    getListAvtivityByField: (state) => {
+        return state.list_activity_by_field;
     },
     getActivityJoined: (state) => {
         return state.list_activity_joined;
@@ -69,6 +73,9 @@ const mutations = {
     showActivityRegister(state, list_activity_register) {
         state.list_activity_register = list_activity_register;
     },
+    showActivityByField(state, list_activity_by_field) {
+        state.list_activity_by_field = list_activity_by_field;
+    },
     //fields
     showListField(state, list_field) {
         state.list_field = list_field;
@@ -85,7 +92,7 @@ const actions = {
     //volunteer
     showListVolunteer({ commit }) {
         http
-            .getNormal("/admin/list-all-volunteers")
+            .getNormal("/admin/volunteers")
             .then((response) => {
                 // console.log(response.data.message);
                 commit("showListVolunteer", response.data.data);
@@ -97,7 +104,7 @@ const actions = {
 
     deleteVolunteer({ dispatch }, id) {
         http
-            .deleteNormal("/admin/delete-volunteer", id)
+            .deleteNormal("/admin/volunteer", id)
             .then((response) => {
                 console.log(response);
                 dispatch("showListVolunteer");
@@ -109,7 +116,7 @@ const actions = {
     //group
     showListGroup({ commit }) {
         http
-            .getNormal("/admin/list-all-groups")
+            .getNormal("/groups")
             .then((response) => {
                 console.log(response.data.message);
                 commit("showListGroup", response.data.data);
@@ -120,7 +127,7 @@ const actions = {
     },
     deleteGroup({ dispatch }, id) {
         http
-            .deleteNormal("/admin/delete-group", id)
+            .deleteNormal("/admin/group", id)
             .then((response) => {
                 console.log(response);
                 // commit('deleteVolunteer', id);
@@ -133,7 +140,7 @@ const actions = {
     //activitya
     showUpcomingActivity({ commit }) {
         http
-            .getNormal("/upcoming-activity")
+            .getNormal("/activity/upcoming-activity")
             .then((response) => {
                 // console.log(response.data.message);
                 commit("showUpcomingActivity", response.data.data);
@@ -144,7 +151,7 @@ const actions = {
     },
     showAllUpcomingActivity({ commit }) {
         http
-            .getNormal("/all-upcoming-activity")
+            .getNormal("/activity/all-upcoming-activity")
             .then((response) => {
                 // console.log(response.data.message);
                 commit("showAllUpcomingActivity", response.data.data);
@@ -173,10 +180,19 @@ const actions = {
                 console.log(error);
             });
     },
+    showActivityByField({ commit }, payload) {
+        http.getNormal("/activities/field", payload)
+            .then(response => {
+                commit("showActivityByField", response.data.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    },
     //field
     showListField({ commit }) {
         http
-            .getNormal("/all-fields")
+            .getNormal("/fields")
             .then((response) => {
                 // console.log(response.data.message);
                 commit("showListField", response.data.data);
@@ -197,13 +213,15 @@ const actions = {
             });
     },
     createField({ dispatch }, payload) {
-        http.postNormal("/admin/field", payload)
-            .then(response => {
+        http
+            .postNormal("/admin/field", payload)
+            .then((response) => {
                 // console.log(response);
                 dispatch("showListFieldController");
-            }).catch(error => {
-                console.log(error);
             })
+            .catch((error) => {
+                console.log(error);
+            });
     },
     deleteField({ dispatch }, id) {
         http

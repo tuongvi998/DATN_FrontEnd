@@ -31,7 +31,7 @@
               </md-button>
               <p slot="description" class="description">Or Be Classical</p> -->
               <!-- <md-field class="md-form-group" slot="inputs">
-                <md-icon>face</md-icon>
+                <md-icon> face</md-icon>
                 <label>First Name...</label>
                 <md-input v-model="firstname"></md-input>
               </md-field> -->
@@ -90,7 +90,7 @@ export default {
   props: {
     header: {
       type: String,
-      default: require("@/assets/img/profile_city.jpg")
+      default: require("@/assets/img/joinus_hand.jpg")
     }
   },
   computed: {

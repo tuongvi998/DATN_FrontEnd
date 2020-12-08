@@ -22,7 +22,7 @@ import UpgradeToPRO from "../components/Dashboard/UpgradeToPRO.vue";
 import UserList from "../components/Dashboard/UserList.vue";
 import GroupList from "../components/Dashboard/GroupList.vue";
 import FieldList from "../components/Dashboard/FieldList.vue";
-
+import GroupActivity from '../components/Group/GroupActivity.vue'
 Vue.use(Router);
 
 const router = new Router({
@@ -65,10 +65,10 @@ const router = new Router({
         {
             path: "/register",
             name: "register",
-            components: { default: Register, header: MainNavbar, footer: MainFooter },
-            props: {
-                header: { colorOnScroll: 400 },
-            },
+            components: { default: Register, footer: MainFooter },
+            // props: {
+            //     header: { colorOnScroll: 400 },
+            // },
         },
         {
             path: "/profile",
@@ -107,9 +107,13 @@ const router = new Router({
             redirect: "group/dashboard",
             children: [{
                 path: "dashboard",
-                name: "Dashboard",
+                name: "GroupDashboard",
                 component: Dashboard,
-            }, ],
+            }, {
+                path: "activities",
+                name: "GroupActivity",
+                component: GroupActivity
+            }],
         },
         {
             path: "/user/:username",

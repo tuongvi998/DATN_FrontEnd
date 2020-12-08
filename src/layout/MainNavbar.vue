@@ -2,7 +2,8 @@
   <md-toolbar id="toolbar" md-elevation="0" class="md-white md-absolute">
     <div class="md-toolbar-row md-collapse-lateral">
       <div class="md-toolbar-section-start">
-        <h3 class="md-title">Vue</h3>
+        <img id="nav-icon" :src="image" alt="">
+        
       </div>
       <div class="md-toolbar-section-end">
         <md-button
@@ -125,6 +126,7 @@ export default {
   props: {},
   data() {
     return {
+      image: require('@/assets/img/nav_icon.png'),
       extraNavClasses: "",
       toggledClass: false,
       user_name: localStorage.getItem("user_name"),
@@ -229,3 +231,10 @@ export default {
   },
 };
 </script>
+<style scoped>
+#nav-icon{
+   width: 48px;
+  height: 48px;
+  object-fit: cover;
+}
+</style>

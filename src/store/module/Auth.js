@@ -56,7 +56,7 @@ const actions = {
             });
     },
     showUserProfile({ commit }) {
-        http.getAuth("/auth/user-profile")
+        http.getAuth("/auth/user")
             .then((response) => {
                 // console.log("showUserProfile", response.data);
                 commit("showUserProfile", response.data);

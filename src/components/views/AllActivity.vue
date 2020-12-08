@@ -13,8 +13,8 @@
                   :key="field.index"
                 >
                   <router-link
-                   @click="hideSidebar(field.name )"
-                    :to="{ name: 'field-name', params: {fieldname: fieldname_link } }"
+                   @click="getActivity(field.id)"
+                    :to="{ name: 'field-name', params: {fieldname: (field.name.normalize('NFD').replace(/\s+/g, '-').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D')) } }"
                     class="md-list-item-router md-list-item-container md-button-clean"
                   >
                     <div class="md-list-item-content md-ripple">
@@ -28,7 +28,8 @@
           </div>
           <div class="col-md-9 col-sm-9 col-12">
             <div class="container row bg-white pt-4 pb-4">
-              <activity-card :activity_list="listAllUpcomingActivity"></activity-card>
+              <!-- <activity-content></activity-content> -->
+              <activity-card :activity_list="listActivityByField"></activity-card>
             </div>
           </div>
         </div>
@@ -38,12 +39,15 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import {ActivityCard} from "@/components";
-
+// import ActivityCard from '../Activity/ActivityCard.vue';
+// import ActivityContent from "../Activity/ListContent.vue";
 export default {
   components: {
-    ActivityCard
+    // ActivityCard
+    ActivityCard,
+    // ActivityContent
   },
   props: {},
   data() {
@@ -57,44 +61,30 @@ export default {
     };
   },
   methods: {
-    hideSidebar(name) {
-      console.log("asdas");
-      var AccentsMap = [
-        "aàảãáạăằẳẵắặâầẩẫấậ",
-        "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
-        "dđ",
-        "DĐ",
-        "eèẻẽéẹêềểễếệ",
-        "EÈẺẼÉẸÊỀỂỄẾỆ",
-        "iìỉĩíị",
-        "IÌỈĨÍỊ",
-        "oòỏõóọôồổỗốộơờởỡớợ",
-        "OÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ",
-        "uùủũúụưừửữứự",
-        "UÙỦŨÚỤƯỪỬỮỨỰ",
-        "yỳỷỹýỵ",
-        "YỲỶỸÝỴ",
-      ];
-      for (var i = 0; i < AccentsMap.length; i++) {
-        var re = new RegExp("[" + AccentsMap[i].substr(1) + "]", "g");
-        var char = AccentsMap[i][0];
-        name = name.replace(re, char);
-      }
-      this.fieldname_link = name.replace(/\s+/g, "-");
-      console.log(this.fieldname_link)
+    getActivity(id) {
+      console.log(id);
+      return this.showActivityByField({
+        id: id
+      });
     },
   },
   computed: {
     ...mapGetters({
       listField: "getListField",
       listAllUpcomingActivity: "getAllUpcomingActivity",
+      listActivityByField: "getListAvtivityByField"
     }),
   },
   created() {
     this.$store.dispatch("showListField");
     this.$store.dispatch("showAllUpcomingActivity");
-    this.activityList = this.listAllUpcomingActivity;
+    // this.activityList = this.listAllUpcomingActivity;
     console.log(this.listField);
+  },
+  methods: {
+    ...mapActions({
+      showActivityByField: "showActivityByField"
+    })
   },
   watch: {
     widthWindown(newval) {
