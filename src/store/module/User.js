@@ -11,6 +11,8 @@ const state = () => ({
     list_activity_register: [],
     list_all_upcoming_activity: [],
     list_activity_by_field: [],
+    activity_detail: [],
+    isRegister: null,
 });
 
 const getters = {
@@ -41,6 +43,12 @@ const getters = {
     getActivityRegister: (state) => {
         return state.list_activity_register;
     },
+    getActivityDetail: (state) => {
+        return state.activity_detail;
+    },
+    getIsRegister: (state) => {
+        return state.isRegister;
+    }
 };
 
 const mutations = {
@@ -51,6 +59,9 @@ const mutations = {
     deleteVolunteer(state, id) {
         var list = state.list_volunteer.filter((volunteer) => volunteer.id != id);
         state.list_volunteer = list;
+    },
+    showIsRegister(state, isRegister) {
+        state.isRegister = isRegister;
     },
     //groups
     showListGroup(state, list_groups) {
@@ -75,6 +86,9 @@ const mutations = {
     },
     showActivityByField(state, list_activity_by_field) {
         state.list_activity_by_field = list_activity_by_field;
+    },
+    showActivityDetail(state, activity_detail) {
+        state.activity_detail = activity_detail;
     },
     //fields
     showListField(state, list_field) {
@@ -113,6 +127,17 @@ const actions = {
                 console.log(error);
             });
     },
+
+    showIsRegister({ commit }, payload) {
+        http.getNormal("/volunteer/check-activity-register", payload)
+            .then(response => {
+                commit('showIsRegister', response.data.data)
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    },
+
     //group
     showListGroup({ commit }) {
         http
@@ -188,6 +213,15 @@ const actions = {
             .catch(error => {
                 console.log(error);
             });
+    },
+    showActivityDetail({ commit }, payload) {
+        http.getNormal("/activity/detail", payload)
+            .then(response => {
+                commit("showActivityDetail", response.data.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
     },
     //field
     showListField({ commit }) {

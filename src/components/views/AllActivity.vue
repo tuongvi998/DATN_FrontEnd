@@ -13,12 +13,10 @@
                   :key="field.index"
                 >
                   <router-link
-                   @click="hideSidebar(field.name )"
                     :to="{ name: 'field-name', params:  {fieldname: (field.name.normalize('NFD').replace(/\s+/g, '-').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D')) } }"
                     class="md-list-item-router md-list-item-container md-button-clean"
                   >
                     <div class="md-list-item-content md-ripple">
-                      <!-- <md-icon>{{ link.icon }}</md-icon> -->
                       <p>{{ field.name }}</p>
                     </div>
                   </router-link>
@@ -38,7 +36,7 @@
 </template>
 
 <script>
-import { mapGetters,mapActions, mapState } from "vuex";
+import { mapGetters,mapActions } from "vuex";
 // import {ActivityCard} from "@/components";
 
 export default {
@@ -57,18 +55,12 @@ export default {
     };
   },
   methods: {
-    getActivity(id) {
-      console.log(id);
-      return this.showActivityByField({
-        id: id
-      });
-    },
   },
   computed: {
     ...mapGetters({
       listField: "getListField",
       listAllUpcomingActivity: "getAllUpcomingActivity",
-      listActivityByField: "getListAvtivityByField"
+      // listActivityByField: "getListAvtivityByField"
     }),
   },
   created() {

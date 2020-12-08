@@ -2,6 +2,7 @@
   <div id="material-kit">
     <vue-confirm-dialog></vue-confirm-dialog>
     <notifications class="notifi mr-3 mt-5" group="foo" />
+    <notifications position="top center" group="noti"/>
     <div :class="{ 'nav-open': NavbarStore.showNavbar }">
       <router-view name="header" />
       <div>

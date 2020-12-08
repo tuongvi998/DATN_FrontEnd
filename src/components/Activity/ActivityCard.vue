@@ -2,7 +2,7 @@
   <div>
     <div
       class="col-md-12 col-sm-12 col-12 mt-5 d-flex text-center"
-      v-for="activity in activity_list"
+      v-for="activity in listAllUpcomingActivity"
       :key="activity.index"
     >
       <div class="card-image p-1">
@@ -16,9 +16,9 @@
         <div id="activity-content">
           {{ activity.content }}
         </div>
-        <button class="btn-primary text-center" id="detail-btn">
-          Explore<span>&rarr;</span>
-        </button>
+        <router-link :to="{name: 'activity-detail', params: {id: activity.id}}"><button class="btn-primary text-center" @click="detail" id="detail-btn">
+          xem them<span>&rarr;</span>
+        </button></router-link>
       </div>
     </div>
   </div>
@@ -34,8 +34,18 @@ export default {
       require: true,
     },
   },
+computed: {
+    ...mapGetters({
+      listAllUpcomingActivity: "getAllUpcomingActivity",
+    }),
+  },
+  methods:{
+    detail(){
+      alert('hdajdas')
+    }
+  },
   created() {
-    // this.$store.dispatch("showAllUpcomingActivity");
+    this.$store.dispatch("showAllUpcomingActivity");
   },
 };
 </script>

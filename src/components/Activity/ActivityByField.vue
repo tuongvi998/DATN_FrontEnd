@@ -2,7 +2,7 @@
   <div>
     <div
       class="col-md-12 col-sm-12 col-12 mt-5 d-flex text-center"
-      v-for="activity in listAllUpcomingActivity"
+      v-for="activity in listAvtivityByField"
       :key="activity.index"
     >
       <div class="card-image p-1">
@@ -29,18 +29,18 @@ import { mapGetters, mapState } from "vuex";
 export default {
   name: "activity-card",
   props: {
-    activity_list: {
+    listAllUpcomingActivity: {
       type: Array,
       require: true,
     },
   },
 computed: {
     ...mapGetters({
-      listAllUpcomingActivity: "getAllUpcomingActivity",
+      listAvtivityByField: "getListAvtivityByField",
     }),
   },
   created() {
-    this.$store.dispatch("showAllUpcomingActivity");
+    // this.$store.dispatch("showActivityByField");
   },
 };
 </script>
