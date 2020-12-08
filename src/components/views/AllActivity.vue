@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters,mapActions, mapState } from "vuex";
 // import {ActivityCard} from "@/components";
 
 export default {

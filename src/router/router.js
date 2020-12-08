@@ -109,14 +109,16 @@ const router = new Router({
             component: GroupLayout,
             redirect: "group/dashboard",
             children: [{
-                path: "dashboard",
-                name: "GroupDashboard",
-                component: Dashboard,
-            }, {
-                path: "activities",
-                name: "GroupActivity",
-                component: GroupActivity
-            }],
+                    path: "dashboard",
+                    name: "GroupDashboard",
+                    component: Dashboard,
+                },
+                // {
+                //     path: "activities",
+                //     name: "GroupActivity",
+                //     component: GroupActivity
+                // }
+            ],
         },
         {
             path: "/user/:username",
