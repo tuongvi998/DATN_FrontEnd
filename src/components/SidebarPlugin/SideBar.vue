@@ -5,24 +5,12 @@
     :data-image="sidebarBackgroundImage"
     :style="sidebarStyle"
   >
-    <div class="logo">
-      <a href="#" class="simple-text logo-mini">
-        <div class="logo-img">
-          <img :src="imgLogo" alt="" />
-        </div>
-      </a>
-
-      <a
-        href="https://www.creative-tim.com/product/vue-material-dashboard"
-        target="_blank"
-        class="simple-text logo-normal"
-      >
-        {{ title }}
-      </a>
-    </div>
+    <slot name="logo" v-if="showLogo" >
+      <logo :imgLogo="imgLogo" :title="title"></logo>
+    </slot>
     <div class="sidebar-wrapper">
       <slot name="content"></slot>
-      <md-list class="nav">
+      <md-list class="nav" :class="sidebar_color">
         <!--By default vue-router adds an active class to each route link. This way the links are colored when clicked-->
         <slot>
           <sidebar-link
@@ -39,31 +27,32 @@
 </template>
 <script>
 import SidebarLink from "./SidebarLink.vue";
-
+import Logo from "./Logo.vue";
 export default {
   components: {
-    SidebarLink
+    SidebarLink,
+    Logo
   },
   props: {
+    showLogo: {
+      type: Boolean
+    },
+    sidebar_color:{
+      type: String,
+    },
     title: {
       type: String,
-      default: "Vue MD"
     },
     sidebarBackgroundImage: {
       type: String,
-      default: require("@/assets/img/sidebar-2.jpg")
     },
     imgLogo: {
       type: String,
-      default: require("@/assets/img/vue-logo.png")
     },
     sidebarItemColor: {
       type: String,
       default: "green",
-      validator: value => {
-        let acceptedValues = ["", "purple", "blue", "green", "orange", "red"];
-        return acceptedValues.indexOf(value) !== -1;
-      }
+
     },
     sidebarLinks: {
       type: Array,

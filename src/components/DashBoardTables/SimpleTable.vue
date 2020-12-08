@@ -20,6 +20,7 @@
             @click="toggle(user.id, user.gender)"
             :class="{ opened: opened.includes(user.id) }"
             class="text-warning tb-content"
+            v-if="isUser"
           >
             <i
               v-if="!opened.includes(user.id)"
@@ -30,14 +31,10 @@
               class="far fa-hand-point-down select-row"
             ></i>
           </td>
-          <!-- <td class="tb-content">{{ user.id }}</td>
-          <td class="tb-content">{{ user.user_id }}</td>
-          <td class="tb-content">{{ user.name }}</td>
-          <td class="tb-content">{{ user.email }}</td> -->
           <td class="tb-content" v-for="col in listColumns" :key="col">{{ user[col] }}</td>
           <td>
             <button
-              @click="deleUser(user.user_id, user.name)"
+              @click="deleUser(user.id, user.name, isUser)"
               class="btn btn-outline-danger tb-content"
               type="button"
             >
@@ -115,8 +112,9 @@ export default {
         this.opened.push(id);
       }
     },
-    deleUser(user_id, name) {
-      this.$confirm({
+    deleUser(user_id, name, isUser) {
+      if(isUser){
+        this.$confirm({
         title: "Xoá tài khoản?",
         message: "Bạn có muốn xoá tài khoản " + name + " ?",
         button: {
@@ -137,8 +135,31 @@ export default {
             return this.deleteUser(user_id);
           }
         },
+      })
+      }else{
+        this.$confirm({
+        title: "Xoá lĩnh vực hoạt động?",
+        message: "Bạn có muốn xoá lĩnh vực " + name + " ?",
+        button: {
+          yes: "Có",
+          no: "Không",
+        },
+        callback: (confirm) => {
+          if (confirm == true) {
+            this.$notify({
+          group: "foo",
+          type: "success",
+          title: "Xoá lĩnh vực hoạt động",
+          text: "Xoá thành công!",
+          duration: 800,
+          speed: 700,
+          width: 1000,
+        });
+            return this.deleteUser(user_id);
+          }
+        },
       });
-      // return this.deleteUser(user_id);
+      }
     },
   },
   // props: ["listUser"]
@@ -146,7 +167,8 @@ export default {
     listUser: Array,
     deleteUser: Function,
     listHeader: Array,
-    listColumns: Array
+    listColumns: Array,
+    isUser: Boolean
   },
 };
 </script>

@@ -4,8 +4,8 @@
       <div class="md-layout">
         <div class="md-layout-item">
           <div class="brand">
-            <h1>Vue Material Kit</h1>
-            <h3>A Badass Vue.js UI Kit made with Material Design.</h3>
+            <h1>Volunteer</h1>
+            <h3>DATN</h3>
           </div>
         </div>
       </div>
@@ -18,7 +18,7 @@
       </div>
       <div class="section section-activity-list">
         <div class="contai">
-          <activity-list :list="upcoming_activity"></activity-list>
+          <upcoming-activity-list :list="upcoming_activity"></upcoming-activity-list>
         </div>
       </div>
       <div class="section section-download pt-4" id="downloadSection">
@@ -41,8 +41,9 @@
           <div
             class="md-layout-item md-size-50 md-small-size-100 mx-auto text-center"
           >
-            <md-button href="/register" class="md-success"
-              >ĐĂNG KÝ NGAY</md-button
+            <md-button class="md-success"
+              ><router-link to="/register">ĐĂNG KÝ NGAY</router-link>
+              </md-button
             ><br />
           </div>
         </div>
@@ -84,14 +85,14 @@
 </template>
 
 <script>
-import { LoginCard, HelpProcess, ActivityList, Contact } from "@/components";
+import { LoginCard, HelpProcess, UpcomingActivityList, Contact } from "@/components";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
     HelpProcess,
-    ActivityList,
     Contact,
+    UpcomingActivityList,
   },
   name: "index",
   bodyClass: "index-page",
@@ -166,6 +167,7 @@ export default {
   },
   created() {
     this.$store.dispatch("showUpcomingActivity");
+    // console.log(this.upcoming_activity);
   },
 };
 </script>

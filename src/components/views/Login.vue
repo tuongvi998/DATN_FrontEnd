@@ -117,7 +117,7 @@ export default {
       disableNotify: "disableNotify"
     }),
     loginFun() {
-      console.log(this.email + 'v ' + this.password)
+      // console.log(this.email + 'v ' + this.password)
       if (this.email == '' && this.password == '') {
         this.checkEmail = false;
         this.checkPassword = false;

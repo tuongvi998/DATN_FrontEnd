@@ -17,9 +17,10 @@ import NavTabsTable from "./DashBoardTables/NavTabsTable.vue";
 import OrderedTable from "./DashBoardTables/OrderedTable.vue";
 import Carousel from './Carousel.vue';
 import HelpProcess from './HelpProcess.vue';
-import ActivityList from './ActivityList.vue';
+import UpcomingActivityList from './UpcomingActivityList.vue';
 import FieldList from './FieldList.vue';
 import Contact from './Contact.vue';
+import ActivityCard from './ActivityCard.vue';
 export {
     DropDown,
     Parallax,
@@ -40,7 +41,8 @@ export {
     SimpleTable,
     Carousel,
     HelpProcess,
-    ActivityList,
+    UpcomingActivityList,
     FieldList,
-    Contact
+    Contact,
+    ActivityCard
 };

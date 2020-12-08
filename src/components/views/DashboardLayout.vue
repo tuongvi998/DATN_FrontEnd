@@ -5,7 +5,10 @@
     <side-bar
       :sidebar-item-color="sidebarBackground"
       :sidebar-background-image="sidebarBackgroundImage"
+      :imgLogo="imgLogo" :title="title"
+      :showLogo="true"
     >
+      <logo></logo>
       <!-- <mobile-menu slot="content"></mobile-menu> -->
       <sidebar-link to="/admin/dashboard">
         <md-icon>dashboard</md-icon>
@@ -19,9 +22,9 @@
         <md-icon>group</md-icon>
         <p>Tổ chức</p>
       </sidebar-link>
-      <sidebar-link to="/admin/table">
+      <sidebar-link to="/admin/fields">
         <md-icon>content_paste</md-icon>
-        <p>Thể loại</p>
+        <p>Lĩnh Vực hoạt động</p>
       </sidebar-link>
       <sidebar-link to="/admin/typography">
         <md-icon>library_books</md-icon>
@@ -44,11 +47,11 @@
     <div class="main-panel">
       <top-navbar></top-navbar>
 
-      <fixed-plugin
+      <!-- <fixed-plugin
         :color.sync="sidebarBackground"
         :image.sync="sidebarBackgroundImage"
       >
-      </fixed-plugin>
+      </fixed-plugin> -->
 
       <dashboard-content> </dashboard-content>
 
@@ -62,7 +65,7 @@ import TopNavbar from "../Dashboard/TopNavbar";
 import ContentFooter from "../Dashboard/ContentFooter.vue";
 import DashboardContent from "../Dashboard/Content.vue";
 // import MobileMenu from "./Dashboard/MobileMenu.vue";
-import FixedPlugin from "../Dashboard/FixedPlugin.vue";
+// import FixedPlugin from "../Dashboard/FixedPlugin.vue";
 import UserList from "../Dashboard/UserList.vue";
 
 export default {
@@ -71,13 +74,15 @@ export default {
     DashboardContent,
     ContentFooter,
     // MobileMenu,
-    FixedPlugin,
+    // FixedPlugin,
     // UserList
   },
   data() {
     return {
       sidebarBackground: "green",
-      sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg")
+      title: "Vue MD",
+      imgLogo: require("@/assets/img/vue-logo.png"),
+      sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg"),
     };
   }
 };

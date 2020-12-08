@@ -12,13 +12,12 @@ import GlobalDirectives from "./globalDirectives";
 // MaterialDashboard plugin
 import MaterialDashboard from "./material-dashboard";
 import Chartist from "chartist";
-
 import Notifications from 'vue-notification';
-import VueConfirmDialog from 'vue-confirm-dialog'
-import Vuesax from 'vuesax';
-import 'vuesax/dist/vuesax.css';
+import VueConfirmDialog from 'vue-confirm-dialog';
+import VueSidebarMenu from 'vue-sidebar-menu'
+import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 
-Vue.use(Vuesax)
+
 Vue.use(VueConfirmDialog);
 Vue.component('vue-confirm-dialog', VueConfirmDialog.default);
 Vue.use(Notifications);
@@ -28,17 +27,18 @@ Vue.use(MaterialKit);
 Vue.use(MaterialDashboard);
 Vue.use(GlobalComponents);
 Vue.use(GlobalDirectives);
+Vue.use(VueSidebarMenu);
+// Vue.component(Modal);
 Vue.prototype.$Chartist = Chartist;
 
 
 // //vue boostrap : 
-// import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
-// import 'bootstrap/dist/css/bootstrap.css';
-// import 'bootstrap-vue/dist/bootstrap-vue.css';
-// // Install BootstrapVue
-// Vue.use(BootstrapVue)
-//     // Optionally install the BootstrapVue icon components plugin
-// Vue.use(IconsPlugin)
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+Vue.use(BootstrapVue)
+    //     // Optionally install the BootstrapVue icon components plugin
+    // Vue.use(IconsPlugin)
 
 const token = localStorage.getItem("token");
 if (token) {
