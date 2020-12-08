@@ -2,7 +2,7 @@
   <div>
     <div
       class="col-md-12 col-sm-12 col-12 mt-5 d-flex text-center"
-      v-for="activity in activity_list"
+      v-for="activity in listAllUpcomingActivity"
       :key="activity.index"
     >
       <div class="card-image p-1">
@@ -34,9 +34,13 @@ export default {
       require: true,
     },
   },
-
+computed: {
+    ...mapGetters({
+      listAllUpcomingActivity: "getAllUpcomingActivity",
+    }),
+  },
   created() {
-    // this.$store.dispatch("showAllUpcomingActivity");
+    this.$store.dispatch("showAllUpcomingActivity");
   },
 };
 </script>

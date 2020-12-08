@@ -22,7 +22,7 @@ import UpgradeToPRO from "../components/Dashboard/UpgradeToPRO.vue";
 import UserList from "../components/Dashboard/UserList.vue";
 import GroupList from "../components/Dashboard/GroupList.vue";
 import FieldList from "../components/Dashboard/FieldList.vue";
-
+import ActivityCard from "../components/ActivityCard.vue";
 Vue.use(Router);
 
 const router = new Router({
@@ -80,8 +80,9 @@ const router = new Router({
             },
         },
         {
-            path: "/all-activity",
+            path: "/hoat-dong",
             name: "all-activity",
+            redirect: '/hoat-dong',
             components: {
                 default: AllActivity,
                 header: MainNavbar,
@@ -92,14 +93,16 @@ const router = new Router({
                 footer: { backgroundColor: "black" },
             },
             children: [{
-                path: "/all-activity/:fieldname",
-                name: "field-name",
-                component: {
-                    default: AllActivity,
-                    header: MainNavbar,
-                    footer: MainFooter,
+                    path: "/",
+                    name: "all-activity",
+                    component: ActivityCard
                 },
-            }, ],
+                {
+                    path: "/hoat-dong/:fieldname",
+                    name: "field-name",
+                    component: ActivityCard
+                },
+            ],
         },
         {
             path: "/group",

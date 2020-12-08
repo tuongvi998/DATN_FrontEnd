@@ -133,7 +133,7 @@ const actions = {
     //activitya
     showUpcomingActivity({ commit }) {
         http
-            .getNormal("/upcoming-activity")
+            .getNormal("/activity/upcoming-activity")
             .then((response) => {
                 // console.log(response.data.message);
                 commit("showUpcomingActivity", response.data.data);
@@ -144,7 +144,7 @@ const actions = {
     },
     showAllUpcomingActivity({ commit }) {
         http
-            .getNormal("/all-upcoming-activity")
+            .getNormal("/activity/all-upcoming-activity")
             .then((response) => {
                 // console.log(response.data.message);
                 commit("showAllUpcomingActivity", response.data.data);
@@ -176,7 +176,7 @@ const actions = {
     //field
     showListField({ commit }) {
         http
-            .getNormal("/all-fields")
+            .getNormal("/fields")
             .then((response) => {
                 // console.log(response.data.message);
                 commit("showListField", response.data.data);
