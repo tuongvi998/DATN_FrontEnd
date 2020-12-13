@@ -9,7 +9,7 @@
         <div class="row w-100">
           <div class="col-md-4 col-sm-6 col-12 text-left">
             <h2 id="activity-title">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit
+              {{activity.title}}
             </h2>
             <small
               ><i class="fas fa-stream mr-3"></i
@@ -39,6 +39,12 @@
             <div class="col-md-2 col-sm-3 ac-title">Nội dung:</div>
             <div class="col-md-10 col-sm-9 ac-content">
               {{ activity.content }}
+            </div>
+          </div>
+          <div class="row w-100 mt-2">
+            <div class="col-md-2 col-sm-3 ac-title">Địa chỉ:</div>
+            <div class="col-md-10 col-sm-9 ac-content">
+              {{ activity.address }}
             </div>
           </div>
           <div class="row w-100 mt-2">
@@ -165,7 +171,7 @@ export default {
       address: "",
       checkIntro: true,
       checkInterest: true,
-      user_id: VueJwtDecode.decode(localStorage.getItem("access_token")).sub,
+      user_id: '',
       date: new Date().toJSON().slice(0, 10).replace(/-/g, "/"),
       isAccept: false,
       profile: {
@@ -209,7 +215,6 @@ export default {
     showRegisterForm() {
       this.checkIntro = true;
       this.checkInterest = true;
-      this.$store.dispatch("showUserProfile");
       this.getUserProfile.forEach((user) => {
         this.name = user.name;
         this.birthday = user.birthday;
@@ -266,8 +271,14 @@ export default {
     },
   },
   created() {
+    //  | VueJwtDecode.decode(localStorage.getItem("access_token")).sub,
+    if(localStorage.getItem("access_token")){
+      this.user_id = VueJwtDecode.decode(localStorage.getItem("access_token")).sub;
+      this.$store.dispatch("showIsRegister", this.activity_id);
+      this.$store.dispatch("showUserProfile");
+    }
     this.$store.dispatch("showActivityDetail", this.activity_id);
-    this.$store.dispatch("showIsRegister", this.activity_id);
+    
     // this.$store.dispatch("showUserProfile");
   },
 };

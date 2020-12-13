@@ -24,6 +24,8 @@ import UserList from "../components/Dashboard/UserList.vue";
 import GroupList from "../components/Dashboard/GroupList.vue";
 import FieldList from "../components/Dashboard/FieldList.vue";
 import ActivityCard from "../components/Activity/ActivityCard.vue";
+import { GroupDashboard, GroupActivity } from "../components/Group/index";
+// import GroupActivity from "../components/Group/GroupActivity.vue";
 Vue.use(Router);
 
 const router = new Router({
@@ -81,9 +83,9 @@ const router = new Router({
             },
         },
         {
-            path: "/hoat-dong",
+            path: "/activity",
             name: "activity",
-            redirect: '/hoat-dong/tat-ca',
+            redirect: '/activity/all',
             components: {
                 default: AllActivity,
                 header: MainNavbar,
@@ -94,40 +96,25 @@ const router = new Router({
                 footer: { backgroundColor: "black" },
             },
             children: [{
-                    path: "/hoat-dong/tat-ca",
+                    path: "/all",
                     name: "all-activity",
                     component: ActivityCard
                 },
                 {
-                    path: "/hoat-dong/:fieldname",
+                    path: "/activity/:fieldname",
                     name: "field-name",
                     component: ActivityCard
                 },
             ],
         },
         {
-            path: "/hoat-dong/chi-tiet/:id",
+            path: "/activity/detail/:id",
             name: "activity-detail",
             components: { default: ActivityDetail, header: MainNavbar, footer: MainFooter },
             props: {
                 header: { colorOnScroll: 400 },
                 footer: { backgroundColor: "black" },
             },
-        }, {
-            path: "/group",
-            component: GroupLayout,
-            redirect: "group/dashboard",
-            children: [{
-                    path: "dashboard",
-                    name: "GroupDashboard",
-                    component: Dashboard,
-                },
-                // {
-                //     path: "activities",
-                //     name: "GroupActivity",
-                //     component: GroupActivity
-                // }
-            ],
         },
         {
             path: "/user/:username",
@@ -143,10 +130,16 @@ const router = new Router({
             component: GroupLayout,
             redirect: "group/dashboard",
             children: [{
-                path: "dashboard",
-                name: "Dashboard",
-                component: Dashboard,
-            }, ],
+                    path: "dashboard",
+                    name: "Group Dashboard",
+                    component: GroupDashboard,
+                },
+                {
+                    path: "activity",
+                    name: "Hoạt động sắp tới",
+                    component: GroupActivity
+                }
+            ],
         },
         {
             path: "/admin",

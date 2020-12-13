@@ -16,8 +16,8 @@
         <div id="activity-content">
           {{ activity.content }}
         </div>
-        <router-link :to="{name: 'activity-detail', params: {id: activity.id}}"><button class="btn-primary text-center" @click="detail" id="detail-btn">
-          xem them<span>&rarr;</span>
+        <router-link :to="{name: 'activity-detail', params: {id: activity.id}}"><button class="btn-primary text-center" id="detail-btn">
+          Xem thêm<span>&rarr;</span>
         </button></router-link>
       </div>
     </div>
@@ -40,9 +40,6 @@ computed: {
     }),
   },
   methods:{
-    detail(){
-      alert('hdajdas')
-    }
   },
   created() {
     this.$store.dispatch("showAllUpcomingActivity");

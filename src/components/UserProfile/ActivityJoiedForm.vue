@@ -10,12 +10,12 @@
           <small class=""><i class="fas fa-map-marker-alt mr-2"></i
                   >{{activity.address}}</small>
           <p class="mt-1" id="active-content">{{activity.content}}</p>
-          <a
-            href=""
+          <router-link tag="a"
+            :to="{name: 'activity-detail', params: {id: activity.id}}"
             class="btn-primary btn-outline mr-2 ml-2 mt-3"
             id="activity-btn"
             >Chi tiết<i class="fas fa-arrow-right"></i
-          ></a>
+          ></router-link>
         </div>
       </div>
     </div>

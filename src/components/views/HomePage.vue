@@ -54,21 +54,19 @@
             <div class="dark-opacity">
               <div class="row p-5">
                 <div class="col-md-4 d-flex justify-content-center">
-                  <h5>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. L
-                  </h5>
+                  <h2 id="info">
+                    235 Tổ chức
+                  </h2>
                 </div>
                 <div class="col-md-4">
-                  <h5>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Laudantium id modi sapiente provident aliquam ut. Ducimus
-                  </h5>
+                  <h2 id="info">
+                    479 Tình nguện viên
+                  </h2>
                 </div>
                 <div class="col-md-4">
-                  <h5>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Laudantium id modi sapiente provident aliquam ut. Ducimus
-                  </h5>
+                  <h2 id="info">
+                    52 Dự án cần tài trợ
+                  </h2>
                 </div>
               </div>
             </div>
@@ -216,6 +214,10 @@ export default {
   width: 200px;
   height: 100px;
   background-image: linear-gradient(gray 100%, transparent 0);
+}
+#info{
+  color: white;
+  padding: 20px;
 }
 #title {
   font-family: Segoe UI, SegoeUI, Helvetica Neue, Helvetica, Arial, sans-serif;
