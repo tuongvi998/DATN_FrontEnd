@@ -3,12 +3,12 @@
     <div class="container">
       <nav>
         <ul>
-          <li>
+          <!-- <li>
             <a href="https://www.creative-tim.com">Creative Tim</a>
           </li>
           <li>
             <a href="https://creative-tim.com/presentation">
-              About Us
+              Giới thiệu
             </a>
           </li>
           <li>
@@ -20,14 +20,14 @@
             <a href="https://www.creative-tim.com/license">
               Licenses
             </a>
-          </li>
+          </li> -->
         </ul>
       </nav>
       <div class="copyright text-center">
         &copy; {{ new Date().getFullYear() }}
         <a href="https://www.creative-tim.com/?ref=mdf-vuejs" target="_blank"
-          >Creative Tim</a
-        >, made with <i class="fa fa-heart heart"></i> for a better web
+          >Chia sẻ</a
+        >, vơi <i class="fa fa-heart heart"></i> để thế giới tốt hơn
       </div>
     </div>
   </footer>
@@ -35,4 +35,11 @@
 <script>
 export default {};
 </script>
-<style></style>
+<style>
+.main-panel > .footer {
+    /* border-top: 1px solid #e7e7e7; */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+</style>

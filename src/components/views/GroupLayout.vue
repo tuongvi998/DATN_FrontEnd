@@ -9,34 +9,34 @@
       :showLogo="true"
     >
       <!-- <mobile-menu slot="content"></mobile-menu> -->
-      <sidebar-link to="/group/dashboard">
+      <sidebar-link :to="{name: 'Group Dashboard'}">
         <md-icon>dashboard</md-icon>
         <p>Dashboard</p>
       </sidebar-link>
-      <sidebar-link to="/group/avtivities">
+      <sidebar-link :to="{name: 'Hoạt động sắp tới'}">
         <md-icon>person</md-icon>
-        <p>Hoạt động</p>
+        <p>Hoạt động sắp tới</p>
       </sidebar-link>
-      <sidebar-link to="/group/posts">
+      <sidebar-link to="/to-chuc/posts">
         <md-icon>content_paste</md-icon>
-        <p>Bài đăng</p>
+        <p>Hoạt động đã diễn ra</p>
       </sidebar-link>
-      <sidebar-link to="/group/typography">
+      <!-- <sidebar-link to="/to-chuc/typography">
         <md-icon>library_books</md-icon>
         <p>Typography</p>
       </sidebar-link>
-      <sidebar-link to="/group/icons">
+      <sidebar-link to="/to-chuc/icons">
         <md-icon>bubble_chart</md-icon>
         <p>Icons</p>
       </sidebar-link>
-      <sidebar-link to="/group/maps">
+      <sidebar-link to="/to-chuc/maps">
         <md-icon>location_on</md-icon>
         <p>Maps</p>
       </sidebar-link>
-      <sidebar-link to="/group/notifications">
+      <sidebar-link to="/to-chuc/notifications">
         <md-icon>notifications</md-icon>
         <p>Notifications</p>
-      </sidebar-link>
+      </sidebar-link> -->
     </side-bar>
 
     <div class="main-panel">
@@ -48,7 +48,8 @@
       >
       </fixed-plugin>
 
-      <dashboard-content> </dashboard-content>
+      <!-- <dashboard-content> </dashboard-content> -->
+      <group-content></group-content>
 
       <content-footer v-if="!$route.meta.hideFooter"></content-footer>
     </div>
@@ -58,24 +59,25 @@
 <script>
 import TopNavbar from "../Dashboard/TopNavbar";
 import ContentFooter from "../Dashboard/ContentFooter.vue";
-import DashboardContent from "../Dashboard/Content.vue";
+// import GroupContent
 // import MobileMenu from "./Dashboard/MobileMenu.vue";
 import FixedPlugin from "../Dashboard/FixedPlugin.vue";
 import UserList from "../Dashboard/UserList.vue";
+import GroupContent from '../Group/GroupContent.vue';
 
 export default {
   components: {
     TopNavbar,
-    DashboardContent,
     ContentFooter,
     // MobileMenu,
     FixedPlugin,
+    GroupContent,
     // UserList
   },
   data() {
     return {
      sidebarBackground: "green",
-      title: "Vue MD",
+      title: "Minh",
       imgLogo: require("@/assets/img/vue-logo.png"),
       sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg"),
     };

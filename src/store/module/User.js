@@ -13,6 +13,7 @@ const state = () => ({
     list_activity_by_field: [],
     activity_detail: [],
     isRegister: null,
+    list_activity_by_group: [] //chua dien ra
 });
 
 const getters = {
@@ -45,6 +46,9 @@ const getters = {
     },
     getActivityDetail: (state) => {
         return state.activity_detail;
+    },
+    getActivityByGroup: (state) => {
+        return state.list_activity_by_group;
     },
     getIsRegister: (state) => {
         return state.isRegister;
@@ -89,6 +93,13 @@ const mutations = {
     },
     showActivityDetail(state, activity_detail) {
         state.activity_detail = activity_detail;
+    },
+    showActivityByGroup(state, list_activity_by_group) {
+        state.list_activity_by_group = list_activity_by_group;
+    },
+    deleteActivity(state, id) {
+        var list = state.list_activity_by_group.filter((activity) => activity.id != id);
+        state.list_activity_by_group = list;
     },
     //fields
     showListField(state, list_field) {
@@ -218,6 +229,26 @@ const actions = {
         http.getNormal("/activity/detail", payload)
             .then(response => {
                 commit("showActivityDetail", response.data.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    },
+    showActivityByGroup({ commit }) {
+        http.getNormal("/group/activities/up-coming")
+            .then(response => {
+                console.log(response);
+                commit("showActivityByGroup", response.data.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    },
+    deleteActivity({ dispatch }, payload) {
+        http.deleteNormal("/group/activity", payload)
+            .then(response => {
+                console.log(response.data.message);
+                dispatch("showActivityByGroup");
             })
             .catch(error => {
                 console.log(error);

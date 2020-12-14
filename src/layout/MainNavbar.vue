@@ -2,7 +2,7 @@
   <md-toolbar id="toolbar" md-elevation="0" class="md-white md-absolute">
     <div class="md-toolbar-row md-collapse-lateral">
       <div class="md-toolbar-section-start">
-        <img id="nav-icon" :src="image" alt="">
+        <router-link to="/"> <img id="nav-icon" :src="image" alt=""></router-link>
         
       </div>
       <div class="md-toolbar-section-end">
@@ -45,10 +45,11 @@
                     <drop-down direction="down">
                       <md-button
                         slot="title"
-                        class="md-button md-button-link md-white md-simple dropdown-toggle"
+                        class="md-button md-button-link md-white md-simple "
                         data-toggle="dropdown"
                         @click="getNameLink"
                       >
+                      <!-- dropdown-toggle -->
                         <p>{{ user_name }}</p>
                       </md-button>
                       <ul class="dropdown-menu dropdown-with-icons">

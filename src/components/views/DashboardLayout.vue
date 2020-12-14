@@ -1,7 +1,6 @@
 <template>
   <div class="wrapper" :class="{ 'nav-open': $sidebar.showSidebar }">
     <notifications></notifications>
-
     <side-bar
       :sidebar-item-color="sidebarBackground"
       :sidebar-background-image="sidebarBackgroundImage"
@@ -26,7 +25,7 @@
         <md-icon>content_paste</md-icon>
         <p>Lĩnh Vực hoạt động</p>
       </sidebar-link>
-      <sidebar-link to="/admin/typography">
+      <!-- <sidebar-link to="/admin/typography">
         <md-icon>library_books</md-icon>
         <p>Typography</p>
       </sidebar-link>
@@ -41,7 +40,7 @@
       <sidebar-link to="/admin/notifications">
         <md-icon>notifications</md-icon>
         <p>Notifications</p>
-      </sidebar-link>
+      </sidebar-link> -->
     </side-bar>
 
     <div class="main-panel">
@@ -80,7 +79,7 @@ export default {
   data() {
     return {
       sidebarBackground: "green",
-      title: "Vue MD",
+      title: "Mai",
       imgLogo: require("@/assets/img/vue-logo.png"),
       sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg"),
     };

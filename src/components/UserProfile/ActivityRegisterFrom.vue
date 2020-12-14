@@ -17,15 +17,17 @@
           <p>
             Thời gian: {{ activity.start_date }} đến {{ activity.end_date }}
           </p>
-          <p>Trạng thái xác nhận: <i v-if="activity.isAccept" class="far fa-check-circle ml-2 text-success check-accept"></i></p>
+          <p>Trạng thái xác nhận: <small v-if="activity.isAccept" class="bg-success">Chấp nhận</small>
+          <small v-if="!activity.isAccept" class="text-light bg-dark">Đang chờ</small>
+          </p>
           
-          <h3><i v-if="activity.isAccept" class="far fa-check-circle text-success"></i></h3>
-          <a
-            href=""
+          <router-link
+            tag="a"
+            :to="{name: 'activity-detail', params: {id: activity.id}}"
             class="btn-primary btn-outline mr-2 ml-2 mt-1"
             id="activity-btn"
             >Chi tiết<i class="fas fa-arrow-right"></i
-          ></a>
+          ></router-link>
           </div>
         </div>
       </div>

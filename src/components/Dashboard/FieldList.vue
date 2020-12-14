@@ -13,7 +13,7 @@
       </div>
       <modal class="modal-field" v-if="showAddFieldModal" @close="addField">
         <template slot="header">
-          <h4 class="modal-title">Modal Title</h4>
+          <h4 class="modal-title">Thêm lĩnh vực</h4>
           <md-button
             class="md-simple md-just-icon md-round modal-default-button"
             @click="addField"
