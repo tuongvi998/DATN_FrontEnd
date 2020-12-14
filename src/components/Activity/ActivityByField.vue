@@ -2,7 +2,7 @@
   <div>
     <div
       class="col-md-12 col-sm-12 col-12 mt-5 d-flex text-center"
-      v-for="activity in listAvtivityByField"
+      v-for="activity in listActivity"
       :key="activity.index"
     >
       <div class="card-image p-1">
@@ -16,31 +16,51 @@
         <div id="activity-content">
           {{ activity.content }}
         </div>
-        <button class="btn-primary text-center" id="detail-btn">
-          Explore<span>&rarr;</span>
-        </button>
+        <router-link :to="{name: 'activity-detail', params: {id: activity.id}}"><button class="btn-primary text-center" id="detail-btn">
+          Xem thêm<span>&rarr;</span>
+        </button></router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import http from '../../service/index';
 import { mapGetters, mapState } from "vuex";
 export default {
   name: "activity-card",
-  props: {
-    listAllUpcomingActivity: {
-      type: Array,
-      require: true,
-    },
+  data() {
+    return {
+      params : '',
+      listActivity: []
+    }
   },
+  // props: {
+  //   listAllUpcomingActivity: {
+  //     type: Array,
+  //     require: true,
+  //   },
+  // },
 computed: {
     ...mapGetters({
-      listAvtivityByField: "getListAvtivityByField",
+      // listAvtivityByField: "getListAvtivityByField",
     }),
   },
   created() {
     // this.$store.dispatch("showActivityByField");
+    this.params = (this.$route.params.fieldname);
+    http.getNormal('/activities/field', this.params)
+    .then(response => {
+        if(response.data.data == null){
+
+        }else{
+          this.listActivity = response.data.data;
+        console.log(response);
+        }
+    })
+    .catch(error =>{
+      console.log(error);
+    })
   },
 };
 </script>

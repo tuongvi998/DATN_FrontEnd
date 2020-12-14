@@ -24,6 +24,7 @@ import UserList from "../components/Dashboard/UserList.vue";
 import GroupList from "../components/Dashboard/GroupList.vue";
 import FieldList from "../components/Dashboard/FieldList.vue";
 import ActivityCard from "../components/Activity/ActivityCard.vue";
+import ActivityByField from "../components/Activity/ActivityByField.vue";
 import { GroupDashboard, GroupActivity } from "../components/Group/index";
 // import GroupActivity from "../components/Group/GroupActivity.vue";
 Vue.use(Router);
@@ -103,7 +104,7 @@ const router = new Router({
                 {
                     path: "/activity/:fieldname",
                     name: "field-name",
-                    component: ActivityCard
+                    component: ActivityByField
                 },
             ],
         },

@@ -12,8 +12,10 @@
                   v-for="field in listField"
                   :key="field.index"
                 >
+                <!-- (field.name.normalize('NFD').replace(/\s+/g, '-').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D')) -->
                   <router-link
-                    :to="{ name: 'field-name', params:  {fieldname: (field.name.normalize('NFD').replace(/\s+/g, '-').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D')) } }"
+                    :to="{ name: 'field-name', params:  {fieldname:  field.name} }"
+
                     class="md-list-item-router md-list-item-container md-button-clean"
                   >
                     <div class="md-list-item-content md-ripple">
@@ -27,6 +29,7 @@
           <div class="col-md-9 col-sm-9 col-12">
             <div class="container row bg-white pt-4 pb-4">
               <router-view></router-view>
+              <!-- <activity></activity> -->
             </div>
           </div>
         </div>
@@ -37,11 +40,10 @@
 
 <script>
 import { mapGetters,mapActions } from "vuex";
-// import {ActivityCard} from "@/components";
+// import Activity from "../Activity/Activity.vue";
 export default {
   components: {
-    // ActivityCard
-    // Loading
+    // Activity
   },
   props: {},
   data() {
@@ -61,8 +63,6 @@ export default {
   computed: {
     ...mapGetters({
       listField: "getListField",
-      listAllUpcomingActivity: "getAllUpcomingActivity",
-      // listActivityByField: "getListAvtivityByField"
     }),
   },
   created() {
@@ -75,16 +75,16 @@ export default {
         );
         setTimeout(() => {
           loader.hide();
-        }, 3000);
+        }, 2500);
     this.$store.dispatch("showListField");
-    this.$store.dispatch("showAllUpcomingActivity");
+    // this.$store.dispatch("showAllUpcomingActivity");
     // this.activityList = this.listAllUpcomingActivity;
     console.log(this.listField);
 
   },
   methods: {
     ...mapActions({
-      showActivityByField: "showActivityByField"
+      // showActivityByField: "showActivityByField"
     })
   },
   watch: {
