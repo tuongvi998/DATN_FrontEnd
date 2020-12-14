@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-light">
+  <div class="bg-light" ref="homeCont">
     <!-- <main-navbar class="mt-0"></main-navbar> -->
     <div class="container-fluid pt-">
       <div class="content pt-5">
@@ -38,10 +38,10 @@
 <script>
 import { mapGetters,mapActions } from "vuex";
 // import {ActivityCard} from "@/components";
-
 export default {
   components: {
     // ActivityCard
+    // Loading
   },
   props: {},
   data() {
@@ -51,10 +51,12 @@ export default {
       sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg"),
       widthWindown: window.innerWidth,
       activityList: [],
-      fieldname_link: ''
+      fieldname_link: '',
+      loader: "dots",
     };
   },
   methods: {
+    
   },
   computed: {
     ...mapGetters({
@@ -64,10 +66,21 @@ export default {
     }),
   },
   created() {
+    let homeCont = this.$refs.homeCont;
+    let loader = this.$loading.show(
+          {
+            container: homeCont,
+            loader: this.loader,
+          }
+        );
+        setTimeout(() => {
+          loader.hide();
+        }, 3000);
     this.$store.dispatch("showListField");
     this.$store.dispatch("showAllUpcomingActivity");
     // this.activityList = this.listAllUpcomingActivity;
     console.log(this.listField);
+
   },
   methods: {
     ...mapActions({

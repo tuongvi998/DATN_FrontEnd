@@ -3,7 +3,15 @@
     <div class="md-toolbar-row md-collapse-lateral">
       <div class="md-toolbar-section-start">
         <router-link to="/"> <img id="nav-icon" :src="image" alt=""></router-link>
-        
+        <div class="md-autocomplete">
+            <md-autocomplete
+              class="search"
+              v-model="selectedEmployee"
+              :md-options="employees"
+            >
+              <label>Tìm...</label>
+            </md-autocomplete>
+          </div>
       </div>
       <div class="md-toolbar-section-end">
         <md-button
@@ -15,7 +23,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </md-button>
-
+        
         <div class="md-collapse">
           <div class="md-collapse-wrapper">
             <mobile-menu nav-mobile-section-start="false">
@@ -133,6 +141,17 @@ export default {
       user_name: localStorage.getItem("user_name"),
       name: "",
       userpage_link: "",
+      selectedEmployee: null,
+      employees: [
+        "Jim Halpert",
+        "Dwight Schrute",
+        "Michael Scott",
+        "Pam Beesly",
+        "Angela Martin",
+        "Kelly Kapoor",
+        "Ryan Howard",
+        "Kevin Malone"
+      ]
     };
   },
   computed: {
@@ -237,5 +256,8 @@ export default {
    width: 48px;
   height: 48px;
   object-fit: cover;
+}
+.search{
+  z-index: 20;
 }
 </style>
