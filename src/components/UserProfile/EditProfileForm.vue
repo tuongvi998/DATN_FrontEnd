@@ -78,8 +78,8 @@
                       <img :src="img" class="rounded" alt="" />
                     </div>
                     <div class="col-md-6 col-sm-6 col-12">
-                      <h5>Đay là tiêu đề</h5>
-                      <p>Đay là mô tả : content</p>
+                      <h5>Đây là tiêu đề</h5>
+                      <p>Đây là mô tả : content</p>
                       <a
                         href=""
                         class="btn-primary btn-outline mr-2 ml-2 mt-3"

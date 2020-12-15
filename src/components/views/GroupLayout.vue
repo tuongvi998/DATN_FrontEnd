@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" :class="{ 'nav-open': $sidebar.showSidebar }">
+  <div class="wrapper bg-light" :class="{ 'nav-open': $sidebar.showSidebar }">
     <notifications></notifications>
 
     <side-bar
@@ -42,11 +42,11 @@
     <div class="main-panel">
       <top-navbar></top-navbar>
 
-      <fixed-plugin
+      <!-- <fixed-plugin
         :color.sync="sidebarBackground"
         :image.sync="sidebarBackgroundImage"
       >
-      </fixed-plugin>
+      </fixed-plugin> -->
 
       <!-- <dashboard-content> </dashboard-content> -->
       <group-content></group-content>
@@ -61,7 +61,7 @@ import TopNavbar from "../Dashboard/TopNavbar";
 import ContentFooter from "../Dashboard/ContentFooter.vue";
 // import GroupContent
 // import MobileMenu from "./Dashboard/MobileMenu.vue";
-import FixedPlugin from "../Dashboard/FixedPlugin.vue";
+// import FixedPlugin from "../Dashboard/FixedPlugin.vue";
 import UserList from "../Dashboard/UserList.vue";
 import GroupContent from '../Group/GroupContent.vue';
 
@@ -70,7 +70,7 @@ export default {
     TopNavbar,
     ContentFooter,
     // MobileMenu,
-    FixedPlugin,
+    // FixedPlugin,
     GroupContent,
     // UserList
   },

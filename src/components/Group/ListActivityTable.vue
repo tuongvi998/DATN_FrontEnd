@@ -1,24 +1,34 @@
 <template>
   <div>
-    <table
-      class="table table-borderless table-responsive-md"
-    >
+    <table class="table table-borderless table-responsive-md">
       <thead>
         <tr>
-          <th v-for="header in listHeader" :key="header.index" scope="col" class="tb-header">{{header}}</th>
+          <th
+            v-for="header in listHeader"
+            :key="header.index"
+            scope="col"
+            class="tb-header"
+          >
+            {{ header }}
+          </th>
         </tr>
       </thead>
 
-      <tbody v-for="activity in listActivity" :key="activity.id" slot="md-table-row">
+      <tbody
+        v-for="activity in listActivity"
+        :key="activity.id"
+        slot="md-table-row"
+      >
         <tr>
-          <td class="tb-content" v-for="col in listColumns" :key="col">{{ activity[col] }}</td>
+          <td class="tb-content" v-for="col in listColumns" :key="col">
+            <router-link :to="{ name: 'Group Acti Detail', params: {actiId: activity.id}}">{{ activity[col] }}</router-link>
+          </td>
           <td>
             <button
               class="btn btn-outline-danger tb-content"
               type="button"
               @click="deleActivity(activity.id, activity.title)"
             >
-            
               <i class="far fa-trash-alt"></i>
             </button>
           </td>
@@ -30,7 +40,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions } from "vuex";
 export default {
   name: "activity-table",
 
@@ -38,21 +48,21 @@ export default {
     return {
       selected: [],
       opened: [],
-      gender: ''
+      gender: "",
     };
   },
   props: {
     listActivity: Array,
     // deleteUser: Function,
     listHeader: Array,
-    listColumns: Array
+    listColumns: Array,
   },
   methods: {
     ...mapActions({
-      deleteActivity: "deleteActivity"
+      deleteActivity: "deleteActivity",
     }),
-  deleActivity(id, title){
-            this.$confirm({
+    deleActivity(id, title) {
+      this.$confirm({
         title: "Xoá tài khoản?",
         message: "Bạn có muốn xoá hoạt động " + title + " ?",
         button: {
@@ -62,22 +72,21 @@ export default {
         callback: (confirm) => {
           if (confirm == true) {
             this.$notify({
-          group: "foo",
-          type: "success",
-          title: "Xoá tài khoản",
-          text: "Xoá tài khoản người dùng thành công!",
-          duration: 800,
-          speed: 700,
-          width: 1000,
-        });
+              group: "foo",
+              type: "success",
+              title: "Xoá tài khoản",
+              text: "Xoá tài khoản người dùng thành công!",
+              duration: 800,
+              speed: 700,
+              width: 1000,
+            });
             return this.deleteActivity(id);
           }
         },
-      })
-  }
-  
-}
-}
+      });
+    },
+  },
+};
 </script>
 <style scoped>
 .tb-header {

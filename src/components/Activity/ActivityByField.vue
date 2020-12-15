@@ -1,8 +1,32 @@
 <template>
-  <div>
+  <div class="w-100">
+    <div class="row w-100 breadcrumb">
+      <div class="col-md-5">
+        <ul id="breadcrumb-menu">
+          <li id="breadcrumb-item">Hoạt động</li>
+          <li id="breadcrumb-item" v-if="this.$route.params.fieldname != ''">
+            / {{ this.$route.params.fieldname }}
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-7">
+        <div class="datime text-right">
+          <date-picker
+            format="MM-YYYY"
+            type="month"
+            v-model="month"
+            placeholder="Tháng diễn ra"
+            valueType="format"
+          ></date-picker>
+        </div>
+      </div>
+    </div>
+    <div class="row w-100 d-flex text-center">
+      <h3>{{ noti }}</h3>
+    </div>
     <div
-      class="col-md-12 col-sm-12 col-12 mt-5 d-flex text-center"
-      v-for="activity in listAvtivityByField"
+      class="col-md-12 col-sm-12 col-12 mt-4 d-flex text-center"
+      v-for="activity in list"
       :key="activity.index"
     >
       <div class="card-image p-1">
@@ -16,36 +40,125 @@
         <div id="activity-content">
           {{ activity.content }}
         </div>
-        <button class="btn-primary text-center" id="detail-btn">
-          Explore<span>&rarr;</span>
-        </button>
+        <router-link
+          :to="{ name: 'activity-detail', params: { id: activity.id } }"
+          ><button class="btn-primary text-center" id="detail-btn">
+            Xem thêm<span>&rarr;</span>
+          </button></router-link
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import http from "../../service/index";
 import { mapGetters, mapState } from "vuex";
+import DatePicker from "vue2-datepicker";
+import "vue2-datepicker/index.css";
+
 export default {
   name: "activity-card",
-  props: {
-    listAllUpcomingActivity: {
-      type: Array,
-      require: true,
-    },
+  data() {
+    return {
+      noti: "",
+      checkActi: true,
+      month: "",
+      params: "",
+      listActivity: [],
+      list: [],
+    };
   },
-computed: {
-    ...mapGetters({
-      listAvtivityByField: "getListAvtivityByField",
-    }),
+  components: {
+    DatePicker,
+  },
+  computed: {
+  },
+  methods: {
+    loadData() {
+      this.month = "";
+      this.checkActi = true;
+      console.log("dsfdsfdsdfsdsfsdfsd", this.checkActi);
+      this.params = this.$route.params.fieldname;
+      http
+        .getNormal("/activities/field", this.params)
+        .then((response) => {
+          if (response.data.data == null) {
+          } else {
+            this.listActivity = response.data.data;
+            this.list = this.listActivity;
+            console.log(response);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    filteredList() {
+      var newList = [];
+      this.listActivity.filter((acti) => {
+        var dd = new Date(this.month);
+        var at = new Date(acti.start_date);
+
+        if (
+          dd.getMonth() == at.getMonth() &&
+          dd.getFullYear() == at.getFullYear()
+        ) {
+          console.log(acti);
+          newList.push(acti);
+        }
+      });
+      if (newList.length == 0) {
+        this.checkActi = false;
+        this.list = newList;
+      } else {
+        this.checkActi = true;
+        this.list = newList;
+      }
+    },
   },
   created() {
     // this.$store.dispatch("showActivityByField");
+    this.loadData();
+  },
+  watch: {
+    "$route.params.fieldname": function (fieldname) {
+      this.loadData();
+    },
+    month(val) {
+      this.filteredList();
+      let dd = new Date(val);
+      console.log(
+        dd.getMonth(),
+        dd.getFullYear(),
+        dd.getUTCFullYear() + ", " + typeof dd
+      );
+    },
   },
 };
 </script>
 
 <style scoped>
+#breadcrumb-item {
+  font-size: 12px;
+  letter-spacing: 0.7px;
+  line-height: 1.2;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #2e8034;
+  margin: 20px 0;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+}
+.breadcrumb {
+  background-color: #fff;
+}
+#breadcrumb-menu {
+  padding-left: 0;
+}
+ul#breadcrumb-menu li {
+  display: inline;
+}
 .card-image {
   width: 38%;
 }

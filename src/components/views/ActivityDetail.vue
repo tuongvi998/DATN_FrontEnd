@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white">
+  <div class="bg-white" ref="homeCont">
     <div class="container pt-5">
       <div
         class="-fluid mt-5"
@@ -162,6 +162,7 @@ export default {
   name: "activity-detail",
   data() {
     return {
+      loader: "dots",
       activity_id: this.$route.params.id,
       birthday: "20/10/2020",
       name: "",
@@ -271,6 +272,16 @@ export default {
     },
   },
   created() {
+    let homeCont = this.$refs.homeCont;
+    let loader = this.$loading.show(
+          {
+            container: homeCont,
+            loader: this.loader,
+          }
+        );
+        setTimeout(() => {
+          loader.hide();
+        }, 3000);
     //  | VueJwtDecode.decode(localStorage.getItem("access_token")).sub,
     if(localStorage.getItem("access_token")){
       this.user_id = VueJwtDecode.decode(localStorage.getItem("access_token")).sub;

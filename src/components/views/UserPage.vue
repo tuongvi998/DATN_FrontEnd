@@ -4,10 +4,11 @@
     <div class="container pt-5">
       <div class="content pt-5">
         <div class="md-layout pt-5">
-          <div class="md-layout-item md-medium-size-100 md-size-28">
+          <div class="md-layout-item md-medium-size-100 md-size-18">
             <md-card class="md-card-profile">
-              <div class="md-card-avatar">
-                <img class="img" :src="cardUserImage" />
+              <div class="md-card-avatar" v-for="profile in getUserProfile"
+                            :key="profile.index">
+                <img class="img" :src="profile.avatar" />
               </div>
               <md-card-content>
                 <h4 class="card-title">{{ username }}</h4>
@@ -19,7 +20,7 @@
               </md-card-content>
             </md-card>
           </div>
-          <div class="md-layout-item md-medium-size-100 md-size-70">
+          <div class="md-layout-item md-medium-size-100 md-size-80">
             <form>
               <md-card>
                 <md-card-content>

@@ -27,12 +27,12 @@
             </div>
           </slide>
         </carousel>
-        <a
-          href=""
+        <router-link tag="a"
+          :to="{name: 'activity'}"
           class="btn-primary btn-outline mr-2 ml-2 mt-3"
           id="activity-btn"
           >Xem thêm <i class="fas fa-arrow-right"></i
-        ></a>
+        ></router-link>
       </div>
     </div>
   </div>

@@ -1,7 +1,25 @@
 <template>
   <div>
+    <div class="row w-100 breadcrumb">
+            <div class="col-md-5">
+              <ul id="breadcrumb-menu">
+                <li id="breadcrumb-item">Hoạt động</li>
+                <li id="breadcrumb-item" v-if="this.$route.params.fieldname != ''">
+                  / {{ this.$route.params.fieldname }}
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-7">
+              <div class="datime text-right">
+                <date-picker format="MM-YYYY"
+        type="month"
+        v-model="month"
+        placeholder="Tháng diễn ra" valueType="format"></date-picker>
+              </div>
+            </div>
+          </div>
     <div
-      class="col-md-12 col-sm-12 col-12 mt-5 d-flex text-center"
+      class="col-md-12 col-sm-12 col-12 mt-4 d-flex text-center"
       v-for="activity in listAllUpcomingActivity"
       :key="activity.index"
     >
@@ -16,9 +34,12 @@
         <div id="activity-content">
           {{ activity.content }}
         </div>
-        <router-link :to="{name: 'activity-detail', params: {id: activity.id}}"><button class="btn-primary text-center" id="detail-btn">
-          Xem thêm<span>&rarr;</span>
-        </button></router-link>
+        <router-link
+          :to="{ name: 'activity-detail', params: { id: activity.id } }"
+          ><button class="btn-primary text-center" id="detail-btn">
+            Xem thêm<span>&rarr;</span>
+          </button></router-link
+        >
       </div>
     </div>
   </div>
@@ -26,21 +47,24 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
+import DatePicker from "vue2-datepicker";
+import "vue2-datepicker/index.css";
 export default {
   name: "activity-card",
-  props: {
-    activity_list: {
-      type: Array,
-      require: true,
-    },
+  components: {
+    DatePicker,
   },
-computed: {
+  data() {
+    return {
+      month: "",
+    };
+  },
+  computed: {
     ...mapGetters({
       listAllUpcomingActivity: "getAllUpcomingActivity",
     }),
   },
-  methods:{
-  },
+  methods: {},
   created() {
     this.$store.dispatch("showAllUpcomingActivity");
   },
@@ -48,6 +72,26 @@ computed: {
 </script>
 
 <style scoped>
+#breadcrumb-item{
+  font-size: 12px;
+  letter-spacing: 0.7px;
+  line-height: 1.2;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #2e8034;
+  margin: 20px 0;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+}
+.breadcrumb {
+  background-color: #fff;
+}
+#breadcrumb-menu {
+  padding-left: 0;
+}
+ul#breadcrumb-menu li {
+  display: inline;
+}
 .card-image {
   width: 38%;
 }

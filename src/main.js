@@ -23,7 +23,7 @@ Vue.use(Loading, {
     width: 64,
     height: 64,
     backgroundColor: '#ffffff',
-    opacity: 0.5,
+    opacity: 0.95,
     zIndex: 999
 });
 

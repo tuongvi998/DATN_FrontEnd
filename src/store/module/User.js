@@ -13,7 +13,9 @@ const state = () => ({
     list_activity_by_field: [],
     activity_detail: [],
     isRegister: null,
-    list_activity_by_group: [] //chua dien ra
+    list_activity_by_group: [], //chua dien ra
+    list_user_join_activity: [],
+    list_user_register_activity: [],
 });
 
 const getters = {
@@ -50,9 +52,15 @@ const getters = {
     getActivityByGroup: (state) => {
         return state.list_activity_by_group;
     },
+    getListUserJoinedActivity: (state) => {
+        return state.list_user_join_activity;
+    },
+    getListUserRegisterActivity: (state) => {
+        return state.list_user_register_activity;
+    },
     getIsRegister: (state) => {
         return state.isRegister;
-    }
+    },
 };
 
 const mutations = {
@@ -98,8 +106,16 @@ const mutations = {
         state.list_activity_by_group = list_activity_by_group;
     },
     deleteActivity(state, id) {
-        var list = state.list_activity_by_group.filter((activity) => activity.id != id);
+        var list = state.list_activity_by_group.filter(
+            (activity) => activity.id != id
+        );
         state.list_activity_by_group = list;
+    },
+    showListUserJoinedActivity(state, list_user_join_activity) {
+        state.list_user_join_activity = list_user_join_activity;
+    },
+    showListUserRegisterActivity(state, list_user_register_activity) {
+        state.list_user_register_activity = list_user_register_activity;
     },
     //fields
     showListField(state, list_field) {
@@ -140,13 +156,14 @@ const actions = {
     },
 
     showIsRegister({ commit }, payload) {
-        http.getNormal("/volunteer/check-activity-register", payload)
-            .then(response => {
-                commit('showIsRegister', response.data.data)
+        http
+            .getNormal("/volunteer/check-activity-register", payload)
+            .then((response) => {
+                commit("showIsRegister", response.data.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
-            })
+            });
     },
 
     //group
@@ -217,38 +234,60 @@ const actions = {
             });
     },
     showActivityByField({ commit }, payload) {
-        http.getNormal("/activities/field", payload)
-            .then(response => {
+        http
+            .getNormal("/activities/field", payload)
+            .then((response) => {
                 commit("showActivityByField", response.data.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
             });
     },
     showActivityDetail({ commit }, payload) {
-        http.getNormal("/activity/detail", payload)
-            .then(response => {
+        http
+            .getNormal("/activity/detail", payload)
+            .then((response) => {
                 commit("showActivityDetail", response.data.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
-            })
+            });
     },
     showActivityByGroup({ commit }) {
-        http.getNormal("/group/activities/up-coming")
-            .then(response => {
+        http
+            .getNormal("/group/activities/up-coming")
+            .then((response) => {
                 console.log(response);
                 commit("showActivityByGroup", response.data.data);
             })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    deleteActivity({ dispatch }, payload) {
+        http
+            .deleteNormal("/group/activity", payload)
+            .then((response) => {
+                console.log(response.data.message);
+                dispatch("showActivityByGroup");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    showListUserJoinedActivity({ commit }, payload) {
+        http.getNormal("/group/register-profile/joined", payload)
+            .then(response => {
+                commit("showListUserJoinedActivity", response.data.data);
+            })
             .catch(error => {
                 console.log(error);
             })
     },
-    deleteActivity({ dispatch }, payload) {
-        http.deleteNormal("/group/activity", payload)
+    showListUserRegisterActivity({ commit }, payload) {
+        http.getNormal("/group/register-profile/register", payload)
             .then(response => {
-                console.log(response.data.message);
-                dispatch("showActivityByGroup");
+                commit("showListUserRegisterActivity", response.data.data);
             })
             .catch(error => {
                 console.log(error);

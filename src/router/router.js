@@ -23,8 +23,10 @@ import UpgradeToPRO from "../components/Dashboard/UpgradeToPRO.vue";
 import UserList from "../components/Dashboard/UserList.vue";
 import GroupList from "../components/Dashboard/GroupList.vue";
 import FieldList from "../components/Dashboard/FieldList.vue";
+
 import ActivityCard from "../components/Activity/ActivityCard.vue";
-import { GroupDashboard, GroupActivity } from "../components/Group/index";
+import ActivityByField from "../components/Activity/ActivityByField.vue"
+import { GroupDashboard, GroupActivity, GroupActivityDetail, GroupAllActivity } from "../components/Group/index";
 // import GroupActivity from "../components/Group/GroupActivity.vue";
 Vue.use(Router);
 
@@ -69,9 +71,6 @@ const router = new Router({
             path: "/register",
             name: "register",
             components: { default: Register },
-            // props: {
-            //     header: { colorOnScroll: 400 },
-            // },
         },
         {
             path: "/profile",
@@ -85,7 +84,7 @@ const router = new Router({
         {
             path: "/activity",
             name: "activity",
-            redirect: '/activity/all',
+            redirect: 'activity/all',
             components: {
                 default: AllActivity,
                 header: MainNavbar,
@@ -96,14 +95,14 @@ const router = new Router({
                 footer: { backgroundColor: "black" },
             },
             children: [{
-                    path: "/all",
+                    path: "all",
                     name: "all-activity",
                     component: ActivityCard
                 },
                 {
                     path: "/activity/:fieldname",
                     name: "field-name",
-                    component: ActivityCard
+                    component: ActivityByField
                 },
             ],
         },
@@ -137,8 +136,18 @@ const router = new Router({
                 {
                     path: "activity",
                     name: "Hoạt động sắp tới",
-                    component: GroupActivity
-                }
+                    component: GroupActivity,
+                    redirect: "/group/activity/",
+                    children: [{
+                        path: "/",
+                        component: GroupAllActivity,
+                        name: "Hoạt động sắp tới:"
+                    }, {
+                        path: "/group/activity/:actiId",
+                        component: GroupActivityDetail,
+                        name: "Group Acti Detail"
+                    }]
+                },
             ],
         },
         {
