@@ -30,6 +30,13 @@ export default {
             },
         });
     },
+    putNormal(endpoint, payload) {
+        return axios.put(URL + endpoint + "/" + payload, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+        });
+    },
     getNormal(endpoint, id) {
         if (id) {
             return axios.get(URL + endpoint + "/" + id, {

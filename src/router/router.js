@@ -11,6 +11,8 @@ import Home from "../components/views/HomePage.vue";
 import UserPage from "../components/views/UserPage.vue";
 import AllActivity from "../components/views/AllActivity.vue";
 import ActivityDetail from "../components/views/ActivityDetail.vue";
+import AllGroup from "../components/views/AllGroup.vue";
+import GroupByField from "../components/views/GroupByField.vue";
 //
 import GroupLayout from "../components/views/GroupLayout.vue";
 import DashboardLayout from "../components/views/DashboardLayout.vue";
@@ -25,8 +27,15 @@ import GroupList from "../components/Dashboard/GroupList.vue";
 import FieldList from "../components/Dashboard/FieldList.vue";
 
 import ActivityCard from "../components/Activity/ActivityCard.vue";
-import ActivityByField from "../components/Activity/ActivityByField.vue"
-import { GroupDashboard, GroupActivity, GroupActivityDetail, GroupAllActivity } from "../components/Group/index";
+import ActivityByField from "../components/Activity/ActivityByField.vue";
+import {
+    GroupDashboard,
+    GroupActivity,
+    GroupActivityDetail,
+    GroupAllActivity,
+    GroupActivityHappen,
+    GroupActivityDetail_happen,
+} from "../components/Group/index";
 // import GroupActivity from "../components/Group/GroupActivity.vue";
 Vue.use(Router);
 
@@ -60,6 +69,29 @@ const router = new Router({
             },
         },
         {
+            path: "/all-groups",
+            name: "allgroup",
+            components: { default: AllGroup, header: MainNavbar, footer: MainFooter },
+            props: {
+                header: { colorOnScroll: 300 },
+                footer: { backgroundColor: "black" },
+            },
+            children: [],
+        },
+        {
+            path: "/all-groups/:fieldname",
+            name: "group by field",
+            components: {
+                default: GroupByField,
+                header: MainNavbar,
+                footer: MainFooter,
+            },
+            props: {
+                header: { colorOnScroll: 300 },
+                footer: { backgroundColor: "black" },
+            },
+        },
+        {
             path: "/login",
             name: "login",
             components: { default: Login },
@@ -84,7 +116,7 @@ const router = new Router({
         {
             path: "/activity",
             name: "activity",
-            redirect: 'activity/all',
+            redirect: "activity/all",
             components: {
                 default: AllActivity,
                 header: MainNavbar,
@@ -97,19 +129,23 @@ const router = new Router({
             children: [{
                     path: "all",
                     name: "all-activity",
-                    component: ActivityCard
+                    component: ActivityCard,
                 },
                 {
                     path: "/activity/:fieldname",
                     name: "field-name",
-                    component: ActivityByField
+                    component: ActivityByField,
                 },
             ],
         },
         {
             path: "/activity/detail/:id",
             name: "activity-detail",
-            components: { default: ActivityDetail, header: MainNavbar, footer: MainFooter },
+            components: {
+                default: ActivityDetail,
+                header: MainNavbar,
+                footer: MainFooter,
+            },
             props: {
                 header: { colorOnScroll: 400 },
                 footer: { backgroundColor: "black" },
@@ -139,14 +175,33 @@ const router = new Router({
                     component: GroupActivity,
                     redirect: "/group/activity/",
                     children: [{
-                        path: "/",
-                        component: GroupAllActivity,
-                        name: "Hoạt động sắp tới:"
-                    }, {
-                        path: "/group/activity/:actiId",
-                        component: GroupActivityDetail,
-                        name: "Group Acti Detail"
-                    }]
+                            path: "/",
+                            component: GroupAllActivity,
+                            name: "Hoạt động sắp tới:",
+                        },
+                        {
+                            path: "/group/activity/:actiId",
+                            component: GroupActivityDetail,
+                            name: "Chi tiết hoạt động",
+                        },
+                    ],
+                },
+                {
+                    path: "activity-happen",
+                    name: "Hoạt động đã diễn ra",
+                    component: GroupActivity,
+                    redirect: "/group/activity-happen/",
+                    children: [{
+                            path: "/",
+                            component: GroupActivityHappen,
+                            name: "Hoạt động đã diễn ra:",
+                        },
+                        {
+                            path: "/group/activity-happen/:actiId",
+                            component: GroupActivityDetail_happen,
+                            name: "Chi tiết hoạt động đã diễn ra",
+                        },
+                    ],
                 },
             ],
         },
@@ -166,12 +221,12 @@ const router = new Router({
                 },
                 {
                     path: "groups",
-                    name: "Group List",
+                    name: "Danh sách các tổ chức",
                     component: GroupList,
                 },
                 {
                     path: "fields",
-                    name: "fields",
+                    name: "Lĩnh vực hoạt động",
                     component: FieldList,
                 },
                 {
@@ -186,7 +241,7 @@ const router = new Router({
                 },
                 {
                     path: "users",
-                    name: "Users",
+                    name: "Danh sách người dùng",
                     meta: {
                         hideFooter: true,
                     },

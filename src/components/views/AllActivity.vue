@@ -3,13 +3,6 @@
     <!-- <main-navbar class="mt-0"></main-navbar> -->
     <div class="container-fluid pt-">
       <div class="content pt-5">
-        <!-- <div class="md-layout pt-5 pl-4 pr-4"> -->
-          <!-- <b-breadcrumb>
-    <b-breadcrumb-item href="#foo">Hoạt động</b-breadcrumb-item>
-    <b-breadcrumb-item v-if="this.$route.params.fieldname != ''">{{this.$route.params.fieldname}}</b-breadcrumb-item>
-  </b-breadcrumb> -->
-            
-        <!-- </div> -->
         <div class="md-layout pt-4">
           <div v-if="showFields" class="col-md-3 col-sm-3 col-12">
             <div class="sidebar-normal">

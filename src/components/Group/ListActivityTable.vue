@@ -21,7 +21,9 @@
       >
         <tr>
           <td class="tb-content" v-for="col in listColumns" :key="col">
-            <router-link :to="{ name: 'Group Acti Detail', params: {actiId: activity.id}}">{{ activity[col] }}</router-link>
+            <router-link v-if="!happen" :to="{ name: 'Chi tiết hoạt động', params: {actiId: activity.id}}">{{ activity[col] }}</router-link>
+          
+            <router-link v-if="happen" :to="{ name: 'Chi tiết hoạt động đã diễn ra', params: {actiId: activity.id}}">{{ activity[col] }}</router-link>
           </td>
           <td>
             <button
@@ -56,6 +58,7 @@ export default {
     // deleteUser: Function,
     listHeader: Array,
     listColumns: Array,
+    happen: Boolean
   },
   methods: {
     ...mapActions({

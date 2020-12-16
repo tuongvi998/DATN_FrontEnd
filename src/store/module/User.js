@@ -14,8 +14,10 @@ const state = () => ({
     activity_detail: [],
     isRegister: null,
     list_activity_by_group: [], //chua dien ra
+    list_activity_by_group_happen: [],
     list_user_join_activity: [],
     list_user_register_activity: [],
+    list_field_group: []
 });
 
 const getters = {
@@ -34,6 +36,9 @@ const getters = {
     getListField: (state) => {
         return state.list_field;
     },
+    getListFieldGroup: (state) => {
+        return state.list_field_group;
+    },
     getListFieldController: (state) => {
         return state.list_field_controler;
     },
@@ -51,6 +56,9 @@ const getters = {
     },
     getActivityByGroup: (state) => {
         return state.list_activity_by_group;
+    },
+    getActivityByGroup_happen: (state) => {
+        return state.list_activity_by_group_happen;
     },
     getListUserJoinedActivity: (state) => {
         return state.list_user_join_activity;
@@ -105,6 +113,9 @@ const mutations = {
     showActivityByGroup(state, list_activity_by_group) {
         state.list_activity_by_group = list_activity_by_group;
     },
+    showActivityByGroup_happen(state, list_activity_by_group_happen) {
+        state.list_activity_by_group_happen = list_activity_by_group_happen;
+    },
     deleteActivity(state, id) {
         var list = state.list_activity_by_group.filter(
             (activity) => activity.id != id
@@ -117,9 +128,18 @@ const mutations = {
     showListUserRegisterActivity(state, list_user_register_activity) {
         state.list_user_register_activity = list_user_register_activity;
     },
+    deleteJoinProfile(state, id) {
+        var list = state.list_user_join_activity.filter(
+            (user) => user.id != id
+        );
+        state.list_user_join_activity = list;
+    },
     //fields
     showListField(state, list_field) {
         state.list_field = list_field;
+    },
+    showListFieldGroup(state, list_field_group) {
+        state.list_field_group = list_field_group;
     },
     showListFieldController(state, list_field) {
         state.list_field_controler = list_field;
@@ -264,6 +284,17 @@ const actions = {
                 console.log(error);
             });
     },
+    showActivityByGroup_happen({ commit }) {
+        http
+            .getNormal("/group/activities/happen")
+            .then((response) => {
+                console.log(response);
+                commit("showActivityByGroup_happen", response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
     deleteActivity({ dispatch }, payload) {
         http
             .deleteNormal("/group/activity", payload)
@@ -274,6 +305,17 @@ const actions = {
             .catch((error) => {
                 console.log(error);
             });
+    },
+    deleteJoinProfile({ dispatch }, payload) {
+        http.deleteNormal("/group/register-profile", payload)
+            .then(response => {
+                const activityId = window.location.href.split("/", 6)[5];
+                console.log(activityId);
+                dispatch("showListUserJoinedActivity", activityId)
+            })
+            .catch(error => {
+                console.log(error)
+            })
     },
     showListUserJoinedActivity({ commit }, payload) {
         http.getNormal("/group/register-profile/joined", payload)
@@ -300,6 +342,17 @@ const actions = {
             .then((response) => {
                 // console.log(response.data.message);
                 commit("showListField", response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    showListFieldGroup({ commit }) {
+        http
+            .getNormal("/fields/count-group")
+            .then((response) => {
+                // console.log(response.data.message);
+                commit("showListFieldGroup", response.data.data);
             })
             .catch((error) => {
                 console.log(error);

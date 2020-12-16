@@ -90,6 +90,7 @@
               :listColumns="listColumns"
               :listHeader="listHeader"
               :listActivity="getActivityByGroup"
+              :happen="false"
             ></group-table>
           </md-card-content>
         </md-card>

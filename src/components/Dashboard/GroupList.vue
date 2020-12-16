@@ -54,10 +54,10 @@ export default {
       id: '',
       name: '',
       listHeader: [
-       '', 'ID', 'User ID', 'Tên', 'Email', '',''
+       '', 'Tên', 'Email', ''
       ],
       listColumns:[
-        "id", "user_id", "name", "email"
+       "name", "email"
       ]
     };
   },

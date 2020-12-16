@@ -14,13 +14,12 @@
         </tr>
       </thead>
 
-      <tbody v-for="user in listUser" :key="user.id" slot="md-table-row">
+      <tbody v-for="user in listUser" :key="user.index" slot="md-table-row">
         <tr>
           <td
-            @click="toggle(user.id, user.gender)"
+            @click="toggle(user.id)"
             :class="{ opened: opened.includes(user.id) }"
             class="text-warning tb-content"
-            v-if="isJoined"
           >
             <i
               v-if="!opened.includes(user.id)"
@@ -35,14 +34,19 @@
             <router-link
               :to="{
                 name: 'Group Acti Detail',
-                params: { actiId: activity.id },
+                params: { actiId: user.id },
               }"
-              >{{ activity[col] }}</router-link
+              >{{ user[col] }}</router-link
             >
           </td>
           <td>
-            <button class="btn btn-outline-danger tb-content" type="button">
-              <i class="far fa-trash-alt"></i>
+            <button
+              v-if="isJoined"
+              @click="chanceAccept(user.id, user.name)"
+              class="btn btn-outline-success tb-content"
+              type="button"
+            >
+              <i class="fas fa-exchange-alt"></i>
             </button>
           </td>
           <slot></slot>
@@ -51,36 +55,45 @@
           <td colspan="1"></td>
           <td colspan="5" class="tb-content">
             <div class="row">
-              <div class="col-3 image">
-                <img :src="user.avatar" id="avatar" />
-              </div>
-              <div class="col-9">
+              <div class="col-3">
                 <h5>
                   {{ user.name }}
                 </h5>
-                <small
+                <!-- <small
                   ><i class="fas fa-map-marker-alt mr-2"></i
                   ><cite title="San Francisco, USA">{{
                     user.address
                   }}</cite></small
-                >
+                > -->
                 <p><i class="far fa-envelope mr-2"></i>{{ user.email }}</p>
-                <p><i class="fas fa-venus-mars mr-2"></i>{{ gender }}</p>
+                <p v-if="user.gender == 0">
+                  <i class="fas fa-venus-mars mr-2"></i>Nữ
+                </p>
+                <p v-if="user.gender == 1">
+                  <i class="fas fa-venus-mars mr-2"></i>Nam
+                </p>
                 <p>
                   <i class="far fa-calendar-alt mr-2"></i>{{ user.birthday }}
                 </p>
                 <!-- Split button -->
                 <div class="btn-group"></div>
               </div>
+              <div class="col-9">
+                <p>Giới thiệu: {{ user.introduction }}</p>
+                <p>Kinh nghiệm: {{ user.experience }}</p>
+                <p>Sở thích: {{ user.interest }}</p>
+              </div>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
+    <md-button class="md-success" v-b-modal.modal-1>+</md-button>
   </div>
 </template>
 
 <script>
+import http from "../../service/index";
 export default {
   data() {
     return {
@@ -94,14 +107,10 @@ export default {
     listHeader: Array,
     listColumns: Array,
     isJoined: Boolean,
+    deleteUser: Function,
   },
   methods: {
-    toggle(id, gender) {
-      if (gender) {
-        this.gender = "Nam";
-      } else {
-        this.gender = "Nữ";
-      }
+    toggle(id) {
       const index = this.opened.indexOf(id);
       if (this.opened != null && !this.opened.includes(id)) {
         this.opened.splice(0, 1);
@@ -111,6 +120,74 @@ export default {
       } else {
         this.opened.push(id);
       }
+    },
+
+    chanceAccept(id, name) {
+      const activity_id = this.$route.params.actiId;
+      this.$confirm({
+        title: "Duyệt tình nguyện viên",
+        message: "Thêm " + name + " vào danh sách tình nguyện viên?",
+        button: {
+          yes: "Có",
+          no: "Không",
+        },
+        callback: (confirm) => {
+          if (confirm == true) {
+            http
+              .putNormal("/group/change-accept-status", id)
+              .then((result) => {
+                this.$store.dispatch("showListUserRegisterActivity",activity_id);
+                this.$store.dispatch("showListUserJoinedActivity",activity_id);
+                this.$notify({
+                  group: "foo",
+                  type: "success",
+                  title: "Duyệt tình nguyện viên",
+                  text: "Thêm tình nguyện viên thành công!",
+                  duration: 800,
+                  speed: 700,
+                  width: 1000,
+                });
+              })
+              .catch((err) => {
+                this.$notify({
+                  group: "foo",
+                  type: "error",
+                  title: "Duyệt tình nguyện viên",
+                  text: "Không thể thêm tình nguyện viên!",
+                  duration: 800,
+                  speed: 700,
+                  width: 1000,
+                });
+              });
+          }
+        },
+      });
+    },
+
+    deleUser(user_id, name) {
+      this.$confirm({
+        title: "Xoá tình nguyện viên?",
+        message:
+          "Bạn có muốn xoá " + name + " khỏi danh sách tình nguyện viên ?",
+        button: {
+          yes: "Có",
+          no: "Không",
+        },
+        callback: (confirm) => {
+          if (confirm == true) {
+            this.$notify({
+              group: "foo",
+              type: "success",
+              title: "Xoá tình nguyện viên",
+              text: "Xoá tình nguyện viên thành công!",
+              duration: 800,
+              speed: 700,
+              width: 1000,
+            });
+            return this.deleteUser(user_id);
+          }
+        },
+      });
     },
   },
 };

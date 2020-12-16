@@ -50,11 +50,13 @@ export default {
       id: '',
       name: '',
       listHeader: [
-       '', 'ID', 'User ID', 'Tên', 'Email', '',''
+       '','Tên', 'Email', '',
       ],
+      // '', 'ID', 'User ID', 'Tên', 'Email', '',''
       listColumns:[
-        "id", "user_id", "name", "email"
+        "name", "email"
       ]
+      // "id", "user_id", "name", "email"
     };
   },
   computed: {

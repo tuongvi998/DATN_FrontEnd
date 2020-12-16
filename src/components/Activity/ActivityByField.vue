@@ -12,7 +12,7 @@
       <div class="col-md-7">
         <div class="datime text-right">
           <date-picker
-            format="MM-YYYY"
+            format="YYYY-MM"
             type="month"
             v-model="month"
             placeholder="Tháng diễn ra"
@@ -21,9 +21,9 @@
         </div>
       </div>
     </div>
-    <div class="row w-100 d-flex text-center">
-      <h3>{{ noti }}</h3>
-    </div>
+    <!-- <div v-if="!checkActi" class="row w-100 d-flex text-center">
+      <h3>hhhhhhhhhhhhhh</h3>
+    </div> -->
     <div
       class="col-md-12 col-sm-12 col-12 mt-4 d-flex text-center"
       v-for="activity in list"
@@ -104,25 +104,26 @@ export default {
           dd.getMonth() == at.getMonth() &&
           dd.getFullYear() == at.getFullYear()
         ) {
-          console.log(acti);
           newList.push(acti);
         }
       });
       if (newList.length == 0) {
-        this.checkActi = false;
-        this.list = newList;
+        // this.checkActi = false;
+        this.list = this.listActivity;
       } else {
-        this.checkActi = true;
+        // this.checkActi = true;
         this.list = newList;
       }
     },
   },
   created() {
     // this.$store.dispatch("showActivityByField");
+    
     this.loadData();
   },
   watch: {
     "$route.params.fieldname": function (fieldname) {
+      // this.checkActi = true;
       this.loadData();
     },
     month(val) {

@@ -36,7 +36,7 @@
               </md-list-item>
               <md-list-item
               >
-                <router-link to="/" tag="a">Danh bạ tổ chức </router-link>
+                <router-link to="/all-groups" tag="a">Danh bạ tổ chức </router-link>
               </md-list-item>
               <md-list-item  v-if="!isLogin">
                 <router-link :to="{name: 'login'}" tag="a">
