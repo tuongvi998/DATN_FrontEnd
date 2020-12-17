@@ -27,6 +27,7 @@
             <label>Nội dung</label>
             <md-input v-model="activity.content"></md-input>
           </md-field>
+          <small class="mt-4">Thời gian:</small>
           <div class="row">
             <div class="col-md-4">
               <date-picker
@@ -54,6 +55,53 @@
                 placeholder="Hạn đăng ký"
                 valueType="format"
               ></date-picker>
+            </div>
+          </div>
+          <small class="pt-4">Khu vực:</small>
+          <div class="row">
+            <div class="col-md-4 p-2">
+              <select
+                class="custom-select custom-select-sm"
+                @change="onChangeProvince($event)"
+              >
+                <option selected disabled>
+                  <small>Tỉnh/ Thành Phố</small>
+                </option>
+                <option
+                  v-for="province in listProvince"
+                  :key="province.id"
+                  :value="province.id"
+                >
+                  {{ province.name }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-4 p-2">
+              <select
+                class="custom-select custom-select-sm"
+                @change="onChangeDistrict($event)"
+              >
+                <option selected disabled><small>Quận/Huyện</small></option>
+                <option
+                  v-for="district in listDistrict"
+                  :key="district.id"
+                  :value="district.id"
+                >
+                  {{ district.prefix }} {{ district.name }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-4 p-2">
+              <select class="custom-select custom-select-sm" @change="onChangeWard($event)">
+                <option selected disabled><small>Xã/ Phường</small></option>
+                <option
+                  v-for="ward in listWard"
+                  :key="ward.id"
+                  :value="ward.id"
+                >
+                  {{ ward.prefix }} {{ ward.name }}
+                </option>
+              </select>
             </div>
           </div>
           <md-field>
@@ -100,7 +148,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 // import { Modal } from "@/components";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
@@ -115,6 +163,11 @@ export default {
   data() {
     return {
       showAddActivityModal: false,
+      add: {
+        province: "",
+        district: "",
+        ward: ""
+      },
       listHeader: [
         "ID",
         "Tên Hoạt động",
@@ -146,13 +199,38 @@ export default {
   computed: {
     ...mapGetters({
       getActivityByGroup: "getActivityByGroup",
+      listProvince: "getListProvince",
+      listDistrict: "getListDistrict",
+      listWard: "getListWard",
     }),
   },
   methods: {
+    ...mapActions({
+      showListWard: "showListWard",
+      showListDistrict: "showListDistrict",
+      showListWard: "showListWard",
+    }),
     exitModal() {
       this.showAddActivityModal = false;
     },
+    onChangeProvince(event) {
+      // console.log(typeof())
+      this.add.province = event.target.options[event.target.options.selectedIndex].text;
+      const province_id = event.target.value;
+      return this.showListDistrict(province_id);
+    },
+    onChangeDistrict(event) {
+      this.add.district = event.target.options[event.target.options.selectedIndex].text;
+      const district_id = event.target.value;
+      return this.showListWard(district_id);
+    },
+    onChangeWard(event){
+      this.add.ward = event.target.options[event.target.options.selectedIndex].text;
+      console.log(this.add.ward + ', '+this.add.district+', '+this.add.province)
+    },
     addActi() {
+      this.activity.address = (this.add.ward + ', '+this.add.district+', '+this.add.province);
+      // console.log(this.activity.address)
       if (
         this.activity.title == "" &&
         this.activity.content == "" &&
@@ -194,6 +272,7 @@ export default {
   },
   created() {
     this.$store.dispatch("showActivityByGroup");
+    this.$store.dispatch("showListProvince");
   },
 };
 </script>

@@ -151,6 +151,7 @@ export default {
     headerStyle() {
       return {
         backgroundImage: `url(${this.image})`,
+        // backgroundImage: require('C:/Users/tuong/Pictures/avatar.jpg')
       };
     },
     signupImage() {

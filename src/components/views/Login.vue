@@ -8,28 +8,6 @@
           >
             <login-card header-color="green">
               <h4 slot="title" class="card-title">Đăng nhập</h4>
-              <!-- <md-button
-                slot="buttons"
-                href="javascript:void(0)"
-                class="md-just-icon md-simple md-white"
-              >
-                <i class="fab fa-facebook-square"></i>
-              </md-button>
-              <md-button
-                slot="buttons"
-                href="javascript:void(0)"
-                class="md-just-icon md-simple md-white"
-              >
-                <i class="fab fa-twitter"></i>
-              </md-button>
-              <md-button
-                slot="buttons"
-                href="javascript:void(0)"
-                class="md-just-icon md-simple md-white"
-              >
-                <i class="fab fa-google-plus-g"></i>
-              </md-button>
-              <p slot="description" class="description">Or Be Classical</p> -->
               <md-field
                 :class="{ 'md-error': !checkEmail }"
                 class="md-form-group mt-4"
@@ -91,6 +69,7 @@ export default {
       password: '',
       checkEmail: true,
       checkPassword: true,
+      
     };
   },
   props: {

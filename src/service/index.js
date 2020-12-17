@@ -16,8 +16,8 @@ export default {
                 },
             });
     },
-    postAuth(endpoint) {
-        return axios.post(URL + endpoint, null, {
+    postAuth(endpoint, payload) {
+        return axios.post(URL + endpoint, payload, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("access_token")}`,
             },

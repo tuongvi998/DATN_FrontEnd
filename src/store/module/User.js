@@ -17,7 +17,11 @@ const state = () => ({
     list_activity_by_group_happen: [],
     list_user_join_activity: [],
     list_user_register_activity: [],
-    list_field_group: []
+    list_field_group: [],
+    list_group_by_field: [],
+    list_province: [],
+    list_district: [],
+    list_ward: []
 });
 
 const getters = {
@@ -45,6 +49,9 @@ const getters = {
     getListAvtivityByField: (state) => {
         return state.list_activity_by_field;
     },
+    getListGroupByField: (state) => {
+        return state.list_group_by_field;
+    },
     getActivityJoined: (state) => {
         return state.list_activity_joined;
     },
@@ -69,6 +76,15 @@ const getters = {
     getIsRegister: (state) => {
         return state.isRegister;
     },
+    getListProvince: (state) => {
+        return state.list_province;
+    },
+    getListDistrict: (state) => {
+        return state.list_district;
+    },
+    getListWard: (state) => {
+        return state.list_ward;
+    }
 };
 
 const mutations = {
@@ -90,6 +106,9 @@ const mutations = {
     deleteGroup(state, id) {
         var list = state.list_groups.filter((group) => group.id != id);
         state.list_groups = list;
+    },
+    showListGroupByField(state, list_group_by_field) {
+        state.list_group_by_field = list_group_by_field;
     },
     //activity
     showUpcomingActivity(state, upcoming_activity) {
@@ -129,9 +148,7 @@ const mutations = {
         state.list_user_register_activity = list_user_register_activity;
     },
     deleteJoinProfile(state, id) {
-        var list = state.list_user_join_activity.filter(
-            (user) => user.id != id
-        );
+        var list = state.list_user_join_activity.filter((user) => user.id != id);
         state.list_user_join_activity = list;
     },
     //fields
@@ -148,6 +165,15 @@ const mutations = {
         var list = state.list_field_controler.filter((field) => field.id != id);
         state.list_field_controler = list;
     },
+    showListProvince(state, list_province) {
+        state.list_province = list_province;
+    },
+    showListDistrict(state, list_district) {
+        state.list_district = list_district;
+    },
+    showListWard(state, list_ward) {
+        state.list_ward = list_ward;
+    }
 };
 const actions = {
     //volunteer
@@ -197,6 +223,15 @@ const actions = {
             .catch((error) => {
                 console.log(error);
             });
+    },
+    showListGroupByField({ commit }, payload) {
+        http.getNormal("/groups", payload)
+            .then(response => {
+                commit("showListGroupByField", response.data.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
     },
     deleteGroup({ dispatch }, id) {
         http
@@ -307,33 +342,36 @@ const actions = {
             });
     },
     deleteJoinProfile({ dispatch }, payload) {
-        http.deleteNormal("/group/register-profile", payload)
-            .then(response => {
+        http
+            .deleteNormal("/group/register-profile", payload)
+            .then((response) => {
                 const activityId = window.location.href.split("/", 6)[5];
                 console.log(activityId);
-                dispatch("showListUserJoinedActivity", activityId)
+                dispatch("showListUserJoinedActivity", activityId);
             })
-            .catch(error => {
-                console.log(error)
-            })
+            .catch((error) => {
+                console.log(error);
+            });
     },
     showListUserJoinedActivity({ commit }, payload) {
-        http.getNormal("/group/register-profile/joined", payload)
-            .then(response => {
+        http
+            .getNormal("/group/register-profile/joined", payload)
+            .then((response) => {
                 commit("showListUserJoinedActivity", response.data.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
-            })
+            });
     },
     showListUserRegisterActivity({ commit }, payload) {
-        http.getNormal("/group/register-profile/register", payload)
-            .then(response => {
+        http
+            .getNormal("/group/register-profile/register", payload)
+            .then((response) => {
                 commit("showListUserRegisterActivity", response.data.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
-            })
+            });
     },
     //field
     showListField({ commit }) {
@@ -391,6 +429,33 @@ const actions = {
             .catch((error) => {
                 console.log(error);
             });
+    },
+    showListProvince({ commit }) {
+        http.getNormal("/provinces")
+            .then(response => {
+                commit("showListProvince", response.data.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    },
+    showListDistrict({ commit }, payload) {
+        http.getNormal("/districts", payload)
+            .then(response => {
+                commit("showListDistrict", response.data.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    },
+    showListWard({ commit }, payload) {
+        http.getNormal("/wards", payload)
+            .then(response => {
+                commit("showListWard", response.data.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
     },
 };
 export default {

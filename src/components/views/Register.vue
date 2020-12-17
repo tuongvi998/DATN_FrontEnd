@@ -8,52 +8,29 @@
           >
             <register-card header-color="green">
               <h4 slot="title" class="card-title">Đăng ký</h4>
-              <!-- <md-button
-                slot="buttons"
-                href="javascript:void(0)"
-                class="md-just-icon md-simple md-white"
-              >
-                <i class="fab fa-facebook-square"></i>
-              </md-button>
-              <md-button
-                slot="buttons"
-                href="javascript:void(0)"
-                class="md-just-icon md-simple md-white"
-              >
-                <i class="fab fa-twitter"></i>
-              </md-button>
-              <md-button
-                slot="buttons"
-                href="javascript:void(0)"
-                class="md-just-icon md-simple md-white"
-              >
-                <i class="fab fa-google-plus-g"></i>
-              </md-button>
-              <p slot="description" class="description">Or Be Classical</p> -->
-              <!-- <md-field class="md-form-group" slot="inputs">
-                <md-icon> face</md-icon>
-                <label>First Name...</label>
-                <md-input v-model="firstname"></md-input>
-              </md-field> -->
-              <md-field class="md-form-group mt-4" slot="inputs">
+              <md-field :class="{ 'md-error': !checkName }" class="md-form-group mt-4" slot="inputs">
                 <md-icon>face</md-icon>
                 <label>Tên...</label>
                 <md-input v-model="name" type="text"></md-input>
               </md-field>
-              <md-field class="md-form-group mt-4" slot="inputs">
+              <md-field :class="{ 'md-error': !checkEmail }" class="md-form-group mt-4" slot="inputs">
                 <md-icon>email</md-icon>
                 <label>Email...</label>
                 <md-input v-model="email" type="email"></md-input>
               </md-field>
-              <md-field class="md-form-group" slot="inputs">
+              <md-field :class="{ 'md-error': !checkPass }" class="md-form-group" slot="inputs">
                 <md-icon>lock_outline</md-icon>
                 <label>Mật khẩu...</label>
-                <md-input v-model="password"></md-input>
+                <md-input v-model="password" type="password"></md-input>
               </md-field>
-              <md-field class="md-form-group" slot="inputs">
+              <md-field :class="{ 'md-error': !checkPass }" class="md-form-group" slot="inputs">
                 <md-icon>lock_outline</md-icon>
                 <label>Xác nhận mật khẩu...</label>
-                <md-input v-model="password"></md-input>
+                <md-input v-model="password_confirm" type="password"></md-input>
+                
+              </md-field>
+              <md-field  v-if="!checkPass" class="md-error md-form-group" slot="inputs">
+<small  class="text-danger">{{notiPass}}</small>
               </md-field>
               <md-button @click="register" slot="footer" class="md-simple md-success md-lg">
                 Đăng ký
@@ -74,7 +51,7 @@
 
 <script>
 import { RegisterCard } from "@/components/index.js";
-
+import http from "../../service/index";
 export default {
   components: {
     RegisterCard
@@ -84,7 +61,18 @@ export default {
     return {
       name: '',
       email: '',
-      password: ''
+      password: '',
+      password_confirm:'',
+      checkPass: true,
+      checkName: true,
+      checkEmail: true,
+      notiPass: '',
+      data: {
+        email: '',
+        name: '',
+        password: '',
+        role_id: ''
+      }
     };
   },
   props: {
@@ -98,6 +86,69 @@ export default {
       return {
         backgroundImage: `url(${this.header})`
       };
+    }
+  },
+  methods: {
+    register(){
+      console.log('dk')
+      if(this.name == "" && this.email =="" && this.password == ""){
+        this.checkName = false;
+        this.checkPass = false;
+        this.checkEmail = false;
+        this.notiPass = ""
+      }else if(this.checkPass =="" && this.email ==  "" ){
+        this.checkName = true;
+        this.checkPass = false;
+        this.checkEmail = false;
+        this.notiPass = ""
+      }
+      else if(this.checkPass =="" && this.name == ""  ){
+        this.checkName = false;
+        this.checkPass = false;
+        this.checkEmail = true;
+        this.notiPass = ""
+      }
+      else if(this.email =="" && this.name == ""  ){
+        this.checkName = false;
+        this.checkPass = true;
+        this.checkEmail = false;
+        this.notiPass = ""
+      }else if(this.name == "" ){
+        this.checkName = false;
+        this.checkPass = true;
+        this.checkEmail = true;
+      }else if(this.email =="" ){
+        this.checkName = true;
+        this.checkPass = true;
+        this.checkEmail = false;
+        this.notiPass = ""
+      }else if(this.checkPass =="" ){
+        this.checkName = true;
+        this.checkPass = false;
+        this.checkEmail = true;
+        this.notiPass = ""
+      }else if(this.password != this.password_confirm){
+        this.notiPass = 'Mật khẩu xác nhận không phù hợp!'
+       this.checkPass = false;
+      }else if(this.password.split('').length <8){
+        this.notiPass = "Mật khẩu cần dài trên 8 ký tự!"
+      }else{
+         this.checkName = true;
+        this.checkPass = true;
+        this.checkEmail = true;
+        this.data.email = this.email;
+        this.data.name = this.name;
+        this.data.password = this.password;
+        this.data.role_id = 3;
+        console.log("........"+this.data)
+        http.postAuth("/auth/register",this.data)
+        .then(res => {
+          alert('dasdad')
+        })
+        .catch(error=> {
+          alert(error)
+        })
+      }
     }
   }
 };
