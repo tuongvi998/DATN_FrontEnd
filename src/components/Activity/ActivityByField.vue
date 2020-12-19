@@ -109,7 +109,7 @@ export default {
       });
       if (newList.length == 0) {
         // this.checkActi = false;
-        this.list = this.listActivity;
+        this.list = newList;
       } else {
         // this.checkActi = true;
         this.list = newList;

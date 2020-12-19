@@ -36,7 +36,7 @@
                 class="md-button md-button-link md-white md-simple"
                 id="md-item"
               >
-                <router-link :to="{ name: 'activity' }" tag="a">
+                <router-link @click="getActi" :to="{ name: 'activity' }" tag="a">
                   <a id="md-item">Hoạt động</a>
                 </router-link>
               </md-button>
@@ -183,6 +183,9 @@ export default {
     ...mapActions({
       showListField: "showListField",
     }),
+    getActi(){
+      // this.$store.dispatch("showAllUpcomingActivity");
+    },
     getField(field){
     // console.log(field);
     // this.$store.dispatch("showListGroupByField",field);

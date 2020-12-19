@@ -28,11 +28,17 @@
                 <md-input v-model="password" type="password"></md-input>
                 <md-icon v-if="!checkPassword">clear</md-icon>
               </md-field>
-              <div slot="alert" class="text-center" id="notify">
-              </div>
-              <!-- <md-field v-if="!check" slot="alert">
+              <div
+                class="md-error md-form-group"
+                slot="inputs"
+                v-for="er in errors"
+                :key="er.index"
+                id="notify"
+              >
+                <small v-if="!check" class="text-danger ml-3">{{ er }}</small
+                ><br />
                 
-              </md-field> -->
+              </div>
               <md-button
                 @click="loginFun()"
                 slot="footer"
@@ -57,6 +63,8 @@
 <script>
 import { LoginCard } from "@/components/index.js";
 import { mapActions, mapMutations, mapState } from "vuex";
+import http from "../../service/index";
+
 export default {
   components: {
     LoginCard,
@@ -65,11 +73,12 @@ export default {
   data() {
     return {
       firstname: '',
-      email: '',
-      password: '',
+      email: null,
+      password: null,
       checkEmail: true,
       checkPassword: true,
-      
+      errors: [],
+      check: true,
     };
   },
   props: {
@@ -96,56 +105,55 @@ export default {
       disableNotify: "disableNotify"
     }),
     loginFun() {
+      this.check = true;
+      this.errors = []
       // console.log(this.email + 'v ' + this.password)
-      if (this.email == '' && this.password == '') {
-        this.checkEmail = false;
-        this.checkPassword = false;
-        this.$notify({
-          group: "foo",
-          type: "error",
-          title: "This is title",
-          text: "Vui lòng nhập email và mật khẩu",
-          duration: 800,
-          speed: 700,
-          width: 1000,
-        });
-      }else if (this.password == '' && this.email != '') {
-        this.checkPassword = false;
-        this.checkEmail = true;
-        console.log('pw ', this.checkPassword)
-        this.$notify({
-          group: "foo",
-          type: "error",
-          title: "",
-          text: "Vui lòng nhập mật khẩu!",
-          duration: 800,
-          speed: 700,
-          width: 1000,
-        });
-      } else if (this.email == '' && this.password != '') {
-        this.checkEmail = false;
+      if (this.email  && this.password) {
+         this.checkEmail = true;
         this.checkPassword = true;
-        console.log('email ', this.checkEmail);
-        this.$notify({
-          group: "foo",
-          type: "error",
-          title: "",
-          text: "Vui lòng nhập email!",
-          duration: 800,
-          speed: 700,
-          width: 1000,
-        });
-      }
-      else if (this.email != '' && this.password != '') {
-        this.checkEmail = true;
-        this.checkPassword = true;
-        return  this.login({
+        this.check = true;
+        // return  this.login({
+        //   email: this.email,
+        //   password: this.password,
+        // });
+        http.postAuth("/auth/login",{
           email: this.email,
           password: this.password,
-        }).then(response =>{
-
-        }).catch(error=>{console.log(error.status)});
-      }
+        })
+        .then(response=> {
+                const token = response.data.access_token;
+                const role = response.data.user.role_id;
+                localStorage.setItem("access_token", token);
+                localStorage.setItem("user_name", response.data.user.name);
+                localStorage.setItem("role_id", role);
+                if(role == 1){
+                  this.$router.push({ path: '/admin' })
+                }else if(role == 2){
+                  this.$router.push({ path: '/group' })
+                }else{
+                  this.$router.push({ path: '/' })
+                }
+        })
+        .catch( error=> {
+          if(error.response){
+            this.check = false;
+            this.checkEmail = false;
+            this.checkPassword = false;
+            this.errors.push(error.response.data);
+          }
+        })
+      }else{
+          if(!this.email){
+            this.checkEmail = false;
+            this.check = false;
+            this.errors.push("Bạn chưa nhập email");
+          }
+          if(!this.password){
+            this.checkPassword = false;
+            this.check = false;
+            this.errors.push("Bạn chưa nhập mật khẩu");
+          }
+      } 
     },
   },
   watch:{

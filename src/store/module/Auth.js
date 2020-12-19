@@ -51,8 +51,8 @@ const actions = {
             })
             .catch((error) => {
                 commit("showNotify");
-                // document.getElementById("notify").innerHTML =
-                //     "<p class='text-danger'><i class='far fa-exclamation-triangle'></i> Please check your Username/Password</p>";
+                document.getElementById("notify").innerHTML =
+                    "<small class='text-danger ml-3'> </small>";
             });
     },
     showUserProfile({ commit }) {

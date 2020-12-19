@@ -32,7 +32,7 @@
             <div class="col-md-4">
               <date-picker
                 v-model="activity.start_date"
-                format="YYYY-DD-MM"
+                format="YYYY-MM-DD"
                 type="date"
                 placeholder="Ngày bắt đầu"
                 valueType="format"
@@ -41,7 +41,7 @@
             <div class="col-md-4">
               <date-picker
                 v-model="activity.end_date"
-                format="YYYY-DD-MM"
+                format="YYYY-MM-DD"
                 type="date"
                 placeholder="Ngày kết thúc"
                 valueType="format"
@@ -50,7 +50,7 @@
             <div class="col-md-4">
               <date-picker
                 v-model="activity.close_date"
-                format="YYYY-DD-MM"
+                format="YYYY-MM-DD"
                 type="date"
                 placeholder="Hạn đăng ký"
                 valueType="format"
@@ -92,7 +92,10 @@
               </select>
             </div>
             <div class="col-md-4 p-2">
-              <select class="custom-select custom-select-sm" @change="onChangeWard($event)">
+              <select
+                class="custom-select custom-select-sm"
+                @change="onChangeWard($event)"
+              >
                 <option selected disabled><small>Xã/ Phường</small></option>
                 <option
                   v-for="ward in listWard"
@@ -104,10 +107,10 @@
               </select>
             </div>
           </div>
-          <md-field>
+          <!-- <md-field>
             <label>Địa điểm:</label>
             <md-input v-model="activity.address"></md-input>
-          </md-field>
+          </md-field> -->
           <!-- <div class="row">
               <div class="col-md-6">
                 <md-field>
@@ -124,6 +127,26 @@
             <label>Quyền lợi</label>
             <md-input v-model="activity.benefit"></md-input>
           </md-field>
+          <div class="row">
+            <div class="col-md-4">
+              <md-field>
+                <label>Chi phí</label>
+                <md-input type="number" v-model="activity.cost"></md-input>
+              </md-field>
+            </div>
+            <div class="col-md-4">
+              <md-field>
+                <label>Đăng ký tối đa</label>
+                <md-input type="number" v-model="activity.max_register"></md-input>
+              </md-field>
+            </div>
+            <div class="col-md-4">
+              <md-field>
+                <label>Số tình nguyện viên</label>
+                <md-input type="number" v-model="activity.min_register"></md-input>
+              </md-field>
+            </div>
+          </div>
           <!-- </template> -->
           <template #modal-footer class="text-center">
             <!-- <md-button class="md-danger md-simple" @click="exitModal">Thoát</md-button> -->
@@ -166,7 +189,7 @@ export default {
       add: {
         province: "",
         district: "",
-        ward: ""
+        ward: "",
       },
       listHeader: [
         "ID",
@@ -187,12 +210,12 @@ export default {
         require: "",
         benefit: "",
         address: "",
-        cost: "1520077",
+        cost: "",
         donate: "0",
         image:
           "https://volunteeringaustralia.r.worldssl.net/wp-content/uploads/volunteering-australia-people-linked-together.jpg",
-        min_register: "30",
-        max_register: "50",
+        min_register: "",
+        max_register: "",
       },
     };
   },
@@ -215,24 +238,63 @@ export default {
     },
     onChangeProvince(event) {
       // console.log(typeof())
-      this.add.province = event.target.options[event.target.options.selectedIndex].text;
+      this.add.province =
+        event.target.options[event.target.options.selectedIndex].text;
       const province_id = event.target.value;
       return this.showListDistrict(province_id);
     },
     onChangeDistrict(event) {
-      this.add.district = event.target.options[event.target.options.selectedIndex].text;
+      this.add.district =
+        event.target.options[event.target.options.selectedIndex].text;
       const district_id = event.target.value;
       return this.showListWard(district_id);
     },
-    onChangeWard(event){
-      this.add.ward = event.target.options[event.target.options.selectedIndex].text;
-      console.log(this.add.ward + ', '+this.add.district+', '+this.add.province)
+    onChangeWard(event) {
+      this.add.ward =
+        event.target.options[event.target.options.selectedIndex].text;
+      console.log(
+        this.add.ward + ", " + this.add.district + ", " + this.add.province
+      );
     },
     addActi() {
-      this.activity.address = (this.add.ward + ', '+this.add.district+', '+this.add.province);
+      const start = new Date(this.activity.start_date);
+      const end = new Date(this.activity.end_date);
+      const close = new Date(this.activity.close_date);
+      const date = new Date();
+      console.log(start, end, date);
+       if(start> end){
+        this.$confirm({
+        title: "Ngày không phù hợp",
+        message: "Ngày kết thúc phải sau ngày bắt đầu",
+        button: {
+          yes: "OK",
+        }
+      })
+      } else if(start < close){
+        this.$confirm({
+        title: "Ngày không phù hợp",
+        message: "Hạn đăng ký phải trước ngày bắt đầu",
+        button: {
+          yes: "OK",
+        }
+      })
+      }else if ( close < date){
+        this.$confirm({
+        title: "Ngày không phù hợp",
+        message: "Hạn đăng ký phải ở tương lai",
+        button: {
+          yes: "OK",
+        }
+      })
+      }
+      this.activity.address =
+        this.add.ward + ", " + this.add.district + ", " + this.add.province;
       // console.log(this.activity.address)
       if (
         this.activity.title == "" &&
+        this.activity.cost == "" &&
+        this.activity.min_register == "" &&
+        this.activity.max_register == "" &&
         this.activity.content == "" &&
         this.activity.start_date == "" &&
         this.activity.end_date == "" &&
@@ -251,8 +313,25 @@ export default {
           width: 1000,
         });
       }
+      var senddata = {
+        group_id: "131",
+        title: this.activity.title,
+        start_date: new Date(this.activity.start_date),
+        end_date: new Date (this.activity.end_date),
+        close_date: new Date(this.activity.close_date),
+        content: this.activity.content,
+        require: this.activity.require,
+        benefit: this.activity.benefit,
+        address: this.activity.address,
+        cost: this.activity.cost,
+        donate: this.activity.donate,
+        image:
+          "https://volunteeringaustralia.r.worldssl.net/wp-content/uploads/volunteering-australia-people-linked-together.jpg",
+        min_register: this.activity.min_register,
+        max_register: this.activity.max_register,
+      }
       http
-        .postNormal("/group/create-activity", this.activity)
+        .postNormal("/group/create-activity", senddata)
         .then((responser) => {
           this.$store.dispatch("showActivityByGroup");
           this.$notify({

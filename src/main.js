@@ -18,6 +18,9 @@ import VueSidebarMenu from 'vue-sidebar-menu'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import JwPagination from 'jw-vue-pagination';
+
+Vue.component('jw-pagination', JwPagination);
 Vue.use(Loading, {
     color: '#000000',
     width: 64,

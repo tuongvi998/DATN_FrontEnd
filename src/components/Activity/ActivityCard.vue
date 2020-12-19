@@ -1,45 +1,76 @@
 <template>
-  <div>
+  <div class="w-100">
     <div class="row w-100 breadcrumb">
-            <div class="col-md-5">
-              <ul id="breadcrumb-menu">
-                <li id="breadcrumb-item">Hoạt động</li>
-                <li id="breadcrumb-item" v-if="this.$route.params.fieldname != ''">
-                  / {{ this.$route.params.fieldname }}
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-7">
-              <div class="datime text-right">
-                <date-picker format="MM-YYYY"
-        type="month"
-        v-model="month"
-        placeholder="Tháng diễn ra" valueType="format"></date-picker>
-              </div>
-            </div>
-          </div>
-    <div
-      class="col-md-12 col-sm-12 col-12 mt-4 d-flex text-center"
-      v-for="activity in listAllUpcomingActivity"
-      :key="activity.index"
-    >
-      <div class="card-image p-1">
-        <img class="rounded" :src="activity.image" alt="Snowy Mountains" />
+      <div class="col-md-5">
+        <ul id="breadcrumb-menu">
+          <li id="breadcrumb-item">Hoạt động</li>
+          <li id="breadcrumb-item" v-if="this.$route.params.fieldname != ''">
+            / {{ this.$route.params.fieldname }}
+          </li>
+        </ul>
       </div>
-      <div class="activity-detail pl-3 text-left">
-        <h3 class="card-title">{{ activity.title }}</h3>
-        <small>{{ activity.field_name }}</small>
-        <br />
-        <small>{{ activity.start_date }} ~ {{ activity.end_date }}</small>
-        <div id="activity-content">
-          {{ activity.content }}
+      <div class="col-md-7">
+        <div class="datime text-right">
+          <date-picker
+            format="YYYY-MM"
+            type="month"
+            v-model="month"
+            placeholder="Tháng diễn ra"
+            valueType="format"
+          ></date-picker>
         </div>
-        <router-link
-          :to="{ name: 'activity-detail', params: { id: activity.id } }"
-          ><button class="btn-primary text-center" id="detail-btn">
-            Xem thêm<span>&rarr;</span>
-          </button></router-link
-        >
+      </div>
+    </div>
+    <div v-if="checkAllActi">
+      <div
+        class="col-md-12 col-sm-12 col-12 mt-4 d-flex text-center"
+        v-for="activity in listAllUpcomingActivity"
+        :key="activity.index"
+      >
+        <div class="card-image p-1">
+          <img class="rounded" :src="activity.image" alt="Snowy Mountains" />
+        </div>
+        <div class="activity-detail pl-3 text-left">
+          <h3 class="card-title">{{ activity.title }}</h3>
+          <small>{{ activity.field_name }}</small>
+          <br />
+          <small>{{ activity.start_date }} ~ {{ activity.end_date }}</small>
+          <div id="activity-content">
+            {{ activity.content }}
+          </div>
+          <router-link
+            :to="{ name: 'activity-detail', params: { id: activity.id } }"
+            ><button class="btn-primary text-center" id="detail-btn">
+              Xem thêm<span>&rarr;</span>
+            </button></router-link
+          >
+        </div>
+      </div>
+    </div>
+    <div v-else>
+      <div
+        class="col-md-12 col-sm-12 col-12 mt-4 d-flex text-center"
+        v-for="activity in listActivity"
+        :key="activity.index"
+      >
+        <div class="card-image p-1">
+          <img class="rounded" :src="activity.image" alt="Snowy Mountains" />
+        </div>
+        <div class="activity-detail pl-3 text-left">
+          <h3 class="card-title">{{ activity.title }}</h3>
+          <small>{{ activity.field_name }}</small>
+          <br />
+          <small>{{ activity.start_date }} ~ {{ activity.end_date }}</small>
+          <div id="activity-content">
+            {{ activity.content }}
+          </div>
+          <router-link
+            :to="{ name: 'activity-detail', params: { id: activity.id } }"
+            ><button class="btn-primary text-center" id="detail-btn">
+              Xem thêm<span>&rarr;</span>
+            </button></router-link
+          >
+        </div>
       </div>
     </div>
   </div>
@@ -54,25 +85,75 @@ export default {
   components: {
     DatePicker,
   },
-  data() {
-    return {
-      month: "",
-    };
-  },
   computed: {
     ...mapGetters({
       listAllUpcomingActivity: "getAllUpcomingActivity",
     }),
   },
-  methods: {},
+  data() {
+    return {
+      month: "",
+      list: [],
+      checkActi: true,
+      listActivity: this.listAllUpcomingActivity,
+      checkAllActi: true,
+    };
+  },
+
+  methods: {
+    loadData() {
+      this.month = "";
+      this.checkActi = true;
+      this.listActivity = listAllUpcomingActivity;
+      this.list = this.listActivity;
+    },
+    filterListActi() {
+      var newList = [];
+      this.listAllUpcomingActivity.filter((acti) => {
+        var dd = new Date(this.month);
+        var at = new Date(acti.start_date);
+        if (
+          dd.getMonth() == at.getMonth() &&
+          dd.getFullYear() == at.getFullYear()
+        ) {
+          newList.push(acti);
+        }
+      });
+      if (newList.length == 0) {
+        // this.checkActi = false;
+        this.listActivity = newList;
+      } else {
+        // this.checkActi = true;
+        this.listActivity = newList;
+      }
+    },
+  },
   created() {
     this.$store.dispatch("showAllUpcomingActivity");
+    this.list = this.listAllUpcomingActivity;
+  },
+  watch: {
+    month(val) {
+      if (val == null) {
+        this.checkAllActi = true;
+        this.listActivity = this.listAllUpcomingActivity;
+      } else {
+        this.checkAllActi = false;
+        this.filterListActi();
+      }
+      // let dd = new Date(val);
+      // console.log(
+      //   dd.getMonth(),
+      //   dd.getFullYear(),
+      //   dd.getUTCFullYear() + ", " + typeof dd
+      // );
+    },
   },
 };
 </script>
 
 <style scoped>
-#breadcrumb-item{
+#breadcrumb-item {
   font-size: 12px;
   letter-spacing: 0.7px;
   line-height: 1.2;
@@ -81,7 +162,7 @@ export default {
   color: #2e8034;
   margin: 20px 0;
   text-align: center;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 .breadcrumb {
   background-color: #fff;

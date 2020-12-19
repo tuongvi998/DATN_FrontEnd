@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content" ref="homeCont">
     <div class="md-layout">
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100"
@@ -8,13 +8,14 @@
           <md-card-content>
             <simple-table
               table-header-color="green"
-              :listUser="listVolunteer"
+              :listUser="pageOfItems"
               :deleteUser="deleteVolunteer"
               :listHeader="listHeader"
               :listColumns="listColumns"
               :isUser="true"
             >
             </simple-table>
+            <div class="row d-flex justify-content-center" > <jw-pagination :pageSize ="20" :items="listVolunteer" :labels="customLabels" @changePage="onChangePage"></jw-pagination></div>
           </md-card-content>
         </md-card>
       </div>
@@ -40,6 +41,12 @@
 import { SimpleTable,  } from "@/components"; //OrderedTable
 import { mapActions, mapGetters } from "vuex";
 
+const customLabels = {
+    first: '<<',
+    last: '>>',
+    previous: '<',
+    next: '>'
+};
 export default {
   components: {
     // OrderedTable,
@@ -52,11 +59,12 @@ export default {
       listHeader: [
        '','Tên', 'Email', '',
       ],
-      // '', 'ID', 'User ID', 'Tên', 'Email', '',''
       listColumns:[
         "name", "email"
-      ]
-      // "id", "user_id", "name", "email"
+      ],
+      customLabels,
+      pageOfItems:[],
+      loader: "dots"
     };
   },
   computed: {
@@ -68,8 +76,20 @@ export default {
     ...mapActions({
       deleteVolunteer: "deleteVolunteer",
     }),
+    onChangePage(pageOfItems) {
+            // update page of items
+            this.pageOfItems = pageOfItems;
+        },
   },
   created() {
+    let homeCont = this.$refs.homeCont;
+    let loader = this.$loading.show({
+      container: homeCont,
+      loader: this.loader,
+    });
+    setTimeout(() => {
+      loader.hide();
+    }, 1000);
     this.list_user = this.$store.dispatch("showListVolunteer");
   },
 };

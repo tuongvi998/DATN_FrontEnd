@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-light">
+  <div class="bg-light"  ref="homeCont"> 
     <div class="container">
       <div class="content mt-5">
         <div class="md-layout bg-white rounded mt-5 mb-2">
@@ -55,6 +55,7 @@ export default {
     return {
       field: '',
       image: require("@/assets/img/allgr_card.jpg"),
+      loader: "dots",
     };
   },
   computed: {
@@ -63,6 +64,14 @@ export default {
     })
   },
   created() {
+    let homeCont = this.$refs.homeCont;
+    let loader = this.$loading.show({
+      container: homeCont,
+      loader: this.loader,
+    });
+    setTimeout(() => {
+      loader.hide();
+    }, 2000);
     this.field = this.$route.params.fieldname;
     console.log(this.field);
     this.$store.dispatch("showListGroupByField",this.field);
