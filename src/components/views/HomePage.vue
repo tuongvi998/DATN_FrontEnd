@@ -18,7 +18,9 @@
       </div>
       <div class="section section-activity-list">
         <div class="contai">
-          <upcoming-activity-list :list="upcoming_activity"></upcoming-activity-list>
+          <upcoming-activity-list
+            :list="upcoming_activity"
+          ></upcoming-activity-list>
         </div>
       </div>
       <div class="section section-download pt-4" id="downloadSection">
@@ -42,8 +44,9 @@
             class="md-layout-item md-size-50 md-small-size-100 mx-auto text-center"
           >
             <md-button class="md-success"
-              ><router-link to="/register">ĐĂNG KÝ NGAY</router-link>
-              </md-button
+              ><router-link to="/register"
+                >ĐĂNG KÝ NGAY</router-link
+              > </md-button
             ><br />
           </div>
         </div>
@@ -54,19 +57,13 @@
             <div class="dark-opacity">
               <div class="row p-5">
                 <div class="col-md-4 d-flex justify-content-center">
-                  <h2 id="info">
-                    235 Tổ chức
-                  </h2>
+                  <h2 id="info">{{ group }} Tổ chức</h2>
                 </div>
                 <div class="col-md-4">
-                  <h2 id="info">
-                    479 Tình nguện viên
-                  </h2>
+                  <h2 id="info">{{ volunteer }} Tình nguện viên</h2>
                 </div>
                 <div class="col-md-4">
-                  <h2 id="info">
-                    52 Dự án cần tài trợ
-                  </h2>
+                  <h2 id="info">{{ need_funding }} Dự án cần tài trợ</h2>
                 </div>
               </div>
             </div>
@@ -83,8 +80,14 @@
 </template>
 
 <script>
-import { LoginCard, HelpProcess, UpcomingActivityList, Contact } from "@/components";
+import {
+  LoginCard,
+  HelpProcess,
+  UpcomingActivityList,
+  Contact,
+} from "@/components";
 import { mapActions, mapGetters } from "vuex";
+import http from "../../service/index";
 
 export default {
   components: {
@@ -131,6 +134,9 @@ export default {
   },
   data() {
     return {
+      volunteer: "",
+      group: "",
+      need_funding: "",
       leafShow: false,
       helpinghand: require("@/assets/img/helping-hand.png"),
     };
@@ -151,7 +157,6 @@ export default {
     headerStyle() {
       return {
         backgroundImage: `url(${this.image})`,
-        // backgroundImage: require('C:/Users/tuong/Pictures/avatar.jpg')
       };
     },
     signupImage() {
@@ -165,6 +170,16 @@ export default {
     window.addEventListener("resize", this.leafActive);
   },
   created() {
+    http
+      .getNormal("/info")
+      .then((response) => {
+        this.volunteer = response.data.volunteer;
+        this.group = response.data.group;
+        this.need_funding = response.data.need_funding;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     this.$store.dispatch("showUpcomingActivity");
     // console.log(this.upcoming_activity);
   },
@@ -216,7 +231,7 @@ export default {
   height: 100px;
   background-image: linear-gradient(gray 100%, transparent 0);
 }
-#info{
+#info {
   color: white;
   padding: 20px;
 }

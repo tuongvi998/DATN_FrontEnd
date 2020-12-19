@@ -48,6 +48,9 @@ export default {
       group_img: require("@/assets/img/group_img.png"),
     };
   },
+  created(){
+
+  }
 };
 </script>
 

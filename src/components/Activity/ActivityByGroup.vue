@@ -5,7 +5,7 @@
         <ul id="breadcrumb-menu">
           <li id="breadcrumb-item">Hoạt động</li>
           <li id="breadcrumb-item" v-if="this.$route.params.fieldname != ''">
-            / {{ this.$route.params.fieldname }}
+            / Ca{{ this.$route.params.fieldname }}
           </li>
         </ul>
       </div>
@@ -21,9 +21,6 @@
         </div>
       </div>
     </div>
-    <!-- <div v-if="!checkActi" class="row w-100 d-flex text-center">
-      <h3>hhhhhhhhhhhhhh</h3>
-    </div> -->
     <div
       class="col-md-12 col-sm-12 col-12 mt-4 d-flex text-center"
       v-for="activity in pageOfItems"
@@ -116,9 +113,9 @@ export default {
       this.month = "";
       this.checkActi = true;
       console.log("dsfdsfdsdfsdsfsdfsd", this.checkActi);
-      this.params = this.$route.params.fieldname;
+      this.params = this.$route.params.groupid;
       http
-        .getNormal("/activities/field", this.params)
+        .getNormal("/activity/by-group-id", this.params)
         .then((response) => {
           if (response.data.data == null) {
           } else {

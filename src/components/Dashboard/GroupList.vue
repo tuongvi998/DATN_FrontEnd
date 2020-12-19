@@ -5,7 +5,7 @@
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100"
       >
         <md-card>
-          <md-card-content >
+          <md-card-content>
             <simple-table
               table-header-color="green"
               :listUser="pageOfItems"
@@ -14,12 +14,20 @@
               :listColumns="listColumns"
               :isUser="true"
             >
-            <!-- <td class="tb-content">{{ user.id }}</td>
+              <!-- <td class="tb-content">{{ user.id }}</td>
             <td class="tb-content">{{ user.user_id }}</td>
             <td class="tb-content">{{ user.name }}</td>
             <td class="tb-content">{{ user.email }}</td> -->
             </simple-table>
-            <div class="row d-flex justify-content-center" > <jw-pagination :pageSize ="20" :items="listGroup" :labels="customLabels" @changePage="onChangePage"></jw-pagination></div>
+            <div class="row d-flex justify-content-center">
+              <jw-pagination
+                :pageSize="20"
+                :items="listGroup"
+                :labels="customLabels"
+                @changePage="onChangePage"
+                :styles="customStyles"
+              ></jw-pagination>
+            </div>
           </md-card-content>
         </md-card>
       </div>
@@ -28,13 +36,28 @@
 </template>
 
 <script>
-import { SimpleTable, } from "@/components";
+import { SimpleTable } from "@/components";
 import { mapActions, mapGetters } from "vuex";
 const customLabels = {
-    first: '<<',
-    last: '>>',
-    previous: '<',
-    next: '>'
+  first: "<<",
+  last: ">>",
+  previous: "<",
+  next: ">",
+};
+const customStyles = {
+  ul: {
+    // border: '2px solid red'
+  },
+  li: {
+    display: "inline-block",
+  },
+  a: {
+    color: " #22a024",
+    padding: "0 0",
+  },
+  "a.active": {
+    backgroundColor: "blue",
+  },
 };
 export default {
   components: {
@@ -42,17 +65,14 @@ export default {
   },
   data() {
     return {
-      id: '',
-      name: '',
-      listHeader: [
-       '', 'Tên', 'Email', ''
-      ],
-      listColumns:[
-       "name", "email"
-      ],
-      pageOfItems:[],
+      id: "",
+      name: "",
+      listHeader: ["", "Tên", "Email", ""],
+      listColumns: ["name", "email"],
+      pageOfItems: [],
       customLabels,
-      loader: "dots"
+      loader: "dots",
+      customStyles
     };
   },
   computed: {
@@ -62,9 +82,9 @@ export default {
   },
   methods: {
     onChangePage(pageOfItems) {
-            // update page of items
-            this.pageOfItems = pageOfItems;
-        },
+      // update page of items
+      this.pageOfItems = pageOfItems;
+    },
     ...mapActions({
       deleteGroup: "deleteGroup",
     }),

@@ -13,6 +13,7 @@ import AllActivity from "../components/views/AllActivity.vue";
 import ActivityDetail from "../components/views/ActivityDetail.vue";
 import AllGroup from "../components/views/AllGroup.vue";
 import GroupByField from "../components/views/GroupByField.vue";
+import GroupDetail from "../components/views/GroupDetail.vue";
 //
 import GroupLayout from "../components/views/GroupLayout.vue";
 import DashboardLayout from "../components/views/DashboardLayout.vue";
@@ -28,6 +29,7 @@ import FieldList from "../components/Dashboard/FieldList.vue";
 
 import ActivityCard from "../components/Activity/ActivityCard.vue";
 import ActivityByField from "../components/Activity/ActivityByField.vue";
+import ActivityByGroup from "../components/Activity/ActivityByGroup.vue";
 import {
     GroupDashboard,
     GroupActivity,
@@ -63,6 +65,15 @@ const router = new Router({
             path: "/",
             name: "homepage",
             components: { default: Home, header: MainNavbar, footer: MainFooter },
+            props: {
+                header: { colorOnScroll: 300 },
+                footer: { backgroundColor: "black" },
+            },
+        },
+        {
+            path: "/detail",
+            name: "groupdetail",
+            components: { default: GroupDetail, header: MainNavbar, footer: MainFooter },
             props: {
                 header: { colorOnScroll: 300 },
                 footer: { backgroundColor: "black" },
@@ -135,6 +146,11 @@ const router = new Router({
                     path: "/activity/:fieldname",
                     name: "field-name",
                     component: ActivityByField,
+                },
+                {
+                    path: "/activity/:groupname/:groupid",
+                    name: "activity-by-group",
+                    component: ActivityByGroup,
                 },
             ],
         },

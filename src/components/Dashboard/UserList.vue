@@ -15,7 +15,15 @@
               :isUser="true"
             >
             </simple-table>
-            <div class="row d-flex justify-content-center" > <jw-pagination :pageSize ="20" :items="listVolunteer" :labels="customLabels" @changePage="onChangePage"></jw-pagination></div>
+            <div class="row d-flex justify-content-center">
+              <jw-pagination
+                :pageSize="20"
+                :items="listVolunteer"
+                :labels="customLabels"
+                :styles="customStyles"
+                @changePage="onChangePage"
+              ></jw-pagination>
+            </div>
           </md-card-content>
         </md-card>
       </div>
@@ -38,14 +46,29 @@
 </template>
 
 <script>
-import { SimpleTable,  } from "@/components"; //OrderedTable
+import { SimpleTable } from "@/components"; //OrderedTable
 import { mapActions, mapGetters } from "vuex";
 
 const customLabels = {
-    first: '<<',
-    last: '>>',
-    previous: '<',
-    next: '>'
+  first: "<<",
+  last: ">>",
+  previous: "<",
+  next: ">",
+};
+const customStyles = {
+  ul: {
+    // border: '2px solid red'
+  },
+  li: {
+    display: "inline-block",
+  },
+  a: {
+    color: " #22a024",
+    padding: "0 0",
+  },
+  "a.active": {
+    backgroundColor: "blue",
+  },
 };
 export default {
   components: {
@@ -54,17 +77,14 @@ export default {
   },
   data() {
     return {
-      id: '',
-      name: '',
-      listHeader: [
-       '','Tên', 'Email', '',
-      ],
-      listColumns:[
-        "name", "email"
-      ],
+      id: "",
+      name: "",
+      listHeader: ["", "Tên", "Email", ""],
+      listColumns: ["name", "email"],
       customLabels,
-      pageOfItems:[],
-      loader: "dots"
+      pageOfItems: [],
+      loader: "dots",
+      customStyles
     };
   },
   computed: {
@@ -77,9 +97,9 @@ export default {
       deleteVolunteer: "deleteVolunteer",
     }),
     onChangePage(pageOfItems) {
-            // update page of items
-            this.pageOfItems = pageOfItems;
-        },
+      // update page of items
+      this.pageOfItems = pageOfItems;
+    },
   },
   created() {
     let homeCont = this.$refs.homeCont;

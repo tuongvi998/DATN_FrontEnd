@@ -24,7 +24,7 @@
     <div v-if="checkAllActi">
       <div
         class="col-md-12 col-sm-12 col-12 mt-4 d-flex text-center"
-        v-for="activity in listAllUpcomingActivity"
+        v-for="activity in pageOfItems"
         :key="activity.index"
       >
         <div class="card-image p-1">
@@ -46,11 +46,19 @@
           >
         </div>
       </div>
+      <div class="row d-flex justify-content-center">
+        <jw-pagination
+          :pageSize="15"
+          :items="listAllUpcomingActivity"
+          :labels="customLabels"
+          @changePage="onChangePage"
+        ></jw-pagination>
+      </div>
     </div>
     <div v-else>
       <div
         class="col-md-12 col-sm-12 col-12 mt-4 d-flex text-center"
-        v-for="activity in listActivity"
+        v-for="activity in pageOfItems"
         :key="activity.index"
       >
         <div class="card-image p-1">
@@ -71,6 +79,15 @@
             </button></router-link
           >
         </div>
+      </div>
+      <div class="row d-flex justify-content-center">
+        <jw-pagination
+          :pageSize="12"
+          :items="listActivity"
+          :labels="customLabels"
+          :styles="customStyles"
+          @changePage="onChangePage"
+        ></jw-pagination>
       </div>
     </div>
   </div>
@@ -80,6 +97,28 @@
 import { mapGetters, mapState } from "vuex";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
+
+const customLabels = {
+  first: "<<",
+  last: ">>",
+  previous: "<",
+  next: ">",
+};
+const customStyles = {
+  ul: {
+    // border: '2px solid red'
+  },
+  li: {
+    display: "inline-block",
+  },
+  a: {
+    color: " #22a024",
+    padding: "0 0",
+  },
+  "a.active": {
+    backgroundColor: "blue",
+  },
+};
 export default {
   name: "activity-card",
   components: {
@@ -97,10 +136,17 @@ export default {
       checkActi: true,
       listActivity: this.listAllUpcomingActivity,
       checkAllActi: true,
+      pageOfItems: [],
+      customLabels,
+      customStyles
     };
   },
 
   methods: {
+    onChangePage(pageOfItems) {
+      // update page of items
+      this.pageOfItems = pageOfItems;
+    },
     loadData() {
       this.month = "";
       this.checkActi = true;
