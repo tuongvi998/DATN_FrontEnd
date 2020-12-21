@@ -3,6 +3,7 @@
     <table
       class="table table-borderless table-responsive-md"
     >
+      <thead class="w-100 text-right">asdasda</thead>
       <thead>
         <tr>
           <th v-for="header in listHeader" :key="header.index" scope="col" class="tb-header">{{header}}</th>
@@ -63,9 +64,9 @@
                 <p>
                   <i class="far fa-envelope mr-2"></i>{{ user.email }}
                 </p>
-                <p>
+                <p v-if="isgender">
                   <i class="fas fa-venus-mars mr-2"></i>{{gender}}</p>
-                <p>
+                <p v-if="birthday">
                   <i class="far fa-calendar-alt mr-2"></i>{{ user.birthday }}
                 </p>
                 <!-- Split button -->
@@ -168,7 +169,9 @@ export default {
     deleteUser: Function,
     listHeader: Array,
     listColumns: Array,
-    isUser: Boolean
+    isUser: Boolean,
+    birthday: Boolean,
+    isgender: Boolean
   },
 };
 </script>

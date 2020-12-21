@@ -15,7 +15,7 @@
       </sidebar-link>
       <sidebar-link to="/admin/users">
         <md-icon>person</md-icon>
-        <p>Tình nguyện viên</p>
+        <p>Người dùng</p>
       </sidebar-link>
       <sidebar-link to="/admin/groups">
         <md-icon>group</md-icon>

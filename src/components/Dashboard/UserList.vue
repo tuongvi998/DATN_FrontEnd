@@ -13,6 +13,8 @@
               :listHeader="listHeader"
               :listColumns="listColumns"
               :isUser="true"
+              :isgender="true"
+              :birthday="true"
             >
             </simple-table>
             <div class="row d-flex justify-content-center">

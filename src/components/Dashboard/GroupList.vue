@@ -13,6 +13,8 @@
               :listHeader="listHeader"
               :listColumns="listColumns"
               :isUser="true"
+              :isgender="false"
+              :birthday="false"
             >
               <!-- <td class="tb-content">{{ user.id }}</td>
             <td class="tb-content">{{ user.user_id }}</td>

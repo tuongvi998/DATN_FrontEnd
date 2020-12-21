@@ -11,13 +11,13 @@
 
           <template slot="content">
             <p class="category">Tổ chức </p>
-            <h3 class="title">$34,245</h3>
+            <h3 class="title">{{group}}</h3>
           </template>
 
           <template slot="footer">
             <div class="stats">
-              <md-icon>date_range</md-icon>
-              Last 24 Hours
+              <md-icon>local_offer</md-icon>
+              <router-link to="admin/groups">Danh sách các tổ chức</router-link>
             </div>
           </template>
         </stats-card>
@@ -31,17 +31,16 @@
           </template>
 
           <template slot="content">
-            <p class="category">Tình nguyện viên đăng ký</p>
+            <p class="category">Tài khoản người dùng</p>
             <h3 class="title">
-              49/50
-              <small>GB</small>
+              {{volunteer}}
             </h3>
           </template>
 
           <template slot="footer">
             <div class="stats">
-              <md-icon class="text-danger">warning</md-icon>
-              <a href="#pablo">Get More Space...</a>
+              <md-icon class="text-default">local_offer</md-icon>
+              <router-link to="/admin/users">Danh sách người dùng</router-link>
             </div>
           </template>
         </stats-card>
@@ -49,20 +48,20 @@
       <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33"
       >
-        <stats-card data-background-color="red">
+        <stats-card data-background-color="blue">
           <template slot="header">
             <md-icon>info_outline</md-icon>
           </template>
 
           <template slot="content">
             <p class="category">Lĩnh vực hoạt động</p>
-            <h3 class="title">75</h3>
+            <h3 class="title">{{field}}</h3>
           </template>
 
           <template slot="footer">
             <div class="stats">
               <md-icon>local_offer</md-icon>
-              Tracked from Github
+              <router-link to="/admin/fields">Danh sách lĩnh vực hoạt động</router-link>
             </div>
           </template>
         </stats-card>
@@ -202,6 +201,7 @@
 </template>
 
 <script>
+import http from "../../service/index"
 import {
   StatsCard,
   ChartCard,
@@ -218,10 +218,22 @@ export default {
     // NavTabsTable,
     // OrderedTable,
   },
+  created(){
+    http.getNormal("/info")
+    .then(response => {
+      this.volunteer = response.data.volunteer;
+      this.group = response.data.group;
+      this.field = response.data.field;
+    })
+  },
   data() {
     return {
+                volunteer: null,
+          group: null,
+          field: null,
       dailySalesChart: {
         data: {
+
           labels: ["M", "T", "W", "T", "F", "S", "S"],
           series: [[12, 17, 7, 17, 23, 18, 38]],
         },
