@@ -7,27 +7,36 @@
     >
       <div class="row mt-5">
         <div class="col-md-6 col-sm-6 col-8">
-          <img :src="activity.image" class="rounded pl-3 pr-3 pb-3" alt="" />
+          <img
+            :src="activity.image_url"
+            class="rounded pl-3 pr-3 pb-3"
+            alt=""
+          />
         </div>
         <div class="col-md-6 col-sm-6 col-12">
           <h5 class="pb-2">{{ activity.title }}</h5>
           <!-- <p id="active-content">{{activity.content}}</p> -->
           <div class="active-content">
-            <p>Địa điểm: {{ activity.activity_address }}</p>
-          <p>
-            Thời gian: {{ activity.start_date }} đến {{ activity.end_date }}
-          </p>
-          <p>Trạng thái xác nhận: <small v-if="activity.isAccept" class="bg-success">Chấp nhận</small>
-          <small v-if="!activity.isAccept" class="text-light bg-dark">Đang chờ</small>
-          </p>
-          
-          <router-link
-            tag="a"
-            :to="{name: 'activity-detail', params: {id: activity.id}}"
-            class="btn-primary btn-outline mr-2 ml-2 mt-1"
-            id="activity-btn"
-            >Chi tiết<i class="fas fa-arrow-right"></i
-          ></router-link>
+            <p>Địa điểm: {{ activity.address }}</p>
+            <p>
+              Thời gian: {{ activity.start_date }} đến {{ activity.end_date }}
+            </p>
+            <p>Trạng thái xác nhận:</p>
+            <md-button v-if="activity.isAccept" class="md-success md-sm"
+              ><small class="text-white">Chấp nhận</small></md-button
+            >
+            <md-button v-if="!activity.isAccept" class="md-sm"
+              ><small class="text-white">Đang chờ</small></md-button
+            >
+            <br />
+
+            <router-link
+              tag="a"
+              :to="{ name: 'activity-detail', params: { id: activity.id } }"
+              class="btn-primary btn-outline mr-2 ml-2 mt-1"
+              id="activity-btn"
+              >Chi tiết<i class="fas fa-arrow-right"></i
+            ></router-link>
           </div>
         </div>
       </div>
@@ -58,7 +67,7 @@ export default {
     } else {
       var id = VueJwtDecode.decode(token);
       //   console.log("token   ", typeof(id.sub.toString()));
-      this.$store.dispatch("showActivityRegister", id.sub);
+      this.$store.dispatch("showActivityRegister");
       console.log(this.getActivityRegister);
     }
   },
@@ -66,7 +75,7 @@ export default {
 </script>
 
 <style scoped>
-.check-accept{
+.check-accept {
   font-size: 20px;
 }
 #activity-btn {
@@ -107,11 +116,11 @@ export default {
   color: #3c4858;
 }
 @media (max-width: 768px) {
-.btn-primary {
-  padding: 0 14px;
-  border: 1px solid;
-  border-radius: 3px;
-  font: 700 10px/32px "Montserrat", sans-serif;
-}
+  .btn-primary {
+    padding: 0 14px;
+    border: 1px solid;
+    border-radius: 3px;
+    font: 700 10px/32px "Montserrat", sans-serif;
+  }
 }
 </style>

@@ -17,13 +17,7 @@
             </div>
             <div class="col-md-7">
               <div class="datime text-right">
-                <!-- <date-picker
-            format="YYYY-MM"
-            type="month"
-            v-model="month"
-            placeholder="Tháng diễn ra"
-            valueType="format"
-          ></date-picker> -->
+
               </div>
             </div>
           </div>
@@ -56,9 +50,71 @@
                 <small
                   ><i class="fas fa-map-marker-alt"></i> {{ group.address }}
                 </small>
+                <br>
+                <md-button class="md-success md-sm" 
+              ><small @click="getGroupInfo(group.id)" class="text-white" v-b-modal.modal-lg variant="primary">Thông tin</small></md-button
+            >
               </div>
             </div>
           </div>
+          <b-modal id="modal-lg" size="lg">
+            <div v-for="gr in listgroup" :key="gr.index">
+                <div class="row pr-4 pl-4">
+              <div class="card-image p-1">
+                <img
+                id=""
+                  class="img-responsive group-ava"
+                  :src="gr.group_avatar_url"
+                  alt="..."
+                />
+              </div>
+              <div class="group-detail pl-3 pb-5 pt-3 text-left">
+              <h5 class="group-name">
+                    {{ gr.name }}
+                  </h5>
+                  <small>{{ gr.email }}</small><br>
+                  <small
+                  ><i class="fas fa-map-marker-alt"></i> {{ gr.address }}
+                </small>
+                <br>
+                <small><i class="fas fa-phone-square-alt"></i> {{gr.phone}}</small>
+              </div>
+            </div>
+            <div class="row pl-4">
+              <div class="col-md-1"></div>
+              <div class="col-md-2">
+                <p id="title">Sứ mệnh:</p>
+              </div>
+              <div class="col-md-8">
+                <p>{{gr.mission}}</p>
+              </div>
+            </div>
+            <div class="row pl-4">
+              <div class="col-md-1"></div>
+              <div class="col-md-2">
+                <p id="title">Tầm nhìn:</p>
+              </div>
+              <div class="col-md-8">
+                <p>{{gr.vision}}</p>
+              </div>
+            </div>
+            <div class="row pl-4">
+              <div class="col-md-1"></div>
+              <div class="col-md-2">
+                <p id="title">Một số hoạt động:</p>
+              </div>
+              <div class="col-md-8">
+                <p>{{gr.activity}}</p>
+              </div>
+            </div>
+            </div>
+            <template #modal-footer class="text-center">
+            <!-- <md-button class="md-danger md-simple" @click="exitModal">Thoát</md-button> -->
+            <md-button class="md-success md-simple"
+              ></md-button
+            >
+          </template>
+          </b-modal>
           <div class="row w-100 d-flex justify-content-center">
             <jw-pagination
               :pageSize="20"
@@ -76,7 +132,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-
+import http from "../../service/index"
 const customLabels = {
   first: "<<",
   last: ">>",
@@ -108,6 +164,7 @@ export default {
       pageOfItems: [],
       customLabels,
       customStyles,
+      listgroup: null
     };
   },
   computed: {
@@ -120,6 +177,16 @@ export default {
       // update page of items
       this.pageOfItems = pageOfItems;
     },
+    getGroupInfo(id){
+      http.getNormal('/group',id)
+      .then(res => {
+        this.listgroup = res.data.data
+        console.log( this.listgroup)
+      })
+      .catch(error=>{
+        console.log(error);
+      })
+    }
   },
   created() {
     let homeCont = this.$refs.homeCont;
@@ -144,6 +211,11 @@ export default {
 </script>
 
 <style scoped>
+#title{
+      font-size: 17px;
+    color: #32672f;
+    font-weight: 500;
+}
 .group-ava {
   /* position: absolute;
   top: 50%; */

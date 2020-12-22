@@ -27,6 +27,7 @@
           </td>
           <td>
             <button
+            v-if="!happen"
               class="btn btn-outline-danger tb-content"
               type="button"
               @click="deleActivity(activity.id, activity.title)"

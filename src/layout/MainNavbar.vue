@@ -4,15 +4,9 @@
       <div class="md-toolbar-section-start">
         <router-link to="/">
           <img id="nav-icon" :src="image" alt=""
-        /></router-link>
+        /></router-link><h6 class="text-success">SHARELOVE</h6>
         <div class="md-autocomplete">
-          <md-autocomplete
-            class="search"
-            v-model="selectedEmployee"
-            :md-options="employees"
-          >
-            <label>Tìm...</label>
-          </md-autocomplete>
+          
         </div>
       </div>
       <div class="md-toolbar-section-end">

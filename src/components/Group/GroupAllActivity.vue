@@ -7,14 +7,31 @@
         <div class="add-btn">
           <md-button class="md-success" v-b-modal.modal-lg>+</md-button>
         </div>
-        <b-modal id="modal-lg" class="mw-100 w-75">
+        <div>
+          <!-- <md-button class="md-success" v-b-modal.modal-lg variant="primary">lg modal</md-button> -->
+        </div>
+        <b-modal id="modal-lg" size="lg" title="Large Modal">
           <template #modal-title>
             <h4 class="modal-title">Thêm hoạt động</h4>
           </template>
-          <md-field>
-            <label>Tên hoạt động</label>
-            <md-input v-model="activity.title"></md-input>
-          </md-field>
+          <div class="row">
+            <div class="col-md-8">
+              <md-field>
+                <label>Tên hoạt động"</label>
+                <md-input v-model="activity.title"></md-input>
+              </md-field>
+            </div>
+            <div class="col-md-4">
+              <label for="avatar">Hình ảnh:</label>
+              <input
+                type="file"
+                id="file" ref="file"
+                name="avatar"
+                @change="onFileSelect"
+                accept="image/png, image/jpeg"
+              />
+            </div>
+          </div>
           <md-field>
             <label>Nội dung</label>
             <md-input v-model="activity.content"></md-input>
@@ -99,18 +116,6 @@
               </select>
             </div>
           </div>
-          <!-- <md-field>
-            <label>Địa điểm:</label>
-            <md-input v-model="activity.address"></md-input>
-          </md-field> -->
-          <!-- <div class="row">
-              <div class="col-md-6">
-                <md-field>
-          <label>Địa điểm:</label>
-            <md-input v-model="activity.address"></md-input>
-          </md-field>
-              </div>
-            </div> -->
           <md-field>
             <label>Yêu cầu</label>
             <md-input v-model="activity.require"></md-input>
@@ -129,13 +134,19 @@
             <div class="col-md-4">
               <md-field>
                 <label>Đăng ký tối đa</label>
-                <md-input type="number" v-model="activity.max_register"></md-input>
+                <md-input
+                  type="number"
+                  v-model="activity.max_register"
+                ></md-input>
               </md-field>
             </div>
             <div class="col-md-4">
               <md-field>
                 <label>Số tình nguyện viên</label>
-                <md-input type="number" v-model="activity.min_register"></md-input>
+                <md-input
+                  type="number"
+                  v-model="activity.min_register"
+                ></md-input>
               </md-field>
             </div>
           </div>
@@ -177,7 +188,9 @@ export default {
   },
   data() {
     return {
+      imageData: { name : null,file: null },
       showAddActivityModal: false,
+      group_id: '9',
       add: {
         province: "",
         district: "",
@@ -248,40 +261,43 @@ export default {
         this.add.ward + ", " + this.add.district + ", " + this.add.province
       );
     },
+    onFileSelect(event){
+      this.imageData = event.target.files[0]
+    },
     addActi() {
       const start = new Date(this.activity.start_date);
       const end = new Date(this.activity.end_date);
       const close = new Date(this.activity.close_date);
       const date = new Date();
       console.log(start, end, date);
-       if(start> end){
+      if (start > end) {
         this.$confirm({
-        title: "Ngày không phù hợp",
-        message: "Ngày kết thúc phải sau ngày bắt đầu",
-        button: {
-          yes: "OK",
-        }
-      })
-      } else if(start < close){
+          title: "Ngày không phù hợp",
+          message: "Ngày kết thúc phải sau ngày bắt đầu",
+          button: {
+            yes: "OK",
+          },
+        });
+      } else if (start < close) {
         this.$confirm({
-        title: "Ngày không phù hợp",
-        message: "Hạn đăng ký phải trước ngày bắt đầu",
-        button: {
-          yes: "OK",
-        }
-      })
-      }else if ( close < date){
+          title: "Ngày không phù hợp",
+          message: "Hạn đăng ký phải trước ngày bắt đầu",
+          button: {
+            yes: "OK",
+          },
+        });
+      } else if (close < date) {
         this.$confirm({
-        title: "Ngày không phù hợp",
-        message: "Hạn đăng ký phải ở tương lai",
-        button: {
-          yes: "OK",
-        }
-      })
-      }
+          title: "Ngày không phù hợp",
+          message: "Hạn đăng ký phải ở tương lai",
+          button: {
+            yes: "OK",
+          },
+        });
+      }else{
       this.activity.address =
         this.add.ward + ", " + this.add.district + ", " + this.add.province;
-      // console.log(this.activity.address)
+      
       if (
         this.activity.title == "" &&
         this.activity.cost == "" &&
@@ -305,11 +321,16 @@ export default {
           width: 1000,
         });
       }
+      var form = new FormData();
+      this.imageData.file = this.$refs.file.files[0]
+            form.append('image',this.imageData.file);
+            alert(typeof(form))
       var senddata = {
-        group_id: "131",
-        title: this.activity.title,
+        group_id: this.group_id,
+        title:this.activity.title,
+        image: form,
         start_date: new Date(this.activity.start_date),
-        end_date: new Date (this.activity.end_date),
+        end_date: new Date(this.activity.end_date),
         close_date: new Date(this.activity.close_date),
         content: this.activity.content,
         require: this.activity.require,
@@ -317,11 +338,9 @@ export default {
         address: this.activity.address,
         cost: this.activity.cost,
         donate: this.activity.donate,
-        image:
-          "https://volunteeringaustralia.r.worldssl.net/wp-content/uploads/volunteering-australia-people-linked-together.jpg",
-        min_register: this.activity.min_register,
+         min_register: this.activity.min_register,
         max_register: this.activity.max_register,
-      }
+      };
       http
         .postNormal("/group/create-activity", senddata)
         .then((responser) => {
@@ -339,6 +358,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    }
     },
   },
   created() {
@@ -349,7 +369,7 @@ export default {
 </script>
 <style scoped>
 .modal-lg {
-    max-width: 80% !important;
+  max-width: 80% !important;
 }
 .modal-mask {
   z-index: 20;
@@ -357,7 +377,7 @@ export default {
 .mx-datepicker {
   width: 100%;
 }
-.modal-md{
+.modal-md {
   max-width: 100vw;
   widows: 75vw;
 }

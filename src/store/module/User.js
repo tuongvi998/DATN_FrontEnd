@@ -21,7 +21,7 @@ const state = () => ({
     list_group_by_field: [],
     list_province: [],
     list_district: [],
-    list_ward: []
+    list_ward: [],
 });
 
 const getters = {
@@ -84,7 +84,7 @@ const getters = {
     },
     getListWard: (state) => {
         return state.list_ward;
-    }
+    },
 };
 
 const mutations = {
@@ -173,7 +173,7 @@ const mutations = {
     },
     showListWard(state, list_ward) {
         state.list_ward = list_ward;
-    }
+    },
 };
 const actions = {
     //volunteer
@@ -225,13 +225,14 @@ const actions = {
             });
     },
     showListGroupByField({ commit }, payload) {
-        http.getNormal("/groups", payload)
-            .then(response => {
+        http
+            .getNormal("/groups", payload)
+            .then((response) => {
                 commit("showListGroupByField", response.data.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
-            })
+            });
     },
     deleteGroup({ dispatch }, id) {
         http
@@ -268,9 +269,9 @@ const actions = {
                 console.log(error);
             });
     },
-    showActivityJoined({ commit }, payload) {
+    showActivityJoined({ commit }) {
         http
-            .getNormal("/volunteer/activity-joined", payload)
+            .getNormal("/volunteer/activity-joined")
             .then((response) => {
                 commit("showActivityJoined", response.data.data);
             })
@@ -278,9 +279,9 @@ const actions = {
                 console.log(error);
             });
     },
-    showActivityRegister({ commit }, payload) {
+    showActivityRegister({ commit }) {
         http
-            .getNormal("/volunteer/activity-register", payload)
+            .getNormal("/volunteer/activity-register")
             .then((response) => {
                 commit("showActivityRegister", response.data.data);
             })
@@ -431,31 +432,34 @@ const actions = {
             });
     },
     showListProvince({ commit }) {
-        http.getNormal("/provinces")
-            .then(response => {
+        http
+            .getNormal("/provinces")
+            .then((response) => {
                 commit("showListProvince", response.data.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
-            })
+            });
     },
     showListDistrict({ commit }, payload) {
-        http.getNormal("/districts", payload)
-            .then(response => {
+        http
+            .getNormal("/districts", payload)
+            .then((response) => {
                 commit("showListDistrict", response.data.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
-            })
+            });
     },
     showListWard({ commit }, payload) {
-        http.getNormal("/wards", payload)
-            .then(response => {
+        http
+            .getNormal("/wards", payload)
+            .then((response) => {
                 commit("showListWard", response.data.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
-            })
+            });
     },
 };
 export default {

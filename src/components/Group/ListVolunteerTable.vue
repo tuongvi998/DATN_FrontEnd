@@ -59,12 +59,6 @@
                 <h5>
                   {{ user.name }}
                 </h5>
-                <!-- <small
-                  ><i class="fas fa-map-marker-alt mr-2"></i
-                  ><cite title="San Francisco, USA">{{
-                    user.address
-                  }}</cite></small
-                > -->
                 <p><i class="far fa-envelope mr-2"></i>{{ user.email }}</p>
                 <p v-if="user.gender == 0">
                   <i class="fas fa-venus-mars mr-2"></i>Nữ
@@ -88,7 +82,7 @@
         </tr>
       </tbody>
     </table>
-    <md-button class="md-success" v-b-modal.modal-1>+</md-button>
+    <md-button class="md-success" @click="sendMail()" v-if="!isJoined" >Lấy danh sách</md-button>
   </div>
 </template>
 
@@ -110,6 +104,22 @@ export default {
     deleteUser: Function,
   },
   methods: {
+    sendMail(){
+      console.log(this.$route.params.actiId)
+      var id = this.$route.params.actiId;
+      http.getNormal('/group/export',id)
+      .then(res => {
+        this.$notify({
+              group: "foo",
+              type: "success",
+              title: "Lấy dữ liệy",
+              text: "Gửi dữ liểu thành công, vui lòng kiểm tra email của bạn!",
+              duration: 800,
+              speed: 700,
+              width: 1000,
+            });
+      })
+    },
     toggle(id) {
       const index = this.opened.indexOf(id);
       if (this.opened != null && !this.opened.includes(id)) {

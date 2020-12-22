@@ -15,7 +15,7 @@
           <img
             id="card-image"
             class="rounded"
-            :src="activity.image"
+            :src="activity.image_url"
             alt="Snowy Mountains"
           />
         </div>
@@ -177,4 +177,8 @@ export default {
 </script>
 
 <style scoped>
+#card-image{
+      height: 283px;
+    width: 100%;
+}
 </style>

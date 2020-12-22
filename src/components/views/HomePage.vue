@@ -4,8 +4,8 @@
       <div class="md-layout">
         <div class="md-layout-item">
           <div class="brand">
-            <h1>Volunteer</h1>
-            <h3>DATN</h3>
+            <h1>Chia sẻ hạnh phúc</h1>
+            <!-- <h3>DATN</h3> -->
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@
       </div>
       <div class="section section-contacts">
         <div class="pb-5 pt-1">
-          <contact></contact>
+          <!-- <contact></contact> -->
         </div>
       </div>
     </div>
@@ -92,7 +92,7 @@ import http from "../../service/index";
 export default {
   components: {
     HelpProcess,
-    Contact,
+    // Contact,
     UpcomingActivityList,
   },
   name: "index",

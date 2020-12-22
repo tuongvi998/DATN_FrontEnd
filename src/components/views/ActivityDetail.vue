@@ -21,9 +21,7 @@
               >{{ activity.email }}</small
             >
             <br />
-            <md-button class="md-success md-sm"
-              ><small class="text-white"><a href="#register-btn">Đăng ký ngay</a></small></md-button
-            >
+            
           </div>
           <div class="col-md-8 col-sm-6 col-12 d-flex text-center">
             <img
