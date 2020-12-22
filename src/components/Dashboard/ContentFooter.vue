@@ -38,7 +38,7 @@ export default {};
 <style>
 .main-panel > .footer {
     /* border-top: 1px solid #e7e7e7; */
-    position: fixed;
+    /* position: fixed; */
     bottom: 0;
     width: 100%;
 }

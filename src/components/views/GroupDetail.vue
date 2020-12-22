@@ -3,28 +3,18 @@
     <div class="container">
       <div class="content mt-5">
         <div class="md-layout bg-white rounded mt-5 mb-2">
-          <h1>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
-            consequatur possimus laudantium quidem laboriosam est odio eius
-            facere non doloremque atque eum assumenda, unde saepe a facilis
-            repellendus magni hic.
-          </h1>
-          <div class="container mt-2">
-            <div class="row w-100 p-3" >
-              <div class="col-md-3 col-sm-6 item" v-for="field in listFieldGroup" :key="field.id" >
-                <div class="card item-card card-block p-2 m-3">
-                  <h4 class="item-card-title text-right">
-                    <i class="material-icons">settings</i>
-                  </h4>
-                  <div id="image">
-                    <img :src="image" alt="Tinh nguyen vien" />
+          <div class=" mt-2">
+              <div class="row w-100">
+                  <div class="col-md-4 d-flex justify-content-center">
+                      <img class="img" src="http://www.philoinhuan.org/files/user/avatar/lin-image-1600761159056.png" alt="">
                   </div>
-                  <router-link :to="{name: 'group by field', params: {fieldname: field.name}}"><h5 class="card-title mt-3 mb-3">{{field.name}}</h5></router-link>
-                  <p class="card-text">
-                    Có {{field.groups_count}} Tổ chức
-                  </p>
-                </div>
+                  <div class="col-md-8">
+                      <h2 class="mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit</h2>
+                       <a class="btn-primary btn-outline mt-2 mr-2 ml-2" id="volunteer-btn">Liên hệ</a>
+                  </div>
               </div>
+            <div class="row w-100 p-3" >
+              
             </div>
           </div>
         </div>
@@ -54,16 +44,38 @@ export default {
 </script>
 
 <style scoped>
-.card-text{
-        font-size: 16px;
-    font-weight: 500;
-    color: #459e2f;
-    text-align: center;
-      height: 40px;
+#volunteer-btn:hover{
+border-color: #4ba64f;
+    background: #4ba64f;
+    color: #fff;
+    border: none;
 }
-img {
-  height: 150px;
-  width: 100%;
+.btn-primary {
+  padding: 0 22px;
+  border: 1px solid;
+  border-radius: 3px;
+  font: 700 12px/36px "Montserrat", sans-serif;
+  text-transform: uppercase;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  display: inline-block;
+  white-space: nowrap;
+  text-shadow: none;
+  text-align: center;
+  -webkit-transition: all 300ms linear 0s;
+  transition: all 300ms linear 0s;
+}
+.btn-primary.btn-outline {
+  background: none;
+}
+.img {
+    box-shadow: 5px 2px 10px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    width: 180px;
+    vertical-align: middle;
+    border-radius: 100%;
+    padding: 0px;
+    background: #fff;
 }
 #image {
   opacity: 0.95;

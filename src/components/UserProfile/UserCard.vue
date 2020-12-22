@@ -1,7 +1,7 @@
 <template>
   <md-card class="md-card-profile">
     <div class="md-card-avatar">
-      <img class="img" :src="cardUserImage" />
+      <img class="img" :src="avatar" />
     </div>
 
     <md-card-content>
@@ -25,6 +25,10 @@ export default {
       default: require("@/assets/img/faces/marc.jpg")
     },
     name: {
+      type: String,
+      require: true
+    },
+    avatar: {
       type: String,
       require: true
     }

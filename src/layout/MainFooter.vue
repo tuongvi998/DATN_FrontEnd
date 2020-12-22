@@ -5,13 +5,12 @@
   >
     <div class="">
       <div class="container">
-        <div class="footer">
-        <div class="row">
-          <div class="col-lg-5 col-xs-12 about-company">
-            <h2>Heading</h2>
+        <div class="footer w-100">
+        <div class="row w-100">
+          <div class="col-lg-6 col-xs-12 about-company">
+            <h4>Tình nguyện cho tương lai</h4>
             <p class="pr-5 text-green-50">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac
-              ante mollis quam tristique convallis
+              Cùng chúng tôi, chúng ta chia sẽ với mọi người để có thể xây dựng một thế giới tốt hơn.
             </p>
             <p>
               <a href="#"><i class="fa fa-facebook-square mr-1"></i></a
@@ -19,25 +18,25 @@
             </p>
           </div>
           <div class="col-lg-3 col-xs-12 links">
-            <h4 class="mt-lg-0 mt-sm-3">Links</h4>
+            <h4 class="mt-lg-0 mt-sm-3">Liên kết</h4>
             <ul class="m-0 p-0">
-              <li>Lorem ipsum</li>
-              <li>Nam mauris velit</li>
-              <li>Etiam vitae mauris</li>
+              <li><router-link tag="p" to="/activity/all">Hoạt động sắp tới</router-link></li>
+              <li><router-link tag="p" to="">Danh sách tổ chức</router-link></li>
+              <li><router-link tag="p" to="/">Liên hệ</router-link></li>
               <li>Fusce scelerisque</li>
             </ul>
           </div>
-          <div class="col-lg-4 col-xs-12 location">
-            <h4 class="mt-lg-0 mt-sm-4">Location</h4>
-            <p>22, Lorem ipsum dolor, consectetur adipiscing</p>
+          <div class="col-lg-3 col-xs-12 location">
+            <h4 class="mt-lg-0 mt-sm-4">Liên hệ</h4>
+            <p>Hải Châu, Đà Nẵng</p>
             <p class="mb-0"><i class="fa fa-phone mr-3"></i>(541) 754-3010</p>
-            <p><i class="fa fa-envelope-o mr-3"></i>info@hsdf.com</p>
+            <p><i class="fa fa-envelope-o mr-3"></i>tuongvii.lee@gmail.com</p>
           </div>
         </div>
         <div class="row mt-3">
           <div class="col copyright">
             <p class="">
-              <small class="text-green-50">© 2020. All Rights Reserved.</small>
+              <small class="text-green-50">© 2020. Bởi Lê Tường Vi.</small>
             </p>
           </div>
         </div>

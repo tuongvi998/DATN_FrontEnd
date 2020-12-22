@@ -15,7 +15,7 @@
       </sidebar-link>
       <sidebar-link to="/admin/users">
         <md-icon>person</md-icon>
-        <p>Tình nguyện viên</p>
+        <p>Người dùng</p>
       </sidebar-link>
       <sidebar-link to="/admin/groups">
         <md-icon>group</md-icon>
@@ -25,35 +25,11 @@
         <md-icon>content_paste</md-icon>
         <p>Lĩnh Vực hoạt động</p>
       </sidebar-link>
-      <!-- <sidebar-link to="/admin/typography">
-        <md-icon>library_books</md-icon>
-        <p>Typography</p>
-      </sidebar-link>
-      <sidebar-link to="/admin/icons">
-        <md-icon>bubble_chart</md-icon>
-        <p>Icons</p>
-      </sidebar-link>
-      <sidebar-link to="/admin/maps">
-        <md-icon>location_on</md-icon>
-        <p>Maps</p>
-      </sidebar-link>
-      <sidebar-link to="/admin/notifications">
-        <md-icon>notifications</md-icon>
-        <p>Notifications</p>
-      </sidebar-link> -->
     </side-bar>
 
     <div class="main-panel">
       <top-navbar></top-navbar>
-
-      <!-- <fixed-plugin
-        :color.sync="sidebarBackground"
-        :image.sync="sidebarBackgroundImage"
-      >
-      </fixed-plugin> -->
-
-      <dashboard-content> </dashboard-content>
-
+      <dashboard-content> </dashboard-content>  
       <content-footer v-if="!$route.meta.hideFooter"></content-footer>
     </div>
   </div>
@@ -79,7 +55,7 @@ export default {
   data() {
     return {
       sidebarBackground: "green",
-      title: "Mai",
+      title: localStorage.getItem("user_name"),
       imgLogo: require("@/assets/img/vue-logo.png"),
       sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg"),
     };

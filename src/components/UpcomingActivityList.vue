@@ -15,7 +15,7 @@
               tag="article"
             >
               <div class="cad-body">
-                <img :src="item.image" id="card-img" />
+                <img :src="item.image_url" id="card-img" />
               </div>
               <div class="card-title">{{ item.title }}</div>
               <div class="card-content p-3">
@@ -27,12 +27,12 @@
             </div>
           </slide>
         </carousel>
-        <a
-          href=""
+        <router-link tag="a"
+          :to="{name: 'activity'}"
           class="btn-primary btn-outline mr-2 ml-2 mt-3"
           id="activity-btn"
           >Xem thêm <i class="fas fa-arrow-right"></i
-        ></a>
+        ></router-link>
       </div>
     </div>
   </div>

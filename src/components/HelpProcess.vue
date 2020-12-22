@@ -31,8 +31,8 @@
       </div>
     </div>
     <div class="row how-help text-center mt-4">
-      <div class="buttons">
-        <router-link to="/activities"> <a class="btn-primary mr-2 ml-2" id="donate-btn">Tài trợ</a></router-link>
+      <div v-if="!isLogin" class="buttons">
+        <!-- <router-link to="/activities"> <a class="btn-primary mr-2 ml-2" id="donate-btn">Tài trợ</a></router-link> -->
         <router-link to="/login"> <a class="btn-primary btn-outline mr-2 ml-2" id="volunteer-btn">Đăng ký</a></router-link>
       </div>
     </div>
@@ -48,6 +48,14 @@ export default {
       group_img: require("@/assets/img/group_img.png"),
     };
   },
+  computed: {
+    isLogin() {
+      return localStorage.getItem("access_token") !== null;
+    },
+  },
+  created(){
+
+  }
 };
 </script>
 

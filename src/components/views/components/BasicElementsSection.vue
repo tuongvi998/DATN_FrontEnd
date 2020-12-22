@@ -180,7 +180,7 @@
           </div>
           <md-progress-bar
             class="md-primary"
-            :md-value="amount"
+            :md-value="90.3"
           ></md-progress-bar>
           <md-progress-bar
             class="md-info"

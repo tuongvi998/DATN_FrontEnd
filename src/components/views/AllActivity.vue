@@ -3,7 +3,7 @@
     <!-- <main-navbar class="mt-0"></main-navbar> -->
     <div class="container-fluid pt-">
       <div class="content pt-5">
-        <div class="md-layout pt-5">
+        <div class="md-layout pt-4">
           <div v-if="showFields" class="col-md-3 col-sm-3 col-12">
             <div class="sidebar-normal">
               <md-list class="sidebar-normal">
@@ -12,10 +12,12 @@
                   v-for="field in listField"
                   :key="field.index"
                 >
-                <!-- (field.name.normalize('NFD').replace(/\s+/g, '-').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D')) -->
+                  <!-- (field.name.normalize('NFD').replace(/\s+/g, '-').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D')) -->
                   <router-link
-                    :to="{ name: 'field-name', params:  {fieldname:  field.name} }"
-
+                    :to="{
+                      name: 'field-name',
+                      params: { fieldname: field.name },
+                    }"
                     class="md-list-item-router md-list-item-container md-button-clean"
                   >
                     <div class="md-list-item-content md-ripple">
@@ -27,9 +29,9 @@
             </div>
           </div>
           <div class="col-md-9 col-sm-9 col-12">
-            <div class="container row bg-white pt-4 pb-4">
-              <router-view></router-view>
-              <!-- <activity></activity> -->
+            <div class="container row bg-white pt-4 pb-4 h-100">
+              <!-- <router-view></router-view> -->
+              <activity-content></activity-content>
             </div>
           </div>
         </div>
@@ -39,11 +41,16 @@
 </template>
 
 <script>
-import { mapGetters,mapActions } from "vuex";
-// import Activity from "../Activity/Activity.vue";
+import { mapGetters, mapActions } from "vuex";
+// import DatePicker from 'vue2-datepicker';
+//   import 'vue2-datepicker/index.css';
+import ActivityContent from "../Activity/ActivityContent.vue";
 export default {
   components: {
-    // Activity
+    // ActivityCard
+    // Loading
+    ActivityContent,
+    // DatePicker 
   },
   props: {},
   data() {
@@ -53,39 +60,36 @@ export default {
       sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg"),
       widthWindown: window.innerWidth,
       activityList: [],
-      fieldname_link: '',
+      fieldname_link: "",
       loader: "dots",
     };
   },
-  methods: {
-    
-  },
+  methods: {},
   computed: {
     ...mapGetters({
       listField: "getListField",
+      // listAllUpcomingActivity: "getAllUpcomingActivity",
+      // listActivityByField: "getListAvtivityByField"
     }),
   },
   created() {
     let homeCont = this.$refs.homeCont;
-    let loader = this.$loading.show(
-          {
-            container: homeCont,
-            loader: this.loader,
-          }
-        );
-        setTimeout(() => {
-          loader.hide();
-        }, 2500);
+    let loader = this.$loading.show({
+      container: homeCont,
+      loader: this.loader,
+    });
+    setTimeout(() => {
+      loader.hide();
+    }, 3000);
     this.$store.dispatch("showListField");
     // this.$store.dispatch("showAllUpcomingActivity");
     // this.activityList = this.listAllUpcomingActivity;
     console.log(this.listField);
-
   },
   methods: {
     ...mapActions({
       // showActivityByField: "showActivityByField"
-    })
+    }),
   },
   watch: {
     widthWindown(newval) {
@@ -97,7 +101,13 @@ export default {
 };
 </script>
 <style scoped>
-
+.content{
+  width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
 .sidebar-normal {
   border-color: #4ba64f;
   background-color: #4ba64f;
@@ -109,7 +119,6 @@ export default {
   padding: 0;
   box-sizing: inherit;
 }
-
 
 @media (max-width: 60em) {
   body {

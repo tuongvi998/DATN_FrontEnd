@@ -2,16 +2,12 @@
   <md-toolbar id="toolbar" md-elevation="0" class="md-white md-absolute">
     <div class="md-toolbar-row md-collapse-lateral">
       <div class="md-toolbar-section-start">
-        <router-link to="/"> <img id="nav-icon" :src="image" alt=""></router-link>
+        <router-link to="/">
+          <img id="nav-icon" :src="image" alt=""
+        /></router-link><h6 class="text-success">SHARELOVE</h6>
         <div class="md-autocomplete">
-            <md-autocomplete
-              class="search"
-              v-model="selectedEmployee"
-              :md-options="employees"
-            >
-              <label>Tìm...</label>
-            </md-autocomplete>
-          </div>
+          
+        </div>
       </div>
       <div class="md-toolbar-section-end">
         <md-button
@@ -23,28 +19,66 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </md-button>
-        
+
         <div class="md-collapse">
           <div class="md-collapse-wrapper">
             <mobile-menu nav-mobile-section-start="false">
               <!-- Here you can add your items from the section-start of your toolbar -->
             </mobile-menu>
             <md-list>
-              <md-list-item
+              <md-button
+                class="md-button md-button-link md-white md-simple"
+                id="md-item"
               >
-                <router-link :to="{name: 'activity'}" tag="a">Hoạt động</router-link>
-              </md-list-item>
-              <md-list-item
+                <router-link @click="getActi" :to="{ name: 'activity' }" tag="a">
+                  <a id="md-item">Hoạt động</a>
+                </router-link>
+              </md-button>
+              <li class="md-list-item">
+                <a
+                  href="javascript:void(0)"
+                  class="md-list-item-router md-list-item-container md-button-clean dropdown"
+                >
+                  <div class="md-list-item-content">
+                    <drop-down direction="down">
+                      <md-button
+                        slot="title"
+                        id="md-item"
+                        class="md-button md-button-link md-white md-simple"
+                        data-toggle="dropdown"
+                        @click="getFields"
+                      >
+                        <!-- dropdown-toggle -->
+                        <p id="md-item">Danh bạ tổ chức</p>
+                      </md-button>
+                      <ul class="dropdown-menu dropdown-with-icons">
+                        <li v-for="field in getListField" :key="field.id">
+                          <router-link
+                          @click="getField(field.name)"
+                            :to="{
+                              name: 'group by field',
+                              params: { fieldname: field.name },
+                            }"
+                          >
+                            {{ field.name }}
+                          </router-link>
+                        </li>
+                      </ul>
+                    </drop-down>
+                  </div>
+                </a>
+              </li>
+              <md-button
+                id="md-item"
+                v-if="!isLogin"
+                class="md-button md-button-link md-white md-simple"
               >
-                <router-link to="/" tag="a">Danh bạ tổ chức </router-link>
-              </md-list-item>
-              <md-list-item  v-if="!isLogin">
-                <router-link :to="{name: 'login'}" tag="a">
-                  Đăng nhập/Đăng ký
-                  <i class="material-icons">login</i>
-                  </router-link>
-                  
-              </md-list-item>
+                <router-link :to="{ name: 'login' }">
+                  <a id="md-item">
+                    Đăng nhập/Đăng ký <i class="material-icons">login</i></a
+                  >
+                </router-link>
+              </md-button>
               <li class="md-list-item" v-if="isLogin">
                 <a
                   class="md-list-item-router md-list-item-container md-button-clean dropdown"
@@ -53,50 +87,27 @@
                     <drop-down direction="down">
                       <md-button
                         slot="title"
-                        class="md-button md-button-link md-white md-simple "
+                        class="md-button md-button-link md-white md-simple"
                         data-toggle="dropdown"
                         @click="getNameLink"
+                        id="md-item"
                       >
-                      <!-- dropdown-toggle -->
-                        <p>{{ user_name }}</p>
+                        <!-- dropdown-toggle -->
+                        <p id="md-item">{{ user_name }}</p>
                       </md-button>
                       <ul class="dropdown-menu dropdown-with-icons">
                         <li @click="profile()">
-                          <router-link  :to="{ name: 'user-page', params: { username: userpage_link } }">
-                            <p>Trang cá nhân</p>
+                          <router-link
+                            :to="{
+                              name: 'user-page',
+                              params: { username: userpage_link },
+                            }"
+                          >
+                            Trang cá nhân
                           </router-link>
                         </li>
-                        <li>
-                          <a @click="logoutFun()">Đăng xuất</a>
-                        </li>
-                      </ul>
-                    </drop-down>
-                  </div>
-                </a>
-              </li>
-
-              <li class="md-list-item" v-else>
-                <a
-                  href="javascript:void(0)"
-                  class="md-list-item-router md-list-item-container md-button-clean dropdown"
-                >
-                  <div class="md-list-item-content">
-                    <drop-down direction="down">
-                      <ul class="dropdown-menu dropdown-with-icons">
-                        <li>
-                          <a href="#/landing">
-                            <p>Landing Page</p>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="/login">
-                            <p>Login Page</p>
-                          </a>
-                        </li>
-                        <li>
-                          <a>
-                            <p>Profile Page</p>
-                          </a>
+                        <li @click="logoutFun()">
+                          <a>Đăng xuất</a>
                         </li>
                       </ul>
                     </drop-down>
@@ -126,8 +137,8 @@ function resizeThrottler(actualResizeHandler) {
 }
 
 import MobileMenu from "@/layout/MobileMenu";
-import { mapActions, mapGetters } from 'vuex';
-import VueJwtDecode from 'vue-jwt-decode';
+import { mapActions, mapGetters } from "vuex";
+import VueJwtDecode from "vue-jwt-decode";
 export default {
   components: {
     MobileMenu,
@@ -135,7 +146,7 @@ export default {
   props: {},
   data() {
     return {
-      image: require('@/assets/img/nav_icon.png'),
+      image: require("@/assets/img/nav_icon.png"),
       extraNavClasses: "",
       toggledClass: false,
       user_name: localStorage.getItem("user_name"),
@@ -150,28 +161,43 @@ export default {
         "Angela Martin",
         "Kelly Kapoor",
         "Ryan Howard",
-        "Kevin Malone"
-      ]
+        "Kevin Malone",
+      ],
     };
   },
   computed: {
+    ...mapGetters({
+      getListField: "getListField",
+    }),
     isLogin() {
       return localStorage.getItem("access_token") !== null;
     },
-    
   },
   methods: {
+    ...mapActions({
+      showListField: "showListField",
+    }),
+    getActi(){
+      // this.$store.dispatch("showAllUpcomingActivity");
+    },
+    getField(field){
+    // console.log(field);
+    // this.$store.dispatch("showListGroupByField",field);
+    },
     logoutFun() {
       return this.$store.dispatch("logout");
     },
-    getNameLink(){
+    getFields() {
+      return this.showListField();
+    },
+    getNameLink() {
       const token = localStorage.getItem("access_token");
-        if(token == null){
-          console.log('null');
-        }else{
-          const str = VueJwtDecode.decode(token);
-        console.log('token', str.sub);
-        }
+      if (token == null) {
+        console.log("null");
+      } else {
+        const str = VueJwtDecode.decode(token);
+        console.log("token", str.sub);
+      }
       this.name = localStorage.getItem("user_name");
       var AccentsMap = [
         "aàảãáạăằẳẵắặâầẩẫấậ",
@@ -244,7 +270,7 @@ export default {
   },
   mounted() {
     // document.addEventListener("scroll", this.scrollListener);
-                // console.log(this.$router.currentRoute.path)
+    // console.log(this.$router.currentRoute.path)
   },
   beforeDestroy() {
     // document.removeEventListener("scroll", this.scrollListener);
@@ -252,12 +278,26 @@ export default {
 };
 </script>
 <style scoped>
-#nav-icon{
-   width: 48px;
+#nav-icon {
+  width: 48px;
   height: 48px;
   object-fit: cover;
 }
-.search{
+.search {
   z-index: 20;
+}
+#md-item {
+  color: rgb(35, 126, 50);
+  font-size: 13px;
+  font-weight: 500;
+}
+#md-item:hover {
+  transition: 0.5s;
+  -ms-transform: scale(1.05); /* IE 9 */
+  -webkit-transform: scale(1.05); /* Safari 3-8 */
+  transform: scale(1.05);
+  color: #9c27b0;
+  /* opacity: 0.9; */
+  /* background-color: rgb(47, 153, 47); */
 }
 </style>

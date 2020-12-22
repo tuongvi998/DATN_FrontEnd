@@ -11,6 +11,9 @@ import Home from "../components/views/HomePage.vue";
 import UserPage from "../components/views/UserPage.vue";
 import AllActivity from "../components/views/AllActivity.vue";
 import ActivityDetail from "../components/views/ActivityDetail.vue";
+import AllGroup from "../components/views/AllGroup.vue";
+import GroupByField from "../components/views/GroupByField.vue";
+import GroupDetail from "../components/views/GroupDetail.vue";
 //
 import GroupLayout from "../components/views/GroupLayout.vue";
 import DashboardLayout from "../components/views/DashboardLayout.vue";
@@ -23,10 +26,23 @@ import UpgradeToPRO from "../components/Dashboard/UpgradeToPRO.vue";
 import UserList from "../components/Dashboard/UserList.vue";
 import GroupList from "../components/Dashboard/GroupList.vue";
 import FieldList from "../components/Dashboard/FieldList.vue";
+
 import ActivityCard from "../components/Activity/ActivityCard.vue";
-import ActivityByField from "../components/Activity/ActivityByField.vue";
-import { GroupDashboard, GroupActivity } from "../components/Group/index";
-// import GroupActivity from "../components/Group/GroupActivity.vue";
+import ActivityByField from "../components/Activity/ActivityByField.vue"; <<
+<< << < HEAD
+import { GroupDashboard, GroupActivity } from "../components/Group/index"; ===
+=== =
+import ActivityByGroup from "../components/Activity/ActivityByGroup.vue";
+import {
+    GroupDashboard,
+    GroupActivity,
+    GroupActivityDetail,
+    GroupAllActivity,
+    GroupActivityHappen,
+    GroupActivityDetail_happen,
+} from "../components/Group/index"; >>>
+>>> > dev / acti
+    // import GroupActivity from "../components/Group/GroupActivity.vue";
 Vue.use(Router);
 
 const router = new Router({
@@ -57,22 +73,68 @@ const router = new Router({
                 header: { colorOnScroll: 300 },
                 footer: { backgroundColor: "black" },
             },
+            meta: {
+                title: "Trang chủ",
+            },
+        },
+        {
+            path: "/detail",
+            name: "groupdetail",
+            components: {
+                default: GroupDetail,
+                header: MainNavbar,
+                footer: MainFooter,
+            },
+            props: {
+                header: { colorOnScroll: 300 },
+                footer: { backgroundColor: "black" },
+            },
+        },
+        {
+            path: "/all-groups",
+            name: "allgroup",
+            components: { default: AllGroup, header: MainNavbar, footer: MainFooter },
+            props: {
+                header: { colorOnScroll: 300 },
+                footer: { backgroundColor: "black" },
+            },
+            meta: {
+                title: "Danh bạ tổ chức",
+            },
+        },
+        {
+            path: "/all-groups/:fieldname",
+            name: "group by field",
+            components: {
+                default: GroupByField,
+                header: MainNavbar,
+                footer: MainFooter,
+            },
+            props: {
+                header: { colorOnScroll: 300 },
+                footer: { backgroundColor: "black" },
+            },
+            meta: {
+                title: "Danh bạ tổ chức",
+            },
         },
         {
             path: "/login",
             name: "login",
             components: { default: Login },
-            // props: {
-            //     header: { colorOnScroll: 400 },
-            // },
+            meta: {
+                title: "Đăng nhập",
+                requiresVisitor: true
+            },
         },
         {
             path: "/register",
             name: "register",
             components: { default: Register },
-            // props: {
-            //     header: { colorOnScroll: 400 },
-            // },
+            meta: {
+                title: "Đăng ký",
+                requiresVisitor: true
+            },
         },
         {
             path: "/profile",
@@ -86,7 +148,7 @@ const router = new Router({
         {
             path: "/activity",
             name: "activity",
-            redirect: '/activity/all',
+            redirect: "activity/all",
             components: {
                 default: AllActivity,
                 header: MainNavbar,
@@ -97,25 +159,38 @@ const router = new Router({
                 footer: { backgroundColor: "black" },
             },
             children: [{
-                    path: "/all",
+                    path: "all",
                     name: "all-activity",
-                    component: ActivityCard
+                    component: ActivityCard,
+                    meta: { title: "Hoạt động" },
                 },
                 {
-                    path: "/activity/:fieldname",
+                    path: "/activity/byfield/:fieldname",
                     name: "field-name",
-                    component: ActivityByField
+                    component: ActivityByField,
+                    meta: { title: "Hoạt động" },
+                },
+                {
+                    path: "/activity/bygroup/:groupname/:groupid",
+                    name: "activity-by-group",
+                    component: ActivityByGroup,
+                    meta: { title: "Hoạt động" },
                 },
             ],
         },
         {
             path: "/activity/detail/:id",
             name: "activity-detail",
-            components: { default: ActivityDetail, header: MainNavbar, footer: MainFooter },
+            components: {
+                default: ActivityDetail,
+                header: MainNavbar,
+                footer: MainFooter,
+            },
             props: {
                 header: { colorOnScroll: 400 },
                 footer: { backgroundColor: "black" },
             },
+            meta: { title: "Chi tiết hoạt động" },
         },
         {
             path: "/user/:username",
@@ -124,6 +199,10 @@ const router = new Router({
             props: {
                 header: { colorOnScroll: 400 },
                 footer: { backgroundColor: "black" },
+            },
+            meta: {
+                title: "Trang cá nhân",
+                requiresAuth: true
             },
         },
         {
@@ -134,12 +213,61 @@ const router = new Router({
                     path: "dashboard",
                     name: "Group Dashboard",
                     component: GroupDashboard,
+                    meta: {
+                        title: "Quản lý",
+                        requiresGroup: true
+                    },
                 },
                 {
                     path: "activity",
                     name: "Hoạt động sắp tới",
-                    component: GroupActivity
-                }
+                    component: GroupActivity,
+                    redirect: "/group/activity/",
+                    children: [{
+                            path: "/",
+                            component: GroupAllActivity,
+                            name: "Hoạt động sắp tới:",
+                            meta: {
+                                title: "Quản lý hoạt động",
+                                requiresGroup: true
+                            },
+                        },
+                        {
+                            path: "/group/activity/:actiId",
+                            component: GroupActivityDetail,
+                            name: "Chi tiết hoạt động",
+                            meta: {
+                                title: "Quản lý chi tiết hoạt động",
+                                requiresGroup: true
+                            },
+                        },
+                    ],
+                },
+                {
+                    path: "activity-happen",
+                    name: "Hoạt động đã diễn ra",
+                    component: GroupActivity,
+                    redirect: "/group/activity-happen/",
+                    children: [{
+                            path: "/",
+                            component: GroupActivityHappen,
+                            name: "Hoạt động đã diễn ra:",
+                            meta: {
+                                title: "Quản lý hoạt động",
+                                requiresGroup: true
+                            },
+                        },
+                        {
+                            path: "/group/activity-happen/:actiId",
+                            component: GroupActivityDetail_happen,
+                            name: "Chi tiết hoạt động đã diễn ra",
+                            meta: {
+                                title: "Quản lý chi tiết hoạt động",
+                                requiresGroup: true
+                            },
+                        },
+                    ],
+                },
             ],
         },
         {
@@ -150,21 +278,28 @@ const router = new Router({
                     path: "dashboard",
                     name: "Dashboard",
                     component: Dashboard,
-                },
-                {
-                    path: "table",
-                    name: "Table List",
-                    component: TableList,
+                    meta: {
+                        title: "Trang quản lý",
+                        requiresAdmin: true
+                    },
                 },
                 {
                     path: "groups",
-                    name: "Group List",
+                    name: "Danh sách các tổ chức",
                     component: GroupList,
+                    meta: {
+                        title: "Quản lý tổ chức",
+                        requiresAdmin: true
+                    },
                 },
                 {
                     path: "fields",
-                    name: "fields",
+                    name: "Lĩnh vực hoạt động",
                     component: FieldList,
+                    meta: {
+                        title: "Quản lý lĩnh vực hoạt động",
+                        requiresAdmin: true
+                    },
                 },
                 {
                     path: "typography",
@@ -172,27 +307,14 @@ const router = new Router({
                     component: Typography,
                 },
                 {
-                    path: "icons",
-                    name: "Icons",
-                    component: Icons,
-                },
-                {
                     path: "users",
-                    name: "Users",
+                    name: "Danh sách người dùng",
                     meta: {
                         hideFooter: true,
+                        title: "Quản lý người dùng",
+                        requiresAdmin: true
                     },
                     component: UserList,
-                },
-                {
-                    path: "notifications",
-                    name: "Notifications",
-                    component: Notifications,
-                },
-                {
-                    path: "upgrade",
-                    name: "Upgrade to PRO",
-                    component: UpgradeToPRO,
                 },
             ],
         },
@@ -206,7 +328,13 @@ const router = new Router({
     //     } else {
     //         return { x: 0, y: 0 };
     //     }
-    // }
+    // },
+});
+const DEFAULT_TITLE = "Tình nguyện";
+router.afterEach((to, from) => {
+    Vue.nextTick(() => {
+        document.title = to.meta.title || DEFAULT_TITLE;
+    });
 });
 router.beforeEach((to, from, next) => {
     if (to.matched.some((record) => record.meta.requireAuth)) {
@@ -218,7 +346,19 @@ router.beforeEach((to, from, next) => {
         }
     } else if (to.matched.some((record) => record.meta.requiresVisitor)) {
         if (localStorage.getItem("access_token")) {
-            router.replace("/home");
+            router.replace("/");
+        } else {
+            next();
+        }
+    } else if (to.matched.some((record) => record.meta.requiresGroup)) {
+        if (localStorage.getItem("role_id") != 2) {
+            router.replace("/");
+        } else {
+            next();
+        }
+    } else if (to.matched.some((record) => record.meta.requiresAdmin)) {
+        if (localStorage.getItem("role_id") != 1) {
+            router.replace("/");
         } else {
             next();
         }

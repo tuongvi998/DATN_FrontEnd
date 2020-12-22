@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white">
+  <div class="bg-white" ref="homeCont">
     <div class="container pt-5">
       <div
         class="-fluid mt-5"
@@ -21,15 +21,13 @@
               >{{ activity.email }}</small
             >
             <br />
-            <md-button class="md-success md-sm"
-              ><small class="text-white">Đăng ký ngay</small></md-button
-            >
+            
           </div>
           <div class="col-md-8 col-sm-6 col-12 d-flex text-center">
             <img
               id="card-image"
               class="rounded"
-              :src="activity.image"
+              :src="activity.image_url"
               alt="Snowy Mountains"
             />
           </div>
@@ -78,7 +76,7 @@
             </div>
           </div>
           <div>
-            <md-button v-if="!isLogin && !isRegister" @click="notifi()"
+            <md-button id="register-btn" v-if="!isLogin && !isRegister" @click="notifi()"
               >Bấm để đăng ký</md-button
             >
             <md-button v-if="isRegister">Da Dang ky</md-button>
@@ -128,6 +126,16 @@
                       >
                     </div>
                     <div class="col-md-12">
+                      <md-field :class="{ 'md-error': !checkExperience }">
+                        <label>Kinh nghiệm: </label>
+                        <md-input v-model="experience"></md-input>
+                        <md-icon v-if="!checkExperience">clear</md-icon>
+                      </md-field>
+                      <small v-if="!checkExperience" class="text-danger"
+                        >Bạn chưa nhập kinh nghiệm bản thân!</small
+                      >
+                    </div>
+                    <div class="col-md-12">
                       <md-field :class="{ 'md-error': !checkInterest }">
                         <label>Sở thích cá nhân</label>
                         <md-input v-model="interest"></md-input>
@@ -162,6 +170,7 @@ export default {
   name: "activity-detail",
   data() {
     return {
+      loader: "dots",
       activity_id: this.$route.params.id,
       birthday: "20/10/2020",
       name: "",
@@ -171,6 +180,8 @@ export default {
       address: "",
       checkIntro: true,
       checkInterest: true,
+      checkExperience: true,
+      experience:'',
       user_id: '',
       date: new Date().toJSON().slice(0, 10).replace(/-/g, "/"),
       isAccept: false,
@@ -180,7 +191,8 @@ export default {
         isAccept: '',
         register_date: '',
         introduction:'',
-        interest: ''
+        interest: '',
+        experience: ''
       }
     };
   },
@@ -202,19 +214,23 @@ export default {
       console.log(this.activity_id);
     },
     notifi() {
-      this.$notify({
-        group: "noti",
-        type: "warn",
-        width: 3000,
+      this.$confirm({
         title: "Bạn chưa đăng nhập",
-        text: "Vui lòng đăng nhập để có thể đăng ký tình nguyện viên </b>",
-        duration: 10000,
-        speed: 1000,
-      });
-    },
+        message: "Bạn có muốn đăng nhập để tiếp tục?",
+        button: {
+          yes: "Có",
+          no: "Không"
+        },
+        callback: (confirm) => {
+          if (confirm == true) {
+            this.$router.push({ name: 'login' })
+          }
+
+    },})},
     showRegisterForm() {
       this.checkIntro = true;
       this.checkInterest = true;
+      this.checkExperience = true;
       this.getUserProfile.forEach((user) => {
         this.name = user.name;
         this.birthday = user.birthday;
@@ -230,16 +246,23 @@ export default {
       var checkInterest = this.interest
         .replace(/^\s+/, "")
         .replace(/\s+$/, "");
-     if (checkIntro == "" && checkInterest == "") {
-        this.checkIntro = false;
+      var checkExperience = this.experience.replace(/^\s+/, "")
+        .replace(/\s+$/, "");
+     if (checkIntro == "" && checkInterest == "" && checkExperience=="") {
+        this.checkIntro = false;    
         this.checkInterest = false;
+        this.checkExperience =false
       } else if (checkIntro == "") {
         this.checkIntro = false;
       } else if (checkInterest == "") {
         this.checkInterest = false;
-      }else if (checkIntro !== "" && checkInterest !== "") {
+      } else if (checkExperience == "") {
+        this.checkExperience = false;
+      }
+      else if (checkIntro !== "" && checkInterest !== "" && checkExperience !=="") {
         this.checkIntro = true;
         this.checkInterest = true;
+        this.checkExperience = true;
         // const date = new Date().toJSON().slice(0, 10).replace(/-/g, "/");
         // const user_id = VueJwtDecode.decode(localStorage.getItem("access_token"))
           // console.log('ds', user_id, '  ', date)
@@ -249,6 +272,7 @@ export default {
           this.profile.register_date = this.date;
           this.profile.introduction = this.introduction;
           this.profile.interest = this.interest;
+          this.profile.experience = this.experience;
           console.log(this.profile)
           http.postNormal("/volunteer/register-profile", this.profile)
           .then(response => {
@@ -271,6 +295,16 @@ export default {
     },
   },
   created() {
+    let homeCont = this.$refs.homeCont;
+    let loader = this.$loading.show(
+          {
+            container: homeCont,
+            loader: this.loader,
+          }
+        );
+        setTimeout(() => {
+          loader.hide();
+        }, 3000);
     //  | VueJwtDecode.decode(localStorage.getItem("access_token")).sub,
     if(localStorage.getItem("access_token")){
       this.user_id = VueJwtDecode.decode(localStorage.getItem("access_token")).sub;

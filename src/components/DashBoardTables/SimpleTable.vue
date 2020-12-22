@@ -3,6 +3,7 @@
     <table
       class="table table-borderless table-responsive-md"
     >
+      <thead class="w-100 text-right">asdasda</thead>
       <thead>
         <tr>
           <th v-for="header in listHeader" :key="header.index" scope="col" class="tb-header">{{header}}</th>
@@ -48,7 +49,8 @@
           <td colspan="5" class="tb-content">
             <div class="row">
               <div class="col-3 image">
-                <img :src="user.avatar" id="avatar" />
+                <img v-if="isgender" :src="user.user_avatar_url" id="avatar" />
+                <img v-else :src="user.group_avatar_url" id="avatar">
               </div>
               <div class="col-9">
                 <h5>
@@ -63,9 +65,9 @@
                 <p>
                   <i class="far fa-envelope mr-2"></i>{{ user.email }}
                 </p>
-                <p>
+                <p v-if="isgender">
                   <i class="fas fa-venus-mars mr-2"></i>{{gender}}</p>
-                <p>
+                <p v-if="birthday">
                   <i class="far fa-calendar-alt mr-2"></i>{{ user.birthday }}
                 </p>
                 <!-- Split button -->
@@ -82,12 +84,6 @@
 <script>
 export default {
   name: "simple-table",
-  props: {
-    // tableHeaderColor: {
-    //   type: String,
-    //   default: "",
-    // },
-  },
   data() {
     return {
       selected: [],
@@ -168,7 +164,9 @@ export default {
     deleteUser: Function,
     listHeader: Array,
     listColumns: Array,
-    isUser: Boolean
+    isUser: Boolean,
+    birthday: Boolean,
+    isgender: Boolean
   },
 };
 </script>

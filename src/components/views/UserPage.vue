@@ -4,53 +4,51 @@
     <div class="container pt-5">
       <div class="content pt-5">
         <div class="md-layout pt-5">
-          <div class="md-layout-item md-medium-size-100 md-size-28">
-            <md-card class="md-card-profile">
+          <div class="md-layout-item md-medium-size-100 md-size-18">
+            <md-card
+              class="md-card-profile"
+              v-for="profile in getUserProfile"
+              :key="profile.index"
+            >
               <div class="md-card-avatar">
-                <img class="img" :src="cardUserImage" />
+                <img class="img" :src="profile.user_avatar_url" />
               </div>
               <md-card-content>
-                <h4 class="card-title">{{ username }}</h4>
-                <p class="card-description">
-                  Don't be scared of the truth because we need to restart the
-                  human foundation in truth And I love you like Kanye loves
-                  Kanye I love Rick Owens’ bed design but the back is...
+                <h4 class="card-title">{{ profile.name }}</h4>
+                <p v-if="profile.gender" class="card-description">
+                  <i class="fas fa-venus-mars"></i> Nam
+                </p>
+                <p v-else class="card-description">
+                  <i class="fas fa-venus-mars"></i> Nữ
                 </p>
               </md-card-content>
             </md-card>
           </div>
-          <div class="md-layout-item md-medium-size-100 md-size-70">
+          <div class="md-layout-item md-medium-size-100 md-size-80 w-100">
             <form>
               <md-card>
                 <md-card-content>
                   <div class="md-layout">
                     <div class="md-layout-item md-size-100 md-small-size-100">
                       <tabs
-                        :tab-name="['Thông tin cá nhân', 'Hoạt động', 'Đăng ký']"
-                        :tab-icon="['', '','']"
+                        :tab-name="[
+                          'Thông tin cá nhân',
+                          'Hoạt động',
+                          'Đăng ký',
+                        ]"
+                        :tab-icon="['', '', '']"
                         plain
                         nav-pills-icons
                         color-button="success"
                       >
                         <template slot="tab-pane-1">
                           <div
-                            class="md-layout"
+                            class="md-layout w-100"
                             v-for="profile in getUserProfile"
                             :key="profile.index"
                           >
                             <div
-                              class="md-layout-item md-small-size-100 md-size-33"
-                            >
-                              <md-field>
-                                <label>Company (disabled)</label>
-                                <md-input
-                                  v-model="disabled"
-                                  disabled
-                                ></md-input>
-                              </md-field>
-                            </div>
-                            <div
-                              class="md-layout-item md-small-size-100 md-size-33"
+                              class="md-layout-item md-small-size-100 md-size-43"
                             >
                               <md-field>
                                 <label>Tên </label>
@@ -61,7 +59,7 @@
                               </md-field>
                             </div>
                             <div
-                              class="md-layout-item md-small-size-100 md-size-33"
+                              class="md-layout-item md-small-size-100 md-size-43"
                             >
                               <md-field>
                                 <label>Email</label>
@@ -95,7 +93,7 @@
                             </div>
                           </div>
                         </template>
-                        <template slot="tab-pane-2">
+                        <template slot="tab-pane-2" class="w-100">
                           <activity-joied-form :img="img"></activity-joied-form>
                         </template>
                         <template slot="tab-pane-3">
@@ -118,15 +116,15 @@
 import { mapGetters, mapState } from "vuex";
 // import EditProfileForm from "../UserProfile/EditProfileForm.vue";
 import { Tabs } from "@/components";
-import ActivityJoiedForm from '../UserProfile/ActivityJoiedForm.vue';
-import ActivityRegisterFrom from '../UserProfile/ActivityRegisterFrom.vue';
+import ActivityJoiedForm from "../UserProfile/ActivityJoiedForm.vue";
+import ActivityRegisterFrom from "../UserProfile/ActivityRegisterFrom.vue";
 
 export default {
   components: {
     // EditProfileForm,
     Tabs,
     ActivityJoiedForm,
-    ActivityRegisterFrom
+    ActivityRegisterFrom,
   },
   props: {
     cardUserImage: {

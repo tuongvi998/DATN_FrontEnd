@@ -1,5 +1,5 @@
 import axios from "axios";
-const URL = "http://127.0.0.1:8000/api";
+const URL = "http://api.tuongvile.xyz/api";
 
 export default {
     getAuth(endpoint, id) {
@@ -16,8 +16,8 @@ export default {
                 },
             });
     },
-    postAuth(endpoint) {
-        return axios.post(URL + endpoint, null, {
+    postAuth(endpoint, payload) {
+        return axios.post(URL + endpoint, payload, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("access_token")}`,
             },
@@ -25,6 +25,13 @@ export default {
     },
     postNormal(endpoint, payload) {
         return axios.post(URL + endpoint, payload, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+        });
+    },
+    putNormal(endpoint, payload) {
+        return axios.put(URL + endpoint + "/" + payload, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("access_token")}`,
             },

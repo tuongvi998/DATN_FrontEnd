@@ -11,6 +11,7 @@
       <slot name="description"></slot>
       <slot class="mt-2" name="inputs"></slot>
       <slot name="alert"></slot>
+      <slot name="error"></slot>
     </md-card-content>
 
     <md-card-actions>

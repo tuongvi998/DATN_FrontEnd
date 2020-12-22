@@ -13,7 +13,15 @@ const state = () => ({
     list_activity_by_field: [],
     activity_detail: [],
     isRegister: null,
-    list_activity_by_group: [] //chua dien ra
+    list_activity_by_group: [], //chua dien ra
+    list_activity_by_group_happen: [],
+    list_user_join_activity: [],
+    list_user_register_activity: [],
+    list_field_group: [],
+    list_group_by_field: [],
+    list_province: [],
+    list_district: [],
+    list_ward: [],
 });
 
 const getters = {
@@ -32,11 +40,17 @@ const getters = {
     getListField: (state) => {
         return state.list_field;
     },
+    getListFieldGroup: (state) => {
+        return state.list_field_group;
+    },
     getListFieldController: (state) => {
         return state.list_field_controler;
     },
     getListAvtivityByField: (state) => {
         return state.list_activity_by_field;
+    },
+    getListGroupByField: (state) => {
+        return state.list_group_by_field;
     },
     getActivityJoined: (state) => {
         return state.list_activity_joined;
@@ -50,9 +64,27 @@ const getters = {
     getActivityByGroup: (state) => {
         return state.list_activity_by_group;
     },
+    getActivityByGroup_happen: (state) => {
+        return state.list_activity_by_group_happen;
+    },
+    getListUserJoinedActivity: (state) => {
+        return state.list_user_join_activity;
+    },
+    getListUserRegisterActivity: (state) => {
+        return state.list_user_register_activity;
+    },
     getIsRegister: (state) => {
         return state.isRegister;
-    }
+    },
+    getListProvince: (state) => {
+        return state.list_province;
+    },
+    getListDistrict: (state) => {
+        return state.list_district;
+    },
+    getListWard: (state) => {
+        return state.list_ward;
+    },
 };
 
 const mutations = {
@@ -74,6 +106,9 @@ const mutations = {
     deleteGroup(state, id) {
         var list = state.list_groups.filter((group) => group.id != id);
         state.list_groups = list;
+    },
+    showListGroupByField(state, list_group_by_field) {
+        state.list_group_by_field = list_group_by_field;
     },
     //activity
     showUpcomingActivity(state, upcoming_activity) {
@@ -97,13 +132,31 @@ const mutations = {
     showActivityByGroup(state, list_activity_by_group) {
         state.list_activity_by_group = list_activity_by_group;
     },
+    showActivityByGroup_happen(state, list_activity_by_group_happen) {
+        state.list_activity_by_group_happen = list_activity_by_group_happen;
+    },
     deleteActivity(state, id) {
-        var list = state.list_activity_by_group.filter((activity) => activity.id != id);
+        var list = state.list_activity_by_group.filter(
+            (activity) => activity.id != id
+        );
         state.list_activity_by_group = list;
+    },
+    showListUserJoinedActivity(state, list_user_join_activity) {
+        state.list_user_join_activity = list_user_join_activity;
+    },
+    showListUserRegisterActivity(state, list_user_register_activity) {
+        state.list_user_register_activity = list_user_register_activity;
+    },
+    deleteJoinProfile(state, id) {
+        var list = state.list_user_join_activity.filter((user) => user.id != id);
+        state.list_user_join_activity = list;
     },
     //fields
     showListField(state, list_field) {
         state.list_field = list_field;
+    },
+    showListFieldGroup(state, list_field_group) {
+        state.list_field_group = list_field_group;
     },
     showListFieldController(state, list_field) {
         state.list_field_controler = list_field;
@@ -111,6 +164,15 @@ const mutations = {
     deleteField(state, id) {
         var list = state.list_field_controler.filter((field) => field.id != id);
         state.list_field_controler = list;
+    },
+    showListProvince(state, list_province) {
+        state.list_province = list_province;
+    },
+    showListDistrict(state, list_district) {
+        state.list_district = list_district;
+    },
+    showListWard(state, list_ward) {
+        state.list_ward = list_ward;
     },
 };
 const actions = {
@@ -140,13 +202,14 @@ const actions = {
     },
 
     showIsRegister({ commit }, payload) {
-        http.getNormal("/volunteer/check-activity-register", payload)
-            .then(response => {
-                commit('showIsRegister', response.data.data)
+        http
+            .getNormal("/volunteer/check-activity-register", payload)
+            .then((response) => {
+                commit("showIsRegister", response.data.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
-            })
+            });
     },
 
     //group
@@ -156,6 +219,16 @@ const actions = {
             .then((response) => {
                 console.log(response.data.message);
                 commit("showListGroup", response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    showListGroupByField({ commit }, payload) {
+        http
+            .getNormal("/groups", payload)
+            .then((response) => {
+                commit("showListGroupByField", response.data.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -196,9 +269,9 @@ const actions = {
                 console.log(error);
             });
     },
-    showActivityJoined({ commit }, payload) {
+    showActivityJoined({ commit }) {
         http
-            .getNormal("/volunteer/activity-joined", payload)
+            .getNormal("/volunteer/activity-joined")
             .then((response) => {
                 commit("showActivityJoined", response.data.data);
             })
@@ -206,9 +279,9 @@ const actions = {
                 console.log(error);
             });
     },
-    showActivityRegister({ commit }, payload) {
+    showActivityRegister({ commit }) {
         http
-            .getNormal("/volunteer/activity-register", payload)
+            .getNormal("/volunteer/activity-register")
             .then((response) => {
                 commit("showActivityRegister", response.data.data);
             })
@@ -217,42 +290,89 @@ const actions = {
             });
     },
     showActivityByField({ commit }, payload) {
-        http.getNormal("/activities/field", payload)
-            .then(response => {
+        http
+            .getNormal("/activities/field", payload)
+            .then((response) => {
                 commit("showActivityByField", response.data.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
             });
     },
     showActivityDetail({ commit }, payload) {
-        http.getNormal("/activity/detail", payload)
-            .then(response => {
+        http
+            .getNormal("/activity/detail", payload)
+            .then((response) => {
                 commit("showActivityDetail", response.data.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
-            })
+            });
     },
     showActivityByGroup({ commit }) {
-        http.getNormal("/group/activities/up-coming")
-            .then(response => {
+        http
+            .getNormal("/group/activities/up-coming")
+            .then((response) => {
                 console.log(response);
                 commit("showActivityByGroup", response.data.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
+            });
+    },
+    showActivityByGroup_happen({ commit }) {
+        http
+            .getNormal("/group/activities/happen")
+            .then((response) => {
+                console.log(response);
+                commit("showActivityByGroup_happen", response.data.data);
             })
+            .catch((error) => {
+                console.log(error);
+            });
     },
     deleteActivity({ dispatch }, payload) {
-        http.deleteNormal("/group/activity", payload)
-            .then(response => {
+        http
+            .deleteNormal("/group/activity", payload)
+            .then((response) => {
                 console.log(response.data.message);
                 dispatch("showActivityByGroup");
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
+            });
+    },
+    deleteJoinProfile({ dispatch }, payload) {
+        http
+            .deleteNormal("/group/register-profile", payload)
+            .then((response) => {
+                const activityId = window.location.href.split("/", 6)[5];
+                console.log(activityId);
+                dispatch("showListUserJoinedActivity", activityId);
             })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    showListUserJoinedActivity({ commit }, payload) {
+        http
+            .getNormal("/group/register-profile/joined", payload)
+            .then((response) => {
+                commit("showListUserJoinedActivity", response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    showListUserRegisterActivity({ commit }, payload) {
+        http
+            .getNormal("/group/register-profile/register", payload)
+            .then((response) => {
+                commit("showListUserRegisterActivity", response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     },
     //field
     showListField({ commit }) {
@@ -261,6 +381,17 @@ const actions = {
             .then((response) => {
                 // console.log(response.data.message);
                 commit("showListField", response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    showListFieldGroup({ commit }) {
+        http
+            .getNormal("/fields/count-group")
+            .then((response) => {
+                // console.log(response.data.message);
+                commit("showListFieldGroup", response.data.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -295,6 +426,36 @@ const actions = {
                 // console.log(response);
                 // commit('deleteVolunteer', id);
                 dispatch("showListFieldController");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    showListProvince({ commit }) {
+        http
+            .getNormal("/provinces")
+            .then((response) => {
+                commit("showListProvince", response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    showListDistrict({ commit }, payload) {
+        http
+            .getNormal("/districts", payload)
+            .then((response) => {
+                commit("showListDistrict", response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    showListWard({ commit }, payload) {
+        http
+            .getNormal("/wards", payload)
+            .then((response) => {
+                commit("showListWard", response.data.data);
             })
             .catch((error) => {
                 console.log(error);
