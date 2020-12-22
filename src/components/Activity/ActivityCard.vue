@@ -27,8 +27,8 @@
         v-for="activity in pageOfItems"
         :key="activity.index"
       >
-        <div class="card-image p-1">
-          <img class="rounded" :src="activity.image" alt="Snowy Mountains" />
+        <div  id="card-image"  class="card-image p-1">
+          <img id="card-img" class="rounded" :src="activity.image_url" alt="Tình Nguyện Viên" />
         </div>
         <div class="activity-detail pl-3 text-left">
           <h3 class="card-title">{{ activity.title }}</h3>
@@ -61,8 +61,8 @@
         v-for="activity in pageOfItems"
         :key="activity.index"
       >
-        <div class="card-image p-1">
-          <img class="rounded" :src="activity.image" alt="Snowy Mountains" />
+        <div id="card-image" class="card-image cc p-1">
+          <img id="card-img" class="rounded" :src="activity.image_url" alt="Tình Nguyện Viên" />
         </div>
         <div class="activity-detail pl-3 text-left">
           <h3 class="card-title">{{ activity.title }}</h3>
@@ -219,8 +219,16 @@ export default {
 ul#breadcrumb-menu li {
   display: inline;
 }
+#card-img{
+ height: 212px;
+ width: 100%;
+ /* height: 100%; */
+}
 .card-image {
+  /* min-height: 210px;
+  max-height: 212px; */
   width: 38%;
+  overflow: hidden;
 }
 .card-title {
   text-transform: uppercase;
@@ -242,7 +250,7 @@ ul#breadcrumb-menu li {
   margin: 0 auto;
   font-size: 14px;
   line-height: 1.5;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -252,7 +260,7 @@ ul#breadcrumb-menu li {
   width: 60%;
 }
 .btn-primary {
-  margin-top: 25px;
+  margin-top: 18px;
   /* padding: 0 22px; */
   padding: 0 12px;
   border: 1px solid;

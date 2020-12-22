@@ -16,7 +16,7 @@
         </md-button>
 
         <div class="md-collapse">
-          <div class="md-autocomplete">
+          <!-- <div class="md-autocomplete">
             <md-autocomplete
               class="search"
               v-model="selectedEmployee"
@@ -24,7 +24,7 @@
             >
               <label>Tìm...</label>
             </md-autocomplete>
-          </div>
+          </div> -->
           <!-- <md-list>
             <md-list-item href="#/">
               <i class="material-icons">dashboard</i>
@@ -61,17 +61,11 @@
                       data-toggle="dropdown"
                     >
                       <md-icon>person</md-icon>
-                      <!-- <span class="notification">5</span> -->
                       <p class="hidden-lg hidden-md">Tài khoản</p>
                     </md-button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                      <li><a href="#">Trang quản lý</a></li>
+                      <li><router-link tag="a" to="/admin/dashboard">Trang quản lý</router-link></li>
                       <li><a  @click="logoutFun()">Đăng xuất</a></li>
-                      
-                      <!-- <li><a href="#">You have 5 new tasks</a></li>
-                      <li><a href="#">You're now friend with Andrew</a></li>
-                      <li><a href="#">Another Notification</a></li>
-                      <li><a href="#">Another One</a></li> -->
                     </ul>
                   </drop-down>
                 </div>
@@ -90,20 +84,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
       selectedEmployee: null,
-      employees: [
-        "Jim Halpert",
-        "Dwight Schrute",
-        "Michael Scott",
-        "Pam Beesly",
-        "Angela Martin",
-        "Kelly Kapoor",
-        "Ryan Howard",
-        "Kevin Malone"
-      ]
+      employees: [      ],
+      get : null
     };
   },
   methods: {
@@ -113,6 +100,12 @@ export default {
     logoutFun() {
       return this.$store.dispatch("logout");
     }
+  },
+  computed:{
+  },
+  created(){
+  
+    
   }
 };
 </script>

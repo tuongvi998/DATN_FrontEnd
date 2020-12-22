@@ -15,7 +15,7 @@
               tag="article"
             >
               <div class="cad-body">
-                <img :src="item.image" id="card-img" />
+                <img :src="item.image_url" id="card-img" />
               </div>
               <div class="card-title">{{ item.title }}</div>
               <div class="card-content p-3">

@@ -29,15 +29,7 @@
 
     <div class="main-panel">
       <top-navbar></top-navbar>
-
-      <!-- <fixed-plugin
-        :color.sync="sidebarBackground"
-        :image.sync="sidebarBackgroundImage"
-      >
-      </fixed-plugin> -->
-
-      <dashboard-content> </dashboard-content>
-
+      <dashboard-content> </dashboard-content>  
       <content-footer v-if="!$route.meta.hideFooter"></content-footer>
     </div>
   </div>

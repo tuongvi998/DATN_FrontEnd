@@ -69,11 +69,18 @@ const router = new Router({
                 header: { colorOnScroll: 300 },
                 footer: { backgroundColor: "black" },
             },
+            meta: {
+                title: "Trang chủ"
+            }
         },
         {
             path: "/detail",
             name: "groupdetail",
-            components: { default: GroupDetail, header: MainNavbar, footer: MainFooter },
+            components: {
+                default: GroupDetail,
+                header: MainNavbar,
+                footer: MainFooter,
+            },
             props: {
                 header: { colorOnScroll: 300 },
                 footer: { backgroundColor: "black" },
@@ -87,7 +94,9 @@ const router = new Router({
                 header: { colorOnScroll: 300 },
                 footer: { backgroundColor: "black" },
             },
-            children: [],
+            meta: {
+                title: "Danh bạ tổ chức"
+            }
         },
         {
             path: "/all-groups/:fieldname",
@@ -101,19 +110,21 @@ const router = new Router({
                 header: { colorOnScroll: 300 },
                 footer: { backgroundColor: "black" },
             },
+            meta: {
+                title: "Danh bạ tổ chức"
+            }
         },
         {
             path: "/login",
             name: "login",
             components: { default: Login },
-            // props: {
-            //     header: { colorOnScroll: 400 },
-            // },
+            meta: { title: "Đăng nhập" }
         },
         {
             path: "/register",
             name: "register",
             components: { default: Register },
+            meta: { title: "Đăng ký" }
         },
         {
             path: "/profile",
@@ -141,16 +152,19 @@ const router = new Router({
                     path: "all",
                     name: "all-activity",
                     component: ActivityCard,
+                    meta: { title: "Hoạt động" },
                 },
                 {
-                    path: "/activity/:fieldname",
+                    path: "/activity/byfield/:fieldname",
                     name: "field-name",
                     component: ActivityByField,
+                    meta: { title: "Hoạt động" },
                 },
                 {
-                    path: "/activity/:groupname/:groupid",
+                    path: "/activity/bygroup/:groupname/:groupid",
                     name: "activity-by-group",
                     component: ActivityByGroup,
+                    meta: { title: "Hoạt động" },
                 },
             ],
         },
@@ -166,6 +180,7 @@ const router = new Router({
                 header: { colorOnScroll: 400 },
                 footer: { backgroundColor: "black" },
             },
+            meta: { title: "Chi tiết hoạt động" }
         },
         {
             path: "/user/:username",
@@ -175,6 +190,7 @@ const router = new Router({
                 header: { colorOnScroll: 400 },
                 footer: { backgroundColor: "black" },
             },
+            meta: { title: "Trang cá nhân" },
         },
         {
             path: "/group",
@@ -184,6 +200,7 @@ const router = new Router({
                     path: "dashboard",
                     name: "Group Dashboard",
                     component: GroupDashboard,
+                    meta: { title: "Quản lý" }
                 },
                 {
                     path: "activity",
@@ -194,12 +211,14 @@ const router = new Router({
                             path: "/",
                             component: GroupAllActivity,
                             name: "Hoạt động sắp tới:",
+                            meta: { title: "Quản lý hoạt động" }
                         },
                         {
                             path: "/group/activity/:actiId",
                             component: GroupActivityDetail,
                             name: "Chi tiết hoạt động",
-                        },
+                            meta: { title: "Quản lý chi tiết hoạt động" }
+                        }
                     ],
                 },
                 {
@@ -211,11 +230,13 @@ const router = new Router({
                             path: "/",
                             component: GroupActivityHappen,
                             name: "Hoạt động đã diễn ra:",
+                            meta: { title: "Quản lý hoạt động" }
                         },
                         {
                             path: "/group/activity-happen/:actiId",
                             component: GroupActivityDetail_happen,
                             name: "Chi tiết hoạt động đã diễn ra",
+                            meta: { title: "Quản lý chi tiết hoạt động" }
                         },
                     ],
                 },
@@ -229,21 +250,19 @@ const router = new Router({
                     path: "dashboard",
                     name: "Dashboard",
                     component: Dashboard,
-                },
-                {
-                    path: "table",
-                    name: "Table List",
-                    component: TableList,
+                    meta: { title: "Trang quản lý" }
                 },
                 {
                     path: "groups",
                     name: "Danh sách các tổ chức",
                     component: GroupList,
+                    meta: { title: "Quản lý tổ chức" }
                 },
                 {
                     path: "fields",
                     name: "Lĩnh vực hoạt động",
                     component: FieldList,
+                    meta: { title: "Quản lý lĩnh vực hoạt động" }
                 },
                 {
                     path: "typography",
@@ -260,6 +279,7 @@ const router = new Router({
                     name: "Danh sách người dùng",
                     meta: {
                         hideFooter: true,
+                        title: "Quản lý người dùng"
                     },
                     component: UserList,
                 },
@@ -285,7 +305,13 @@ const router = new Router({
     //     } else {
     //         return { x: 0, y: 0 };
     //     }
-    // }
+    // },
+});
+const DEFAULT_TITLE = "Tình nguyện";
+router.afterEach((to, from) => {
+    Vue.nextTick(() => {
+        document.title = to.meta.title || DEFAULT_TITLE;
+    });
 });
 router.beforeEach((to, from, next) => {
     if (to.matched.some((record) => record.meta.requireAuth)) {

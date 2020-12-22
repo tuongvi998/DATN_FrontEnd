@@ -5,20 +5,12 @@
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100"
       >
         <div class="add-btn">
-          <!-- <md-button
-          class="md-success"
-          @click="showAddActivityModal = true;"
-          ><i class="far fa-plus-square"></i
-        ></md-button> -->
-          <md-button class="md-success" v-b-modal.modal-1>+</md-button>
+          <md-button class="md-success" v-b-modal.modal-lg>+</md-button>
         </div>
-        <b-modal id="modal-1" class="modal-field">
-          <!-- <template slot="header"> -->
+        <b-modal id="modal-lg" class="mw-100 w-75">
           <template #modal-title>
             <h4 class="modal-title">Thêm hoạt động</h4>
           </template>
-          <!-- </template>
-        <template slot="body"> -->
           <md-field>
             <label>Tên hoạt động</label>
             <md-input v-model="activity.title"></md-input>
@@ -356,10 +348,17 @@ export default {
 };
 </script>
 <style scoped>
+.modal-lg {
+    max-width: 80% !important;
+}
 .modal-mask {
   z-index: 20;
 }
 .mx-datepicker {
   width: 100%;
+}
+.modal-md{
+  max-width: 100vw;
+  widows: 75vw;
 }
 </style>

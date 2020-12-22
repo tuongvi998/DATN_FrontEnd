@@ -49,7 +49,8 @@
           <td colspan="5" class="tb-content">
             <div class="row">
               <div class="col-3 image">
-                <img :src="user.avatar" id="avatar" />
+                <img v-if="isgender" :src="user.user_avatar_url" id="avatar" />
+                <img v-else :src="user.group_avatar_url" id="avatar">
               </div>
               <div class="col-9">
                 <h5>
@@ -83,12 +84,6 @@
 <script>
 export default {
   name: "simple-table",
-  props: {
-    // tableHeaderColor: {
-    //   type: String,
-    //   default: "",
-    // },
-  },
   data() {
     return {
       selected: [],

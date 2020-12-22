@@ -30,7 +30,7 @@
       :key="activity.index"
     >
       <div class="card-image p-1">
-        <img class="rounded" :src="activity.image" alt="Snowy Mountains" />
+        <img id="card-img" class="rounded" :src="activity.image_url" alt="Tình nguyện..." />
       </div>
       <div class="activity-detail pl-3 text-left">
         <h3 class="card-title">{{ activity.title }}</h3>
@@ -177,6 +177,11 @@ export default {
 </script>
 
 <style scoped>
+#card-img{
+ height: 212px;
+ width: 100%;
+ /* height: 100%; */
+}
 #breadcrumb-item {
   font-size: 12px;
   letter-spacing: 0.7px;
@@ -220,7 +225,7 @@ ul#breadcrumb-menu li {
   margin: 0 auto;
   font-size: 14px;
   line-height: 1.5;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -230,7 +235,7 @@ ul#breadcrumb-menu li {
   width: 60%;
 }
 .btn-primary {
-  margin-top: 25px;
+  margin-top: 18px;
   /* padding: 0 22px; */
   padding: 0 12px;
   border: 1px solid;

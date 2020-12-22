@@ -22,14 +22,14 @@
             >
             <br />
             <md-button class="md-success md-sm"
-              ><small class="text-white">Đăng ký ngay</small></md-button
+              ><small class="text-white"><a href="#register-btn">Đăng ký ngay</a></small></md-button
             >
           </div>
           <div class="col-md-8 col-sm-6 col-12 d-flex text-center">
             <img
               id="card-image"
               class="rounded"
-              :src="activity.image"
+              :src="activity.image_url"
               alt="Snowy Mountains"
             />
           </div>
@@ -78,7 +78,7 @@
             </div>
           </div>
           <div>
-            <md-button v-if="!isLogin && !isRegister" @click="notifi()"
+            <md-button id="register-btn" v-if="!isLogin && !isRegister" @click="notifi()"
               >Bấm để đăng ký</md-button
             >
             <md-button v-if="isRegister">Da Dang ky</md-button>
@@ -216,16 +216,19 @@ export default {
       console.log(this.activity_id);
     },
     notifi() {
-      this.$notify({
-        group: "noti",
-        type: "warn",
-        width: 3000,
+      this.$confirm({
         title: "Bạn chưa đăng nhập",
-        text: "Vui lòng đăng nhập để có thể đăng ký tình nguyện viên </b>",
-        duration: 10000,
-        speed: 1000,
-      });
-    },
+        message: "Bạn có muốn đăng nhập để tiếp tục?",
+        button: {
+          yes: "Có",
+          no: "Không"
+        },
+        callback: (confirm) => {
+          if (confirm == true) {
+            this.$router.push({ name: 'login' })
+          }
+
+    },})},
     showRegisterForm() {
       this.checkIntro = true;
       this.checkInterest = true;
@@ -248,7 +251,7 @@ export default {
       var checkExperience = this.experience.replace(/^\s+/, "")
         .replace(/\s+$/, "");
      if (checkIntro == "" && checkInterest == "" && checkExperience=="") {
-        this.checkIntro = false;
+        this.checkIntro = false;    
         this.checkInterest = false;
         this.checkExperience =false
       } else if (checkIntro == "") {

@@ -35,8 +35,9 @@
             >
               <div class="card-image p-1">
                 <img
+                id=""
                   class="img-responsive group-ava"
-                  :src="group.avatar"
+                  :src="group.group_avatar_url"
                   alt="..."
                 />
               </div>
@@ -148,7 +149,8 @@ export default {
   top: 50%; */
   left: 0;
   /* margin-top: -57px; */
-  width: 115px;
+      min-width: 120px;
+    max-width: 122px;
   border-radius: 100%;
   box-shadow: 4px 6px 10px rgba(0, 0, 0, 0.2);
   padding: 0px;

@@ -131,7 +131,7 @@ export default {
                 }else if(role == 2){
                   this.$router.push({ path: '/group' })
                 }else{
-                  this.$router.push({ path: '/' })
+                  this.$router.back();
                 }
         })
         .catch( error=> {
